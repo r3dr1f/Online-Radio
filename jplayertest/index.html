@@ -1,8 +1,48 @@
-<%inherit file="default.mako" />
-<%block name="title">Úvodná stránka</%block>
-<%block name="page_content">
-<h2>Toto je úvodná stránka</h2>
+<!DOCTYPE html>
+<html>
+<head>
+	<link type="text/css" href="skins/jplayer.blue.monday.css" rel="stylesheet" />
+	
+	
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script type="text/javascript" src="./js/jquery.jplayer.min.js"></script>
+<script type="text/javascript" src="./js/jquery.jplayer.inspector.js"></script>
+<script type="text/javascript" src="./js/themeswitcher.js"></script>
 
+<script type="text/javascript">
+    $(document).ready(function(){
+      var stream = {
+		title: "ABC Jazz",
+		//mp3: "http://listen.radionomy.com/abc-jazz"
+		mp3: "http://127.0.0.1:8080"
+	},
+	ready = false;
+
+	$("#jquery_jplayer_1").jPlayer({
+		ready: function (event) {
+			ready = true;
+			$(this).jPlayer("setMedia", stream);
+		},
+		pause: function() {
+			$(this).jPlayer("clearMedia");
+		},
+		error: function(event) {
+			if(ready && event.jPlayer.error.type === $.jPlayer.error.URL_NOT_SET) {
+				// Setup the media stream again and play it.
+				console.log("error");
+				$(this).jPlayer("setMedia", stream).jPlayer("play");
+			}
+		},
+		swfPath: "./js",
+		supplied: "mp3",
+		preload: "none",
+		wmode: "window",
+		keyEnabled: true
+	});
+    });
+</script>
+</head>
+<body>
 <div id="jquery_jplayer_1" class="jp-jplayer"></div>
   <div id="jp_container_1" class="jp-audio">
     <div class="jp-type-single">
@@ -43,4 +83,5 @@
       </div>
     </div>
   </div>
-</%block>
+</body>
+</html>

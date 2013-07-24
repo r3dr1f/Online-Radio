@@ -56,6 +56,11 @@ from ..authenticator import (
     NonExistingUserError,
     )
 
+from subprocess import (
+    Popen, 
+    PIPE
+    )
+
 
 import random
 #}}}
@@ -272,4 +277,16 @@ def recovery_final_submit(request):
     user = request.db_session.query(User).filter_by(id=request.matchdict['user_id']).first()
     user.password = password
     return HTTPFound(location=request.route_url('home'))
+
+@view_config(route_name='admin', request_method='GET', renderer='project:templates/admin.mako')
+def admin_show(request):
+    return {}
+
+@view_config(route_name='admin', request_method='POST', renderer='project:templates/admin.mako')
+def admin_start_stream(request):
+    process = Popen(['vlc', '-vvv', '-d', '/home/dygestor/Desktop/06-So Far Away.mp3', '--sout', '#standard{access=http,mux=mp3,dst=127.0.0.1:1234/stream}'], stdout=PIPE)
+    stdout, stderr = process.communicate()
+    print(stdout)
+    print(stderr)
+    return {}
 
