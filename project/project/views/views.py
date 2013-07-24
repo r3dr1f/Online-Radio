@@ -61,6 +61,8 @@ from subprocess import (
     PIPE
     )
 
+import time
+
 
 import random
 #}}}
@@ -284,7 +286,9 @@ def admin_show(request):
 
 @view_config(route_name='admin', request_method='POST', renderer='project:templates/admin.mako')
 def admin_start_stream(request):
-    process = Popen(['vlc', '-vvv', '-d', '/home/dygestor/Desktop/06-So Far Away.mp3', '--sout', '#standard{access=http,mux=mp3,dst=127.0.0.1:1234/stream}'], stdout=PIPE)
+    process = Popen(['vlc', '--one-instance', '/home/dygestor/Desktop/17 - The Departure.mp3', '--sout-keep', '--sout', '#standard{access=http,mux=mp3,dst=127.0.0.1:1234/stream}'], stdout=PIPE)
+    time.sleep(1)
+    process2 = Popen(['vlc', '--one-instance', '--playlist-enqueue', '/home/dygestor/Desktop/15 - Tainted.mp3'], stdout=PIPE)
     stdout, stderr = process.communicate()
     print(stdout)
     print(stderr)
