@@ -280,7 +280,7 @@ def recovery_final_submit(request):
 
 @view_config(route_name='admin', request_method='GET', renderer='project:templates/admin.mako')
 def admin_show(request):
-    request.isOpenedStream = None
+	isOpenedStream = None
     return {}
 
 @view_config(route_name='admin', request_method='POST', renderer='project:templates/admin.mako')
@@ -289,6 +289,6 @@ def admin_start_stream(request):
     stdout, stderr = process.communicate()
     print(stdout)
     print(stderr)
-    request.isOpenedStream = True
-    return {'stdout':str(stderr)}
+	isOpenedStream = Some
+    return {'stdout':stdout}
 
