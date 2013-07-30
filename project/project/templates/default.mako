@@ -7,12 +7,15 @@
 		<script type="text/javascript" src="${request.static_path('project:static/js/jquery.jplayer.min.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/jquery.jplayer.inspector.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/themeswitcher.js')}"></script>
+		<script type="text/javascript" src="${request.static_path('project:static/js/scripts.js')}"></script>
 		<script type="text/javascript">
 		    $(document).ready(function(){
       		var stream = {
 			title: "ABC Jazz",
 			//mp3: "http://listen.radionomy.com/abc-jazz"
-			mp3: "http://127.0.0.1:1234/stream"
+			//mp3: "http://127.0.0.1:1234/stream"
+			//mp3: "http://tombadoma.dyndns.org:8080/stream"
+			mp3: "http://localhost:8000/stream"
 			},
 			ready = false;
 

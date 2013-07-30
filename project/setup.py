@@ -17,6 +17,7 @@ requires = [
     'pyramid_mailer',
     'py3k-bcrypt',
     'mock',
+    'beautifulsoup4',
     ]
 
 setup(name='project',
