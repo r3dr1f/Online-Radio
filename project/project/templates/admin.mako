@@ -5,6 +5,4 @@
 	<form action="${request.route_path('admin')}" method="POST">
 		<button type="submit" class="submit-form">Zapnut stream</button>
 	</form>
-	<p> sem nieco malo ist ${song}</p>
-	
 </%block>
