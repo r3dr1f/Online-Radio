@@ -35,14 +35,12 @@ from ..utils import valid_email
 from . import Base
 
 class Playlist(Base):
-    """Database table User.
+    """Database table Playlist.
  
     Attributes:
         id: Identificator of object
-        email: User email, used as a login, so it's must be unique
-        password: User Password
-        active: Indicates, whether user-account is active
-        games: relationship to table Game
+        song_id: id of played song
+        play_time: the time the song was played
     """
     __tablename__ = 'playlist'
     id = Column(Integer, primary_key=True)
