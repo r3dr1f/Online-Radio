@@ -33,6 +33,10 @@ from ..models.user import (
     User, 
     )
 
+from ..models.playlist import (
+    Playlist, 
+    )
+
 from ..utils import valid_email
 
 from mako.template import Template
@@ -113,10 +117,9 @@ def get_server_details(server, port, mount):
 def main_page_view(request):
     """Shows a Home Page.
     """
-    
-    get_server_details("localhost", "8000", "stream")
-    
+    ret = get_server_details('localhost', '8000', 'stream')
     return {
+        'info': ret,
         'page_title': 'HomePage',
         'logged': (request.userid is not None)
         }
@@ -327,12 +330,17 @@ def admin_show(request):
 
 @view_config(route_name='admin', request_method='POST', renderer='project:templates/admin.mako')
 def admin_start_stream(request):
-    process = Popen(['vlc','-Irc', '--one-instance', '/media/sda2/Hudba/marha.mp3', '--sout-keep', '--sout', '#standard{access=http,mux=mp3,dst=127.0.0.1:1234/stream}'], stdout=PIPE)
+    process = Popen(['vlc', '--one-instance', '/home/r3dr1f/02 - Mr Brightside.mp3', '--sout-keep', '--sout', '#standard{access=http,mux=mp3,dst=127.0.0.1:1234/stream}'], stdout=PIPE)
     time.sleep(1)
-    process2 = Popen(['vlc', '--one-instance', '--playlist-enqueue', '/media/sda2/Hudba/marha.mp3'], stdout=PIPE)
+    songname = "Mr Brightside"
+    process2 = Popen(['vlc', '--one-instance', '--playlist-enqueue', '/home/r3dr1f/02 - Breaking Benjamin - The Diary Of Jane.mp3'], stdout=PIPE)
     stdout, stderr = process.communicate()
     print(stdout)
     print(stderr)
-    request.isOpenedStream = True
-    return {'stdout':str(stderr)}
+    return {'song': songname}
 
+@view_config(route_name='getsource', request_method='GET', renderer='project:templates/getsource.mako')
+def get_source(request):
+    songinfo = request.db_session.query(Playlist).first()
+    return{'songinfo': songinfo}
+    

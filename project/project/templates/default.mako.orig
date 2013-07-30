@@ -14,7 +14,10 @@
 			title: "ABC Jazz",
 			//mp3: "http://listen.radionomy.com/abc-jazz"
 			//mp3: "http://127.0.0.1:1234/stream"
+<<<<<<< HEAD
 			//mp3: "http://tombadoma.dyndns.org:8080/stream"
+=======
+>>>>>>> a00caa9e3b9436e6e81ba1a80dce1c023895383b
 			mp3: "http://localhost:8000/stream"
 			},
 			ready = false;
@@ -30,7 +33,6 @@
 				error: function(event) {
 					if(ready && event.jPlayer.error.type === $.jPlayer.error.URL_NOT_SET) {
 					// Setup the media stream again and play it.
-					console.log("error");
 					$(this).jPlayer("setMedia", stream).jPlayer("play");
 					}
 				},
