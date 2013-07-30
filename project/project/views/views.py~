@@ -61,6 +61,8 @@ from subprocess import (
     PIPE
     )
 
+import time
+
 
 import random
 #}}}
@@ -280,15 +282,17 @@ def recovery_final_submit(request):
 
 @view_config(route_name='admin', request_method='GET', renderer='project:templates/admin.mako')
 def admin_show(request):
-	isOpenedStream = None
+    request.isOpenedStream = None
     return {}
 
 @view_config(route_name='admin', request_method='POST', renderer='project:templates/admin.mako')
 def admin_start_stream(request):
-    process = Popen(['vlc', '-vvv', '-d', '/media/sda2/Hudba/marha.mp3', '--sout', '#standard{access=http,mux=mp3,dst=127.0.0.1:1234/stream}'], stdout=PIPE)
+    process = Popen(['vlc', '--one-instance', '/media/sda2/Hudba/marha.mp3', '--sout-keep', '--sout','-Irc', '#standard{access=http,mux=mp3,dst=127.0.0.1:1234/stream}'], stdout=PIPE)
+    time.sleep(1)
+    process2 = Popen(['vlc', '--one-instance', '--playlist-enqueue', '/media/sda2/Hudba/marha.mp3'], stdout=PIPE)
     stdout, stderr = process.communicate()
     print(stdout)
     print(stderr)
-	isOpenedStream = Some
-    return {'stdout':stdout}
+    request.isOpenedStream = True
+    return {'stdout':str(stderr)}
 

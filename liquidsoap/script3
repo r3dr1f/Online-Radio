@@ -1,0 +1,20 @@
+# This function is called when
+# a new metadata block is passed in
+# the stream.
+def apply_metadata(m) =
+  title = m["filename"]
+  artist = m["artist"]
+  print("Now playing: #{title} by #{artist}")
+end
+
+#!/usr/bin/liquidsoap 
+# Log dir 
+set("log.file.path","/tmp/basic-radio.log")
+# Music 
+myplaylist = playlist(mode="normal","~/projekt_spotedu/Online-Radio/liquidsoap/playlist2.m3u",reload_mode="rounds",reload=1)
+
+myplaylist = on_metadata(apply_metadata,myplaylist)
+
+# Stream it out 
+output.icecast(%mp3, host = "localhost", port = 8000, password = "rafael", mount = "stream", myplaylist, fallible=true)
+

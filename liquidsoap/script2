@@ -1,0 +1,14 @@
+set("log.file.path","/tmp/basic-radio.log")
+# Input the stream,
+# from an Icecast server or any other source
+url = "http://localhost:8000/streamvlc"
+input = mksafe(input.http(url))
+
+# First transcoder: MP3 32 kbps
+# We also degrade the samplerate, and encode in mono
+# Second transcoder : MP3 128 kbps
+output.icecast(
+  %mp3(bitrate=128), 
+  mount="/stream",
+  host="localhost", port=8000, password="rafael",
+  input)
