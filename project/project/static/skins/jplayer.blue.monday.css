@@ -31,7 +31,7 @@ div.jp-video {
 	background-color:#eee;
 }
 div.jp-audio {
-	width:220px;
+	width:200px;
 	border-radius: 10px;
 }
 div.jp-audio-stream {
@@ -256,7 +256,7 @@ a.jp-volume-max {
 
 div.jp-audio div.jp-type-single a.jp-mute,
 div.jp-audio div.jp-type-single a.jp-unmute {
-	margin-left: 10px;	
+	margin-left: 20px;	
 }
 div.jp-audio div.jp-type-playlist a.jp-mute,
 div.jp-audio div.jp-type-playlist a.jp-unmute {
@@ -320,7 +320,7 @@ div.jp-volume-bar {
 }
 div.jp-audio div.jp-volume-bar {
 	top:37px;
-	left:125px;
+	left:100px;
 }
 div.jp-audio-stream div.jp-volume-bar {
 	top:37px;
