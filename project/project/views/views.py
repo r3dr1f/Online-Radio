@@ -79,9 +79,7 @@ def notfound(request):
 def main_page_view(request):
     """Shows a Home Page.
     """
-    ret = get_server_details('localhost', '8000', 'stream')
     return {
-        'info': ret,
         'page_title': 'HomePage',
         'logged': (request.userid is not None)
         }
