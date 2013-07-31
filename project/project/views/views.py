@@ -37,13 +37,17 @@ from ..models.playlist import (
     Playlist, 
     )
 
+from ..models.song import (
+    Song,
+    )
+
 from ..utils import valid_email
 
 from mako.template import Template
 
 from pkg_resources import resource_string
 
-import os.path
+import os, shutil
 
 import json
 
@@ -304,3 +308,35 @@ def get_source(request):
     songinfo = request.db_session.query(Playlist).order_by(Playlist.play_time.desc()).first()
     return{'songinfo': songinfo}
     
+@view_config(route_name='upload', request_method='GET', renderer='project:templates/upload.mako')
+def upload_song(request):
+    return {}
+
+@view_config(route_name='upload', request_method='POST', renderer='project:templates/upload.mako')
+def upload_song_post(request):
+    # ``filename`` contains the name of the file in string format.
+    #
+    # WARNING: Internet Explorer is known to send an absolute file
+    # *path* as the filename.  This example is naive; it trusts
+    # user input.
+#     def getHighestId():
+#         return request.db_session.query(
+#                 Song
+#             ).order_by(
+#                 Song.id
+#             )[-1].id
+    
+    if request.POST['name'] != '':
+        song = Song(1, request.POST['name'])
+        request.db_session.add(song)
+        request.db_session.flush()
+        
+        filename = str(song.id) + ".mp3"
+
+        input_file = request.POST['mp3'].file
+
+        file_path = os.path.join(os.getcwd() + '/../liquidsoap/', filename)
+        with open(file_path, 'wb') as output_file:
+            shutil.copyfileobj(input_file, output_file)
+
+        return {'ok': 1}
