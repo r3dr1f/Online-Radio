@@ -38,7 +38,7 @@
 				supplied: "mp3",
 				preload: "none",
 				wmode: "window",
-				keyEnabled: true
+				keyEnabled: false
 				});
     		});
 		</script>

@@ -10,7 +10,7 @@ def apply_metadata(m) =
   filename = list.nth(list.rev(filename),0) # vezmeme meno suboru
   filename = list.nth(string.split(separator="\.",filename),0) # odpojime koncovku .mp3
   
-  command = "python3 feedback.py " ^ filename
+  command = "python3.3 feedback.py " ^ filename
   system(command)
 
 end
