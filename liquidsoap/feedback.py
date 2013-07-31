@@ -4,6 +4,7 @@
 import sqlite3 as lite
 import sys
 from time import gmtime, strftime
+from next_song import generate_next_song
 
 con = None
 
@@ -23,3 +24,5 @@ finally:
     
     if con:
         con.close()
+    generate_next_song()
+    print("generated next 5 songs")
