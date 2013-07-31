@@ -330,17 +330,15 @@ def admin_show(request):
 
 @view_config(route_name='admin', request_method='POST', renderer='project:templates/admin.mako')
 def admin_start_stream(request):
-    process = Popen(['vlc', '--one-instance', '/home/r3dr1f/02 - Mr Brightside.mp3', '--sout-keep', '--sout', '#standard{access=http,mux=mp3,dst=127.0.0.1:1234/stream}'], stdout=PIPE)
-    time.sleep(1)
-    songname = "Mr Brightside"
-    process2 = Popen(['vlc', '--one-instance', '--playlist-enqueue', '/home/r3dr1f/02 - Breaking Benjamin - The Diary Of Jane.mp3'], stdout=PIPE)
+    print('#####'*20)
+    process = Popen(['liquidsoap', '/home/r3dr1f/OnlineRadio/liquidsoap/script.liq', '-v'], stdout=PIPE)
     stdout, stderr = process.communicate()
     print(stdout)
     print(stderr)
-    return {'song': songname}
+    return {}
 
 @view_config(route_name='getsource', request_method='GET', renderer='project:templates/getsource.mako')
 def get_source(request):
-    songinfo = request.db_session.query(Playlist).first()
+    songinfo = request.db_session.query(Playlist).order_by(Playlist.play_time.desc()).first()
     return{'songinfo': songinfo}
     
