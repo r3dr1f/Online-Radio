@@ -422,3 +422,6 @@ body {
   text-decoration: underline;
   color: #36646c;
 }
+.default_hide{
+  display: none;
+}

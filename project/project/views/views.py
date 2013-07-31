@@ -83,9 +83,7 @@ def notfound(request):
 def main_page_view(request):
     """Shows a Home Page.
     """
-    ret = get_server_details('localhost', '8000', 'stream')
     return {
-        'info': ret,
         'page_title': 'HomePage',
         'logged': (request.userid is not None)
         }
@@ -99,11 +97,11 @@ class DuplicateUserError(RegistrationError):
     pass
 
 
-def register_user(db_session, email, password):
+def register_user(db_session, email, password, role, interpret_name):
     """Registers a new user and returns his ID (single number).
 
     """
-    user = User(email, password)
+    user = User(email, password, role, interpret_name)
     
     if db_session.query(User).filter_by(email=email).count() != 0:
         raise DuplicateUserError
@@ -137,7 +135,7 @@ def register_submission(request):
     errors = validate_registration_data(POST)
     if not errors:
         try:
-            user_id = register_user(request.db_session, POST['email'], POST['password'])
+            user_id = register_user(request.db_session, POST['email'], POST['password'], POST['role'], POST['interpret_name'])
             return HTTPFound(request.route_path('register_success', user_id=user_id))
         except DuplicateUserError:
             errors['email'] = 'duplicate_email'
