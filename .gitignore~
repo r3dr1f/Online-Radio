@@ -38,4 +38,3 @@ nosetests.xml
 *.sqlite
 env
 songs
-liquidsoap/playlist.m3u
