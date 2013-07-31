@@ -15,7 +15,7 @@
 			//mp3: "http://listen.radionomy.com/abc-jazz"
 			//mp3: "http://127.0.0.1:1234/stream"
 			//mp3: "http://tombadoma.dyndns.org:8080/stream"
-			mp3: "http://localhost:8000/stream"
+			mp3: "http://localhost:8080/stream"
 			},
 			ready = false;
 
