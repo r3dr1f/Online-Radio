@@ -80,8 +80,11 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     email = Column(String(50), unique=True)
     _password = Column(String(100), nullable=False)
+    role = Column(Integer)
+    interpret_name = Column(String(100))
     fullname = Column(String(100))
     recovery_code = Column(String(100))
+    
  
     @validates('email')
     def validate_email(self, key, address):
@@ -102,11 +105,13 @@ class User(Base):
         #self._password = hashpw(value.encode('ascii'), gensalt())
         self._password = hashpw(value, gensalt())
  
-    def __init__(self, email, password):
+    def __init__(self, email, password, role, interpret_name):
         """Initialization of class.
         """
         self.email = email
         self.password = password
+        self.role = role
+        self.interpret_name = interpret_name
  
     def __repr__(self):
         """Returns representative object of class User.

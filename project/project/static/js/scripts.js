@@ -14,4 +14,10 @@ function callAjax() {
 }	
 var interval = window.setInterval(function() {callAjax()}, 5000);
 
+callAjax();
+
+$(".trigger").click(function() {
+	$('.default_hide').toggle();
+});
+
 });

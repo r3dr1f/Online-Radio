@@ -31,7 +31,8 @@ div.jp-video {
 	background-color:#eee;
 }
 div.jp-audio {
-	width:420px;
+	width:220px;
+	border-radius: 10px;
 }
 div.jp-audio-stream {
 	width:182px;
@@ -81,6 +82,7 @@ div.jp-interface {
 	position: relative;
 	background-color:#eee;
 	width:100%;
+	border-radius: 10px 10px 0px 0px;
 }
 
 div.jp-audio div.jp-type-single div.jp-interface {
@@ -254,7 +256,7 @@ a.jp-volume-max {
 
 div.jp-audio div.jp-type-single a.jp-mute,
 div.jp-audio div.jp-type-single a.jp-unmute {
-	margin-left: 210px;	
+	margin-left: 10px;	
 }
 div.jp-audio div.jp-type-playlist a.jp-mute,
 div.jp-audio div.jp-type-playlist a.jp-unmute {
@@ -318,7 +320,7 @@ div.jp-volume-bar {
 }
 div.jp-audio div.jp-volume-bar {
 	top:37px;
-	left:330px;
+	left:125px;
 }
 div.jp-audio-stream div.jp-volume-bar {
 	top:37px;
@@ -381,6 +383,7 @@ div.jp-video div.jp-duration {
 div.jp-title {
 	font-weight:bold;
 	text-align:center;
+	border-radius: 0px 0px 10px 10px;
 }
 
 div.jp-title,
