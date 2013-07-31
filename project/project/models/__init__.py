@@ -29,4 +29,3 @@ def set_up_tables(engine):
     load_modules()   
     metadata.drop_all(engine)
     metadata.create_all(engine)
-
