@@ -333,7 +333,7 @@ def upload_song_post(request):
 
         input_file = request.POST['mp3'].file
 
-        file_path = os.path.join(os.getcwd() + '/../liquidsoap/', filename)
+        file_path = os.path.join(os.getcwd() + '/../liquidsoap/songs/', filename)
         with open(file_path, 'wb') as output_file:
             shutil.copyfileobj(input_file, output_file)
 
