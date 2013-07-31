@@ -7,7 +7,7 @@ playlist_length = 5
     returns path to next song to play
 """
 def pick_next_song():
-    return "./" + str(random.randrange(1,4)) + ".mp3"
+    return "./songs/" + str(random.randrange(1,4)) + ".mp3"
 
 """
     fills playlist with next 5 files to play

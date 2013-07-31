@@ -387,6 +387,7 @@ body {
 /* line 26, ../../../design/sass/screen.scss */
 #content {
   padding: 20px 20px;
+  min-height: 170px;
 }
 
 /* line 1, ../../../design/sass/_footer.scss */
