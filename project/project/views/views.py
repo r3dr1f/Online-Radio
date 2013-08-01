@@ -47,7 +47,7 @@ from mako.template import Template
 
 from pkg_resources import resource_string
 
-import os, shutil
+import os, shutil, mimetypes
 
 import json
 
@@ -74,6 +74,10 @@ import time
 
 import random
 #}}}
+
+def allowed_mime_type(mime_type):
+    mime_types = {'audio/mpeg'}
+    return mime_type[0] in mime_types
 
 @notfound_view_config(append_slash=True)
 def notfound(request):
@@ -312,29 +316,26 @@ def upload_song(request):
 
 @view_config(route_name='upload', request_method='POST', renderer='project:templates/upload.mako')
 def upload_song_post(request):
-    # ``filename`` contains the name of the file in string format.
-    #
-    # WARNING: Internet Explorer is known to send an absolute file
-    # *path* as the filename.  This example is naive; it trusts
-    # user input.
-#     def getHighestId():
-#         return request.db_session.query(
-#                 Song
-#             ).order_by(
-#                 Song.id
-#             )[-1].id
-    
     if request.POST['name'] != '':
-        song = Song(1, request.POST['name'])
-        request.db_session.add(song)
-        request.db_session.flush()
+        if 'mp3' in request.POST and not hasattr(request.POST['mp3'], 'filename'):
+            print("asd")    
+            return {'ok': 0, 'error': 'mp3'}
+        else:
+            if not allowed_mime_type(mimetypes.guess_type(request.POST['mp3'].filename)):
+                return {'ok': 0, 'error': 'mime'}
+            else:
+                song = Song(1, request.POST['name'])
+                request.db_session.add(song)
+                request.db_session.flush()
+                
+                filename = str(song.id) + ".mp3"
         
-        filename = str(song.id) + ".mp3"
-
-        input_file = request.POST['mp3'].file
-
-        file_path = os.path.join(os.getcwd() + '/../liquidsoap/songs/', filename)
-        with open(file_path, 'wb') as output_file:
-            shutil.copyfileobj(input_file, output_file)
-
-        return {'ok': 1}
+                input_file = request.POST['mp3'].file
+        
+                file_path = os.path.join(os.getcwd() + '/../liquidsoap/songs/', filename)
+                with open(file_path, 'wb') as output_file:
+                    shutil.copyfileobj(input_file, output_file)
+        
+                return {'ok': 1}
+    else:
+        return {'ok': 0, 'error': 'name'}
