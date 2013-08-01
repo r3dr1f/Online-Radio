@@ -10,7 +10,7 @@ import dbconnect #pripojenie k databaze
 con = None
 
 try:
-	if (sys.argv[1] == "-init"):
+	if (sys.argv[1] != "-init"):
 		con = dbconnect.connect()
 		cur = con.cursor()
 		print('INSERT INTO playlist (song_id,play_time) VALUES (%s,datetime())'%(sys.argv[1]))
