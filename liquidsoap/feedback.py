@@ -10,10 +10,12 @@ import dbconnect #pripojenie k databaze
 con = None
 
 try:
-	if (sys.argv[1] != "-init"):
+	#pri prepinaci -init sa nepripaja k databaze, chceme len vytvorit playlist s 5 pesnickami
+	# -init znamena, ze ideme nainicializovat playlist
+	if (sys.argv[1] != "-init"): 
 		con = dbconnect.connect()
 		cur = con.cursor()
-		print('INSERT INTO playlist (song_id,play_time) VALUES (%s,datetime())'%(sys.argv[1]))
+		#print('INSERT INTO playlist (song_id,play_time) VALUES (%s,datetime())'%(sys.argv[1]))
 		cur.execute('INSERT INTO playlist (song_id,play_time) VALUES (%s,datetime())'%(sys.argv[1]))
 		con.commit()          
     
@@ -25,4 +27,4 @@ finally:
     if con:
         con.close()
     generate_next_song()
-    print("generated next 5 songs")
+    print("generated next song")

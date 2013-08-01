@@ -10,12 +10,9 @@ playlist_length = 5
 def pick_next_song():
     con = dbconnect.connect()
     query = con.cursor()
-    # Do this instead
-    #t = ('RHAT',)
-    #query.execute('SELECT song_id FROM songs WHERE num_value >= RAND() * (SELECT MAX(num_value) FROM songs) LIMIT 1', t)
-    #print (query.fetchone())
+    query.execute("SELECT * FROM song ORDER BY RANDOM() LIMIT 1;")
     
-    return "./songs/" + str(random.randrange(1,4)) + ".mp3"
+    return "./songs/" + str(query.fetchone()[0]) + ".mp3" #[0] akoze prvy stlpec, cize id
 
 """
     fills playlist with next 5 files to play
@@ -36,5 +33,3 @@ def generate_next_song(fname = fname):
     file.write("".join(map(lambda x: str(x), songs)))
     file.close()
     print(songs)
-
-generate_next_song()

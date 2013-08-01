@@ -5,6 +5,7 @@ def apply_metadata(m) =
   title = m["filename"]
   artist = m["artist"]
   print("Now playing: #{title} by #{artist}")
+  print(environment)
   
   filename = string.split(separator="/",title) # rozdelime cestu po lomitkach
   filename = list.nth(list.rev(filename),0) # vezmeme meno suboru
@@ -21,7 +22,7 @@ set("log.file.path","/tmp/basic-radio.log")
 
 #tidy up before playing playlist
 playlist_file = "playlist.m3u"
-system("python3.3 feedback.py no_song")
+system("python3.3 feedback.py -init")
 
 
 # Music 
