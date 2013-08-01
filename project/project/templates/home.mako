@@ -21,7 +21,7 @@
       </div>
       <div class="jp-title">
         <ul>
-          <li></li>
+          <li>&nbsp;</li>
         </ul>
       </div>
       <div class="jp-no-solution">
