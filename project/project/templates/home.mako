@@ -1,6 +1,7 @@
 <%inherit file="default.mako" />
 <%block name="title">Úvodná stránka</%block>
 <%block name="page_content">
+<script type="text/javascript" src="${request.static_path('project:static/js/scripts.js')}"></script>
 <h2>Toto je úvodná stránka</h2>
 
 <div id="jquery_jplayer_1" class="jp-jplayer"></div>
