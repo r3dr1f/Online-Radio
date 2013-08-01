@@ -39,3 +39,4 @@ nosetests.xml
 env
 songs
 liquidsoap/playlist.m3u
+playlist.m3u

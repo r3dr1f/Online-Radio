@@ -1,14 +1,12 @@
 <<<<<<< HEAD
+./songs/2.mp3
 ./songs/3.mp3
-./1.mp3
-./1.mp3
-./2.mp3
-./1.mp3
+./songs/2.mp3
+./songs/1.mp3
 =======
-./3.mp3
-./2.mp3
-./2.mp3
-./2.mp3
-./1.mp3
-
->>>>>>> f15756750bbd42a89790ceb7b6231630861a6ca8
+./songs/3.mp3
+./songs/1.mp3
+./songs/3.mp3
+./songs/3.mp3
+>>>>>>> 3c07e218f5e206b51cf37855c073101a11bc7775
+./songs/3.mp3
