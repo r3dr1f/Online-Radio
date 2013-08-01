@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
 var old_data = "";
+var first_time = true;
 
 function callAjax() {
 	$.ajax({
@@ -12,12 +13,16 @@ function callAjax() {
 		success: function(data) {
 			if(old_data != data){
 		    	old_data = data;
-		    	$(".jp-title ul li").slideToggle("slow");
-		    	$(".jp-title ul li").text("");
-    			$(".jp-title ul li").delay(2000).slideToggle("slow");
-    			window.setTimeout(function () {
-    				$(".jp-title ul li").text(data);
-				}, 2000);		
+		    	if(!first_time){
+		    		$(".jp-title ul li").slideToggle("slow");
+    				$(".jp-title ul li").delay(2500).slideToggle("slow");
+    				window.setTimeout(function () {
+    					$(".jp-title ul li").text(data);
+					}, 2000);	
+    			} else {
+    				first_time = false;
+    				$('.jp-title ul li').text(data);
+    			}	
     		}
 		}
 	});
