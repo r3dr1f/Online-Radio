@@ -18,8 +18,14 @@ end
 #!/usr/bin/liquidsoap 
 # Log dir 
 set("log.file.path","/tmp/basic-radio.log")
+
+#tidy up before playing playlist
+playlist_file = "playlist.m3u"
+system("python3.3 feedback.py -init")
+
+
 # Music 
-myplaylist = playlist(mode="normal","playlist.m3u",reload_mode="rounds",reload=1)
+myplaylist = playlist(mode="normal",playlist_file,reload_mode="rounds",reload=1)
 
 myplaylist = on_metadata(apply_metadata,myplaylist)
 
