@@ -1,4 +1,5 @@
 import random
+import dbconnect
 
 fname = "playlist.m3u"
 playlist_length = 5
@@ -7,7 +8,11 @@ playlist_length = 5
     returns path to next song to play
 """
 def pick_next_song():
-    return "./songs/" + str(random.randrange(1,4)) + ".mp3"
+    con = dbconnect.connect()
+    query = con.cursor()
+    query.execute("SELECT * FROM song ORDER BY RANDOM() LIMIT 1;")
+    
+    return "./songs/" + str(query.fetchone()[0]) + ".mp3" #[0] akoze prvy stlpec, cize id
 
 """
     fills playlist with next 5 files to play
