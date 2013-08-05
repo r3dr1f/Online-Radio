@@ -41,6 +41,10 @@ from ..models.song import (
     Song,
     )
 
+from ..models.interpret import (
+    Interpret,
+    )
+
 from ..utils import valid_email
 
 from mako.template import Template
@@ -100,12 +104,25 @@ class RegistrationError(Exception):
 class DuplicateUserError(RegistrationError): 
     pass
 
+def register_interpret(db_session, user_id, interpret_name):
+    """Registers a new interpret
+    
+    """
+    interpret = Interpret(user_id, interpret_name)
+    
+    if db_session.query(Interpret).filter_by(interpret_name=interpret_name).count() != 0:
+        raise DuplicateUserError
 
-def register_user(db_session, email, password, role, interpret_name):
+    db_session.add(interpret)
+    db_session.flush()
+    
+    return {}
+
+def register_user(db_session, email, password, role):
     """Registers a new user and returns his ID (single number).
 
     """
-    user = User(email, password, role, interpret_name)
+    user = User(email, password, role)
     
     if db_session.query(User).filter_by(email=email).count() != 0:
         raise DuplicateUserError
@@ -139,7 +156,14 @@ def register_submission(request):
     errors = validate_registration_data(POST)
     if not errors:
         try:
-            user_id = register_user(request.db_session, POST['email'], POST['password'], POST['role'], POST['interpret_name'])
+            if not 'role' in POST:
+                POST['role'] = 0
+            else:
+                POST['role'] = 1 
+            user_id = register_user(request.db_session, POST['email'], POST['password'], POST['role'])
+            if 'role' in POST and POST['interpret_name']:
+                print('registrujem interpreta') 
+                register_interpret(request.db_session, user_id ,POST['interpret_name'])
             return HTTPFound(request.route_path('register_success', user_id=user_id))
         except DuplicateUserError:
             errors['email'] = 'duplicate_email'
@@ -307,11 +331,14 @@ def admin_start_stream(request):
 
 @view_config(route_name='getsource', request_method='GET', renderer='project:templates/getsource.mako')
 def get_source(request):
-    songinfo = request.db_session.query(Playlist).order_by(Playlist.play_time.desc()).first()
-    return{'songinfo': songinfo}
+    song_id = request.db_session.query(Playlist).order_by(Playlist.play_time.desc()).first()
+    song_name = request.db_session.query(Song).filter_by(id=song_id.song_id).first()
+    return{'song_name': song_name}
     
 @view_config(route_name='upload', request_method='GET', renderer='project:templates/upload.mako')
 def upload_song(request):
+    if request.interpretid is None:
+        return HTTPFound(location=request.route_url('home'))
     return {}
 
 @view_config(route_name='upload', request_method='POST', renderer='project:templates/upload.mako')
@@ -324,7 +351,7 @@ def upload_song_post(request):
             if not allowed_mime_type(mimetypes.guess_type(request.POST['mp3'].filename)):
                 return {'ok': 0, 'error': 'mime'}
             else:
-                song = Song(1, request.POST['name'])
+                song = Song(request.interpret.id, request.POST['name'])
                 request.db_session.add(song)
                 request.db_session.flush()
                 

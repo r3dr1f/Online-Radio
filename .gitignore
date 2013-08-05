@@ -41,6 +41,7 @@ songs
 liquidsoap/playlist.m3u
 playlist.m3u
 
+*.m3u
 
 # Compiled source #
 ###################
