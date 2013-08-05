@@ -25,6 +25,8 @@ from .models import (
 
 from .models.user import User
 
+from .models.interpret import Interpret
+
 from .helpers import attr
 
 from .authenticator import Authenticator
@@ -49,11 +51,17 @@ def main(global_config, **settings):
         request.settings = settings
         request.db_session = DBSession
         request.userid = authenticated_userid(request)
-
+        request.interpretid = authenticated_userid(request)
+        
         if request.userid is not None:
             request.user = request.db_session.query(User).\
                     filter(User.id == request.userid).\
                     first()
+            if request.interpretid is not None:
+                request.interpret = request.db_session.query(Interpret).filter(Interpret.user_id == request.userid).first()
+            else:
+                request.interpret = None
+            
         else:
             request.user = None
 

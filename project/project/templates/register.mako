@@ -28,7 +28,7 @@
     </div>
     <div class="input-group default_hide">
         <label for="interpret_name">Ako ťa ľudia oslovujú?</label>
-        <input type="text" name="interpret_name" id="interpret_name" required/>
+        <input type="text" name="interpret_name" id="interpret_name"/>
     </div>
     <button type="submit" class="submit-form">Zaregistrovať sa</button>
 </form>
