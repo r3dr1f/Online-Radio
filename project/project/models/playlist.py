@@ -58,6 +58,3 @@ class Playlist(Base):
         """Returns representative object of class User.
         """
         return "Song<{id}>".format(id=self.id)
-    
-    def __json__(self, request):
-        return {'song_name': self.song.name}
