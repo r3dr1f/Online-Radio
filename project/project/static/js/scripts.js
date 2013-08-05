@@ -8,5 +8,4 @@ function registracia_objavenie_mena_interpreta(){
 
 registracia_objavenie_mena_interpreta();
 
-
 });

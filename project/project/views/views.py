@@ -329,11 +329,13 @@ def admin_start_stream(request):
     print(stderr)
     return {}
 
-@view_config(route_name='getsource', request_method='GET', renderer='project:templates/getsource.mako')
+@view_config(route_name='getsource', request_method='GET', renderer='json')
 def get_source(request):
-    song_id = request.db_session.query(Playlist).order_by(Playlist.play_time.desc()).first()
-    song_name = request.db_session.query(Song).filter_by(id=song_id.song_id).first()
-    return{'song_name': song_name}
+    song = request.db_session.query(Playlist).order_by(Playlist.play_time.desc()).first()
+    song_name = request.db_session.query(Song).filter_by(id=song.song_id).first()
+    playlist = request.db_session.query(Playlist).order_by(Playlist.id.desc())[0:15]
+#     print(playlist)
+    return{'song_name': song_name, 'playlist': playlist}
     
 @view_config(route_name='upload', request_method='GET', renderer='project:templates/upload.mako')
 def upload_song(request):
@@ -345,7 +347,6 @@ def upload_song(request):
 def upload_song_post(request):
     if request.POST['name'] != '':
         if 'mp3' in request.POST and not hasattr(request.POST['mp3'], 'filename'):
-            print("asd")    
             return {'ok': 0, 'error': 'mp3'}
         else:
             if not allowed_mime_type(mimetypes.guess_type(request.POST['mp3'].filename)):

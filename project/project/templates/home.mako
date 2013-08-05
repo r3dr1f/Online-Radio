@@ -4,6 +4,19 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+function setPlaylist(data) {
+	table = document.getElementById("playlist");
+	table.innerHTML = "";
+	for (i = 0; i < data.length; i++) {
+		tr = document.createElement("tr");
+		td = document.createElement("td");
+		td.innerHTML = data[i].song_name;
+		tr.appendChild(td);
+		table.appendChild(tr);
+	}	
+}
+
+
 var old_data = "";
 var first_time = true;
 
@@ -12,22 +25,11 @@ function callAjax() {
 		//url: "http://localhost:1234/requests/status.xml",
 		url: "/getsource",
 		type: "GET",
-		dataType: "html",
-		contentType: "html",
+		dataType: "json",
+		contentType: "json",
 		success: function(data) {
-			if(old_data != data){
-		    	old_data = data;
-		    	if(!first_time){
-		    		$(".jp-title ul li").slideToggle("slow");
-    				$(".jp-title ul li").delay(2500).slideToggle("slow");
-    				window.setTimeout(function () {
-    					$(".jp-title ul li").text(data);
-					}, 2000);	
-    			} else {
-    				first_time = false;
-    				$('.jp-title ul li').text(data);
-    			}	
-    		}
+    					$(".jp-title ul li").text(data.song_name.name);
+    					setPlaylist(data.playlist);
 		}
 	});
 }	
@@ -65,4 +67,5 @@ callAjax();
       </div>
     </div>
   </div>
+ <table id="playlist"></table>
 </%block>

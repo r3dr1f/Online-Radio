@@ -44,7 +44,8 @@ class Playlist(Base):
     """
     __tablename__ = 'playlist'
     id = Column(Integer, primary_key=True)
-    song_id = Column(Integer)
+    song_id = Column(Integer, ForeignKey('song.id'), index=True)
+    song=relationship('Song', backref="playlists")
     play_time = Column(DateTime)
 
     def __init__(self, id, play_time):
@@ -57,3 +58,6 @@ class Playlist(Base):
         """Returns representative object of class User.
         """
         return "Song<{id}>".format(id=self.id)
+    
+    def __json__(self, request):
+        return {'song_name': self.song.name}

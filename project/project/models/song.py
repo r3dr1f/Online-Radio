@@ -57,3 +57,6 @@ class Song(Base):
         """Returns representative object of class User.
         """
         return "Song<{id}>".format(interpret_id=self.interpret_id, name=self.name)
+    
+    def __json__(self, request):
+        return {'id': self.id, 'name': self.name}
