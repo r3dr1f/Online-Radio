@@ -61,3 +61,6 @@ class Interpret(Base):
         """Returns representative object of class interpret.
         """
         return "Interpret<{id}>".format(id=self.id)
+    
+    def __json__(self, request):
+        return {'id': self.id, 'name': self.interpret_name, 'user': self.user.email}

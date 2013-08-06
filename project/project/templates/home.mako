@@ -11,8 +11,8 @@ function setPlaylist(data) {
 		tr = document.createElement("tr");
 		td = document.createElement("td");
 		a  = document.createElement("a");
-		a.setAttribute("href",data[i].song_id);
-		a.innerHTML = data[i].interpret+' - '+data[i].song_name;
+		a.setAttribute("href","song/"+data[i].song.id);
+		a.innerHTML = data[i].interpret.name+' - '+data[i].song_name;
 		td.appendChild(a);
 		tr.appendChild(td);
 		table.appendChild(tr);
@@ -36,14 +36,14 @@ function callAjax() {
 			    	$(".jp-title ul li").slideToggle("slow");
 			       	$(".jp-title ul li").delay(2500).slideToggle("slow");
 			       	window.setTimeout(function () {
-			         	$(".jp-title ul li a").text(data.song.interpret+' - '+data.song.name);
-			         	$('.jp-title ul li a').attr('href',data.song.id);
+			         	$(".jp-title ul li a").text(data.song.interpret.name+' - '+data.song.name);
+			         	$('.jp-title ul li a').attr('href',"song/"+data.song.id);
 			        }, 2000);
 			        setPlaylist(data.playlist);
 			    } else {
 		           	first_time = false;
-		           	$('.jp-title ul li a').text(data.song.interpret+' - '+data.song.name);
-		           	$('.jp-title ul li a').attr('href',data.song.id);
+		           	$('.jp-title ul li a').text(data.song.interpret.name+' - '+data.song.name);
+		           	$('.jp-title ul li a').attr('href',"song/"+data.song.id);
 					setPlaylist(data.playlist);
 		        }
         	}	
@@ -85,4 +85,5 @@ callAjax();
     </div>
   </div>
  <table id="playlist"></table>
+ <div class="song-info"></div>
 </%block>

@@ -12,13 +12,29 @@ registracia_objavenie_mena_interpreta();
 
 _.templateSettings.variable = "song";
 var template = _.template(
-	'<%- song.name %>'
+	'<%- song.interpret %> - <%- song.name %>'
 );
 
-var templateData = {
-	name: "Karol kalal drevo"
-};
-
-$('#playlist').after(template(templateData));
+$("body").on("click", "#playlist a, .jp-title a", function(event){
+  event.preventDefault();
+  var song_id = $(this).attr("href").split("/");
+  song_id = song_id.slice(-1)[0];
+  $.ajax({
+  	url: "/getsong",
+  	type: "post",
+  	dataType: "json",
+  	data: {id: song_id},
+  	success: function(data){
+  		console.log(data);
+  		var templateData = {
+			name: data.song.name,
+			interpret: data.song.interpret.name
+		};
+  		$('.song-info').html(template(templateData));
+  	}
+  });
+  
+  return false;
+});
 
 });
