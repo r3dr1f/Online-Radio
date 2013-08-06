@@ -44,7 +44,8 @@ class Song(Base):
     """
     __tablename__ = 'song'
     id = Column(Integer, primary_key=True)
-    interpret_id = Column(Integer)
+    interpret_id = Column(Integer, ForeignKey('interpret.id'))
+    interpret = relationship('Interpret', backref="song")
     name = Column(String(100))
  
     def __init__(self, interpret_id, name):
@@ -59,4 +60,4 @@ class Song(Base):
         return "Song<{id}>".format(interpret_id=self.interpret_id, name=self.name)
     
     def __json__(self, request):
-        return {'id': self.id, 'name': self.name}
+        return {'id': self.id, 'name': self.name, 'interpret': self.interpret.interpret_name}

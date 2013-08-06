@@ -60,4 +60,4 @@ class Playlist(Base):
         return "Song<{id}>".format(id=self.id)
     
     def __json__(self, request):
-        return {'song_name': self.song.name}
+        return {'song_name': self.song.name, 'interpret': self.song.interpret.interpret_name, 'song_id': self.song.id}

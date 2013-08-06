@@ -8,4 +8,17 @@ function registracia_objavenie_mena_interpreta(){
 
 registracia_objavenie_mena_interpreta();
 
+// templateovacia cast
+
+_.templateSettings.variable = "song";
+var template = _.template(
+	'<%- song.name %>'
+);
+
+var templateData = {
+	name: "Karol kalal drevo"
+};
+
+$('#playlist').after(template(templateData));
+
 });
