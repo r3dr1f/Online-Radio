@@ -101,6 +101,7 @@ def main(global_config, **settings):
     config.add_route('admin', '/admin')
     config.add_route('getsource', '/getsource')
     config.add_route('upload', '/upload')
+    config.add_route('getsong', '/getsong')
 
     config.scan()
     random.seed()

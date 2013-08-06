@@ -325,8 +325,6 @@ def admin_start_stream(request):
     print('#####'*20)
     process = Popen(['liquidsoap', '/home/r3dr1f/OnlineRadio/liquidsoap/script.liq', '-v'], stdout=PIPE)
     stdout, stderr = process.communicate()
-    print(stdout)
-    print(stderr)
     return {}
 
 @view_config(route_name='getsource', request_method='GET', renderer='json')
@@ -334,7 +332,6 @@ def get_source(request):
     song = request.db_session.query(Playlist).order_by(Playlist.play_time.desc()).first()
     song_name = request.db_session.query(Song).filter_by(id=song.song_id).first()
     playlist = request.db_session.query(Playlist).order_by(Playlist.id.desc())[0:15]
-#     print(playlist)
     return{'song': song_name, 'playlist': playlist}
     
 @view_config(route_name='upload', request_method='GET', renderer='project:templates/upload.mako')
@@ -367,3 +364,8 @@ def upload_song_post(request):
                 return {'ok': 1}
     else:
         return {'ok': 0, 'error': 'name'}
+
+@view_config(route_name='getsong', request_method='POST', renderer='json')
+def get_song(request):
+    song = request.db_session.query(Song).filter_by(id=request.POST['id']).first()
+    return{'song': song}
