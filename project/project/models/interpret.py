@@ -43,15 +43,19 @@ class Interpret(Base):
     """
     __tablename__ = 'interpret'
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer)
+    user_id = Column(Integer, ForeignKey('uzer.id')) #one to one vztah s userom
     interpret_name = Column(String(100))
+    user = relationship('User', backref="interpret")
     
 
-    def __init__(self, user_id, interpret_name):
+    def __init__(self, user, interpret_name):
         """Initialization of class.
         """
-        self.user_id = user_id
+        if (user.role != "interpret"):
+            return
+        self.user_id = user.id
         self.interpret_name = interpret_name
+        self.user = user
  
     def __repr__(self):
         """Returns representative object of class interpret.

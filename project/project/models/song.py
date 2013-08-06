@@ -48,10 +48,11 @@ class Song(Base):
     interpret = relationship('Interpret', backref="song")
     name = Column(String(100))
  
-    def __init__(self, interpret_id, name):
+    def __init__(self, interpret, name):
         """Initialization of class.
         """
-        self.interpret_id = interpret_id
+        self.interpret_id = interpret.id
+        self.interpret = interpret
         self.name = name
  
     def __repr__(self):

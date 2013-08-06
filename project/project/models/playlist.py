@@ -35,7 +35,7 @@ from ..utils import valid_email
 from . import Base
 
 class Playlist(Base):
-    """Database table Playlist.
+    """Database table Playlist - contains song.
  
     Attributes:
         id: Identificator of object

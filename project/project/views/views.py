@@ -335,7 +335,7 @@ def get_source(request):
     song_name = request.db_session.query(Song).filter_by(id=song.song_id).first()
     playlist = request.db_session.query(Playlist).order_by(Playlist.id.desc())[0:15]
 #     print(playlist)
-    return{'song': song_name, 'playlist': playlist}
+    return{'song_name': song_name, 'playlist': playlist}
     
 @view_config(route_name='upload', request_method='GET', renderer='project:templates/upload.mako')
 def upload_song(request):

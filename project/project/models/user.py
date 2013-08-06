@@ -80,7 +80,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     email = Column(String(50), unique=True)
     _password = Column(String(100), nullable=False)
-    role = Column(Integer)
+    role = Column(String(50))
     fullname = Column(String(100))
     recovery_code = Column(String(100))
     
@@ -106,10 +106,13 @@ class User(Base):
  
     def __init__(self, email, password, role):
         """Initialization of class.
+            roles: 0 = user/1 = interpret/2 = admin
         """
+        mapa = {0:"user",1:"interpret",2:"admin","user":"user","interpret":"interpret","admin":"admin"}
+        
         self.email = email
         self.password = password
-        self.role = role
+        self.role = mapa[role]
  
     def __repr__(self):
         """Returns representative object of class User.

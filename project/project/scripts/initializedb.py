@@ -18,9 +18,16 @@ from ..models import (
     )
 
 from ..models.song import (
-    Song,                       
+    Song,                      
     )
 
+from ..models.interpret import (
+    Interpret,                      
+    )
+
+from ..models.user import (
+    User,                      
+    )
 
 def usage(argv):
     cmd = os.path.basename(argv[0])
@@ -38,13 +45,30 @@ def main(argv=sys.argv):
     engine = engine_from_config(settings, 'sqlalchemy.')
     set_up_tables(engine)
     
-    song = Song(1, "skuska")
-    song2 = Song(1, "skuska2")
-    song3 = Song(1, "skuska3")
+    user1 = User("admin@mail.com","heslo","admin")
+    user2 = User("mail1@mail.com","heslo","interpret")
+    interpret1 = Interpret(user2,"smajdova manka1")
+    user3 = User("mail2@mail.com","heslo","interpret")
+    interpret2 = Interpret(user3,"sladke slyze2")
+    user4 = User("user4@mail.com","heslo","user")
+    
+    song = Song(interpret1, "skuska")
+    song2 = Song(interpret2, "skuska2")
+    song3 = Song(interpret2, "skuska3")
     
     connection = engine.connect()
     Session = sessionmaker(bind=connection)
     db_session = Session()
+    db_session.add(user1)
+    
+    db_session.add(user2)
+    db_session.add(interpret1)
+    
+    db_session.add(user3)
+    db_session.add(interpret2)
+    
+    db_session.add(user4)
+    
     db_session.add(song)
     db_session.add(song2)
     db_session.add(song3)
