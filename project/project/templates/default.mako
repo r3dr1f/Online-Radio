@@ -31,7 +31,6 @@
 				error: function(event) {
 					if(ready && event.jPlayer.error.type === $.jPlayer.error.URL_NOT_SET) {
 					// Setup the media stream again and play it.
-					console.log("error");
 					$(this).jPlayer("setMedia", stream).jPlayer("play");
 					}
 				},
