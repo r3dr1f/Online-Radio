@@ -426,3 +426,19 @@ body {
 .default_hide{
   display: none;
 }
+.rating {
+  font-size: 10em;
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+   content: "\2605";
+   color: yellow;
+   position: absolute;
+}

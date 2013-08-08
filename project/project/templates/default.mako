@@ -48,7 +48,7 @@
 <body id='museum'>
     <div id="main">
         <div id="header">
-            <h1><a href="/">Project</a></h1>
+            <h1><a href="#">Project</a></h1>
             <div class="login">
             % if request.userid is None:
                 <div id="log in">
