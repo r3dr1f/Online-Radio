@@ -37,9 +37,8 @@ nosetests.xml
 *.db
 *.sqlite
 env
-songs
-liquidsoap/playlist.m3u
-playlist.m3u
+!project/project/liquidsoap/songs/FAIL.mp3
+project/project/liquidsoap/songs
 
 *.m3u
 

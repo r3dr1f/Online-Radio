@@ -48,10 +48,10 @@ class Playlist(Base):
     song=relationship('Song', backref="playlists")
     play_time = Column(DateTime)
 
-    def __init__(self, id, play_time):
+    def __init__(self, song, play_time):
         """Initialization of class.
         """
-        self.id = id
+        self.song = song
         self.play_time = play_time
  
     def __repr__(self):

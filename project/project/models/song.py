@@ -64,7 +64,7 @@ class Song(Base):
     def __repr__(self):
         """Returns representative object of class User.
         """
-        return "Song<{id}>".format(interpret_id=self.interpret_id, name=self.name)
+        return "Song<{id}>".format(id=self.interpret_id)
     
     def __json__(self, request):
         return {'id': self.id, 'name': self.name, 'interpret': self.interpret, 'rating_max': self.rating_max}
