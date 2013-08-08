@@ -45,6 +45,10 @@ from ..models.interpret import (
     Interpret,
     )
 
+from ..models.rating import (
+    Rating,
+    )
+
 from ..utils import valid_email
 
 from mako.template import Template
@@ -368,4 +372,24 @@ def upload_song_post(request):
 @view_config(route_name='getsong', request_method='POST', renderer='json')
 def get_song(request):
     song = request.db_session.query(Song).filter_by(id=request.POST['id']).first()
-    return{'song': song}
+    if not request.user is None:
+        rating = request.db_session.query(Rating).filter_by(user_id = request.user.id, song_id = song.id).first()
+        if not rating is None:
+            return{'song': song, 'rating': rating}
+    else:
+        return{'song': song}
+    
+@view_config(route_name='rate', request_method='POST', renderer='json')
+def rate_song(request):
+    if not request.user is None: 
+        rating = int(request.POST['rating'])
+        if rating > 4:
+            rating = 4
+        elif rating < 0:
+            rating = 0
+        song = request.db_session.query(Song).filter_by(id=request.POST['id']).first()
+        rating = Rating(request.user, song, rating)
+        request.db_session.add(rating)
+        return{'song': song, 'rating': rating}
+    else:
+        return{'error': "asd"}
