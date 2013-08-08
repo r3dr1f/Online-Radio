@@ -3,8 +3,7 @@
 # the stream.
 def apply_metadata(m) =
   title = m["filename"]
-  artist = m["artist"]
-  print("Now playing: #{title} by #{artist}")
+  print("Now playing: #{title}")
   
   filename = string.split(separator="/",title) # rozdelime cestu po lomitkach
   filename = list.nth(list.rev(filename),0) # vezmeme meno suboru
@@ -12,7 +11,6 @@ def apply_metadata(m) =
   
   command = "python3.3 feedback.py " ^ filename
   system(command)
-
 end
 
 #!/usr/bin/liquidsoap 
@@ -23,11 +21,10 @@ set("log.file.path","/tmp/basic-radio.log")
 playlist_file = "playlist.m3u"
 system("python3.3 feedback.py -init")
 
-
 # Music 
 myplaylist = playlist(mode="normal",playlist_file,reload_mode="rounds",reload=1)
 
-myplaylist = on_metadata(apply_metadata,myplaylist)
+myplaylist = on_track(apply_metadata,myplaylist)
 
 # Stream it out 
 output.icecast(%mp3, host = "localhost", port = 8080, password = "baldur", mount = "stream", myplaylist, fallible=true)
