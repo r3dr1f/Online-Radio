@@ -52,7 +52,7 @@ class Interpret(Base):
         """Initialization of class.
         """
         if (user.role != "interpret"):
-            return
+            user.role = "interpret"
         self.user_id = user.id
         self.interpret_name = interpret_name
         self.user = user
