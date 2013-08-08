@@ -52,9 +52,9 @@ def main(argv=sys.argv):
     interpret2 = Interpret(user3,"sladke slyze2")
     user4 = User("user4@mail.com","heslo","user")
     
-    song = Song(interpret1, "skuska")
+    song = Song(interpret1, "skuska", 60)
     song2 = Song(interpret2, "skuska2")
-    song3 = Song(interpret2, "skuska3")
+    song3 = Song(interpret2, "skuska3", 40)
     
     connection = engine.connect()
     Session = sessionmaker(bind=connection)
