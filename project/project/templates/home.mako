@@ -86,7 +86,4 @@ callAjax();
   </div>
  <table id="playlist"></table>
  <div class="song-info"></div>
- <div class="rating">
-<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-</div>
 </%block>

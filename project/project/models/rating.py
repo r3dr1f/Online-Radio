@@ -55,9 +55,9 @@ class Rating(Base):
         """Initialization of class.
         """
         self.user = user
-        self.user_id = user_id
+        self.user_id = user.id
         self.song = song
-        self.song_id = song_id
+        self.song_id = song.id
         self.rating = rating
  
     def __repr__(self):

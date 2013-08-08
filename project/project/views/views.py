@@ -45,6 +45,10 @@ from ..models.interpret import (
     Interpret,
     )
 
+from ..models.rating import (
+    Rating,
+    )
+
 from ..utils import valid_email
 
 from mako.template import Template
@@ -53,7 +57,7 @@ from pkg_resources import resource_string
 
 import os, shutil, mimetypes
 
-import json
+import json, sys
 
 from sqlalchemy import (
     asc,
@@ -368,4 +372,40 @@ def upload_song_post(request):
 @view_config(route_name='getsong', request_method='POST', renderer='json')
 def get_song(request):
     song = request.db_session.query(Song).filter_by(id=request.POST['id']).first()
-    return{'song': song}
+    if not request.user is None:
+        rating = request.db_session.query(Rating).filter_by(user_id = request.user.id, song_id = song.id).first()
+        if not rating is None:
+            return{'song': song, 'rating': rating, 'user': request.user}
+        else:
+            return{'song': song, 'user': request.user}
+    else:
+        return{'song': song}
+    
+@view_config(route_name='rate', request_method='POST', renderer='json')
+def rate_song(request):
+    if not request.user is None:
+        song = request.db_session.query(Song).filter_by(id=request.POST['id']).first()
+        rating = request.db_session.query(Rating).filter_by(user_id = request.user.id, song_id = song.id).first()
+        if rating is None:
+            rating = int(request.POST['rating'])
+            if rating > 4:
+                rating = 4
+            elif rating < 0:
+                rating = 0
+            rating_obj = Rating(request.user, song, rating)
+            request.db_session.add(rating_obj)
+            all_ratings = request.db_session.query(Rating).filter_by(song_id = song.id).all()
+            all_who_rated = len(all_ratings)
+            count = 0
+            for ratings in all_ratings:
+                count += ratings.rating
+            multiply_to_hundred = 25 # nasobime 25 lebo hodnotenie je od 0 po 4
+            average_rating = (count/all_who_rated)*multiply_to_hundred
+            #update_song = Song(song.interpret, song.name, average_rating, song.factor_played, song.factor_age)
+            request.db_session.query(Song).filter_by(id=song.id).update({"rating_max": average_rating})
+            return{'song': song, 'rating': rating_obj}
+        else:
+            error = "Lutujeme ale tuto pesnicku ste uz raz hodnotili"
+            return{'error': error}
+    else:
+        return{'error': "asd"}

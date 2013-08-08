@@ -426,7 +426,25 @@ body {
 .default_hide{
   display: none;
 }
+<<<<<<< HEAD
+.rating {
+  font-size: 10em;
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+   content: "\2605";
+   color: yellow;
+   position: absolute;
+=======
 
 #song-id {
 	display: none;
+>>>>>>> 1bf58444fcf65c04f7a10bc34245afa0bdcc7b8e
 }

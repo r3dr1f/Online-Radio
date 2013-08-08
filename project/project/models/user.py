@@ -118,6 +118,9 @@ class User(Base):
         """Returns representative object of class User.
         """
         return "User<{email}>".format(email=self.email)
+    
+    def __json__(self, request):
+        return {'id': self.id}
  
  
 class InvalidEmailError(ValidationError):
