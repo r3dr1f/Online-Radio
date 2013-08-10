@@ -1,10 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import sqlite3 as lite
 import sys
-from time import gmtime, strftime
-from next_song import generate_next_song
+from project.liquidsoap.next_song import generate_next_song
 from project.models.playlist import Playlist
 from project.liquidsoap import _session
 import datetime
@@ -32,7 +30,4 @@ except:
     print("FAILED TO UPDATE RECORD IN TABLE PLAYLIST",sys.exc_info()[0])
    
 finally:
-    
-    if con:
-        con.close()
     generate_next_song()

@@ -55,7 +55,8 @@ class Playlist(Base):
         self.play_time = play_time
  
     def __repr__(self):
-        """Returns representative object of class User.
+        """
+        Returns representative object of class User.
         """
         return "Song<{id}>".format(id=self.id)
     

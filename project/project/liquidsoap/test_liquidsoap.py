@@ -1,5 +1,5 @@
 import unittest
-from next_song import generate_next_song
+from project.liquidsoap.next_song import generate_next_song
 
 class SimplisticTest(unittest.TestCase):
     
