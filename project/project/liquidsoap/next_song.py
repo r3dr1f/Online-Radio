@@ -18,7 +18,7 @@ playlist_length = 5
     sets "queued" column for currently added song to playlist to True
 """
 
-def commit_playing_song(song_id):
+def commit_queued_song(song_id):
     cur_song = _session.query(Playlist).filter(Playlist.song_id == song_id, Playlist.queued == False).order_by("id asc").first()
     if (cur_song != None):
         cur_song.queued = True
@@ -77,6 +77,6 @@ def generate_next_song(fname = fname):
         _session.commit()
         
         print(path_to_song(songs[0]))
-        commit_playing_song(songs[0]) #nastavime danemu songu, ze je uz zaradeny vo fronte, kedze sme ho poslali printom do liquidsoapu  
+        commit_queued_song(songs[0]) #nastavime danemu songu, ze je uz zaradeny vo fronte, kedze sme ho poslali printom do liquidsoapu  
     
 generate_next_song()
