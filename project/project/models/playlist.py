@@ -47,12 +47,14 @@ class Playlist(Base):
     song_id = Column(Integer, ForeignKey('song.id'), index=True)
     song=relationship('Song', backref="playlists")
     play_time = Column(DateTime)
+    queued = Column(Boolean)
 
-    def __init__(self, song, play_time):
+    def __init__(self, song, play_time, queued):
         """Initialization of class.
         """
         self.song = song
         self.play_time = play_time
+        self.queued = queued
  
     def __repr__(self):
         """

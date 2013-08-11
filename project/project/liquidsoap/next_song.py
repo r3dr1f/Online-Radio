@@ -1,16 +1,34 @@
+"""
+    next_song.py 
+        - generates next song to play and adds it to database playlist
+"""
+
 import random
 import sys
 from project.models.song import Song
 from project.models.playlist import Playlist
 from project.liquidsoap import _session
-from datetime import date
+import datetime
 
 
 fname = "playlist.m3u"
 playlist_length = 5
 
 """
-    roulette wheel selection on the dictionary {song_id:weight}
+    sets "queued" column for currently added song to playlist to True
+"""
+
+def commit_playing_song(song_id):
+    cur_song = _session.query(Playlist).filter(Playlist.song_id == song_id, Playlist.queued == False).order_by("id asc").first()
+    if (cur_song != None):
+        cur_song.queued = True
+        _session.add(cur_song)
+        _session.commit()
+    else:
+        sys.stderr.write("commit_playing_song: INVALID SONG COMMITED!\n")   
+
+"""
+    roulette wheel selection on the dictionary {song:weight}
 """
 
 def roulette_selection(song_weight_table):
@@ -47,23 +65,18 @@ def generate_next_song(fname = fname):
     songs = []
     
     try:
-        songs = _session.query(Playlist.song_id).filter(Playlist.play_time == None).order_by("id asc").all()  
-        #vyberie to pesnicky, co este neboli prehrate a rovno aj cesty k nim
-        songs = [path_to_song(song_id) + "\n" for (song_id,) in songs]
+        songs = _session.query(Playlist.song_id).filter(Playlist.queued == False).order_by("id asc").all() 
+        songs = [song_id for (song_id,) in songs]
     except:
         print("failed to connect to db")
     finally:
         while (len(songs) < playlist_length): #naplnenie playlistu
             next_song = pick_next_song()
-            songs.append(path_to_song(next_song.id) + "\n")
-            _session.add(Playlist(next_song,None)) #pridanie songu do databazy bez casu prehrania, kedze este sa len ide prehrat
+            songs.append(next_song.id)
+            _session.add(Playlist(next_song,None,False)) #pridanie songu do databazy bez casu prehrania, kedze este sa len ide prehrat
         _session.commit()
-        file = open(fname, "w") # writes list with songs to playlist file
+        
+        print(path_to_song(songs[0]))
+        commit_playing_song(songs[0]) #nastavime danemu songu, ze je uz zaradeny vo fronte, kedze sme ho poslali printom do liquidsoapu  
     
-        songs = [path_to_song("FAIL") + "\n"] + songs[0:1]; #FAILy su pridane, aby liquidsoap nereloadoval moc skoro
-        songs.append(path_to_song("FAIL") + "\n");
-        songs.append(path_to_song("FAIL") + "\n");
-        file.write("".join(map(lambda x: str(x), songs)))
-        file.close()
-     
-    print("written to file: %s",songs)
+generate_next_song()

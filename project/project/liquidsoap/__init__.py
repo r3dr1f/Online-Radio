@@ -15,7 +15,6 @@ import os
 
 current_filedir_path = os.path.dirname(__file__)
 engine_path = 'sqlite:///' + current_filedir_path + '/../../project.sqlite'
-print (engine_path)
 
 #db_path = "../../project.sqlite"
 

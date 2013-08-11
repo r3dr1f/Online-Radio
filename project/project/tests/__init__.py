@@ -4,7 +4,7 @@ import inspect
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from ..models import set_up_tables
+from project.models import set_up_tables
 
 current_filedir_path = os.path.dirname(__file__)
 engine_path = 'sqlite:///' + current_filedir_path + '/test.db'

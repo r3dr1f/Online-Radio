@@ -1,6 +1,17 @@
-# This function is called when
-# a new metadata block is passed in
-# the stream.
+#!/usr/bin/liquidsoap 
+# Log dir 
+set("log.file.path","/tmp/basic-radio.log")
+
+def my_request_function() = 
+  # Get the first line of my external process
+  result =
+    list.hd(
+      get_process_lines("python3 next_song.py"))
+  # Create and return a request using this result
+  print("#{result}")
+  request.create(result)
+end
+
 def apply_metadata(m) =
   title = m["filename"]
   print("Now playing: #{title}")
@@ -13,20 +24,11 @@ def apply_metadata(m) =
   system(command)
 end
 
-#!/usr/bin/liquidsoap 
-# Log dir 
-set("log.file.path","/tmp/basic-radio.log")
-
-#tidy up before playing playlist
-playlist_file = "playlist.m3u"
+#set queued but not played songs to unqueued (can happen if liquidsoap was suddenly closed)
 system("python3.3 feedback.py -init")
 
-# Music 
-myplaylist = playlist(mode="normal",playlist_file,reload_mode="rounds",reload=1)
+# Create the source
+s = request.dynamic(my_request_function)
+s = on_track(apply_metadata,s)
 
-myplaylist = on_track(apply_metadata,myplaylist)
-
-# Stream it out 
-output.icecast(%mp3, host = "localhost", port = 8080, password = "baldur", mount = "stream", myplaylist, fallible=true)
-
-
+output.icecast(%mp3, host = "localhost", port = 8080, password = "baldur", mount = "stream", s, fallible=true)
