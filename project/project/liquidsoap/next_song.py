@@ -12,7 +12,7 @@ import datetime
 
 
 fname = "playlist.m3u"
-playlist_length = 5
+playlist_length = 2
 
 """
     sets "queued" column for currently added song to playlist to True
@@ -46,7 +46,7 @@ def roulette_selection(song_weight_table):
 """
 
 def pick_next_song():
-    songs = _session.query(Song, Song.rating_max * Song.factor_played * Song.factor_age).all()
+    songs = _session.query(Song, Song.current_rating).all()
     x = {song:weight for (song,weight) in songs}
     return roulette_selection(x)
 
