@@ -103,6 +103,7 @@ def main(global_config, **settings):
     config.add_route('upload', '/upload')
     config.add_route('getsong', '/getsong')
     config.add_route('rate', '/rate')
+    config.add_route('search', '/search')
 
     config.scan()
     random.seed()

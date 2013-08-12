@@ -74,6 +74,13 @@
                 </form>
             % endif
             </div>
+        <div>
+        	<label for="search"></label>
+        	<input type="text" size="30" name="search" id="search">
+        	<input type="submit" name="search-it" id="search-it" value="Vyhladat">
+        </div>
+        </div>
+        <div id="search-info">
         </div>
         <div id='content'>
             <%block name="page_content">${content | n}</%block>

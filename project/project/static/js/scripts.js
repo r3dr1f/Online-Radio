@@ -33,6 +33,24 @@ var template = _.template('' +
 	'</div>'
 );
 
+var templatetwo = _.template('' + 
+	'<div class="song-info">' +
+		'<% if (song.songs.length > 0) { %>' + 
+	    '<p>Najdene songy: </p>' +
+	    '<% for(var songi in song.songs) {%>' +
+		'<p><%- song.songs[songi].name %></p>' +
+		'<% } %>' +
+		'<% } else if (song.interprets.length > 0) { %>' +
+		'<p>Najdeni interpreti: </p>' + 
+		'<% for(var interpreti in song.interprets) {%>' +
+		'<p><%- song.interprets[interpreti].name %></p>' +
+		'<% } %>' +
+		'<% } else { %>' +
+		'<p>Vami vyhladavany vyraz sa nenasiel</p>' +  
+		'<% }%>' +
+	'</div>'
+);
+
 $("body").on("click", "#playlist a, .jp-title a", function(event){
   event.preventDefault();
   var song_id = $(this).attr("href").split("/");
@@ -105,12 +123,28 @@ $("body").on("click", "#rate0, #rate1, #rate2, #rate3, #rate4", function(event){
 			name: data.song.name,
 			interpret: data.song.interpret.name,
 			id: data.song.id,
-			rating: data.rating
+			rating: data.rating.rating
 		};
   		$('.song-info').html(template(templateData));
   	}
   });
   return false;
+});
+
+$("#search-it").click(function(event){
+	$.ajax({
+  	url: "/search",
+  	type: "post",
+  	dataType: "json",
+  	data: {search: $("#search").val()},
+  	success: function(data){
+  		var templateData = {
+			songs: data.songs,
+			interprets: data.interprets
+		};
+  		$('#search-info').html(templatetwo(templateData));
+  	}
+  });
 });
 
 });
