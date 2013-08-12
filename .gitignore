@@ -37,6 +37,7 @@ nosetests.xml
 *.db
 *.sqlite
 env
+project/project/liquidsoap/songs
 
 *.m3u
 

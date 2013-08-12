@@ -50,10 +50,10 @@ def main(argv=sys.argv):
     interpret1 = Interpret(user2,"smajdova manka1")
     user3 = User("mail2@mail.com","heslo","interpret")
     interpret2 = Interpret(user3,"sladke slyze2")
-    user4 = User("user4@mail.com","heslo","user")
+    user4 = User("user4@mail.com","heslo","interpret")
     interpret3 = Interpret(user4,"vyprazane kotrmelce")
-    user5 = User("user5@mail.com","heslo","user")
-    interpret4 = Interpret(user5,"zamračené keksy")
+    user5 = User("user5@mail.com","heslo","interpret")
+    interpret4 = Interpret(user5,"zamracene keksy")
     
     
     song = Song(interpret1, "jalovica", 50)
@@ -90,11 +90,32 @@ def main(argv=sys.argv):
     
     db_session.add(user3)
     db_session.add(interpret2)
-    
+    db_session.add(user5)
     db_session.add(user4)
+    db_session.add(interpret3)
+    db_session.add(interpret4)
     
     db_session.add(song)
     db_session.add(song2)
     db_session.add(song3)
+    db_session.add(song4)
+    db_session.add(song5)
+    db_session.add(song6)
+    db_session.add(song7)
+    db_session.add(song8)
+    db_session.add(song9)
+    db_session.add(song10)
+    db_session.add(song11)
+    db_session.add(song12)
+    db_session.add(song13)
+    db_session.add(song14)
+    db_session.add(song15)
+    db_session.add(song16)
+    db_session.add(song17)
+    db_session.add(song18)
+    db_session.add(song19)
+    db_session.add(song20)
+    db_session.add(song21)
+    
     
     db_session.commit()
