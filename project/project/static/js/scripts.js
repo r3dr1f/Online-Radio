@@ -105,7 +105,7 @@ $("body").on("click", "#rate0, #rate1, #rate2, #rate3, #rate4", function(event){
 			name: data.song.name,
 			interpret: data.song.interpret.name,
 			id: data.song.id,
-			rating: data.rating
+			rating: data.rating.rating
 		};
   		$('.song-info').html(template(templateData));
   	}
