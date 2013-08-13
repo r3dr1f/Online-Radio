@@ -10,9 +10,7 @@ from project.models.playlist import Playlist
 from project.liquidsoap import _session
 import datetime
 
-
-fname = "playlist.m3u"
-playlist_length = 2
+playlist_length = 5
 
 """
     sets "queued" column for currently added song to playlist to True
@@ -61,7 +59,7 @@ def path_to_song(song_id):
     fills playlist with next 5 files to play
 """
 
-def generate_next_song(fname = fname):
+def generate_next_song():
     songs = []
     
     try:
