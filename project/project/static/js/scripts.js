@@ -11,7 +11,7 @@ registracia_objavenie_mena_interpreta();
 // templateovacia cast
 
 _.templateSettings.variable = "song";
-var songTemplate = _.template('' + 
+var template = _.template('' + 
 	'<div class="song-info">' + 
 	'<span class="name">' + 
 		'<%- song.interpret %> - <%- song.name %>' + 
@@ -33,7 +33,25 @@ var songTemplate = _.template('' +
 	'</div>'
 );
 
-$("body").on("click", "#playlist a.info-song, .jp-title a", function(event){
+var templatetwo = _.template('' + 
+	'<div class="song-info">' +
+		'<% if (song.songs.length > 0) { %>' + 
+	    '<p>Najdene songy: </p>' +
+	    '<% for(var songi in song.songs) {%>' +
+		'<p><%- song.songs[songi].name %></p>' +
+		'<% } %>' +
+		'<% } else if (song.interprets.length > 0) { %>' +
+		'<p>Najdeni interpreti: </p>' + 
+		'<% for(var interpreti in song.interprets) {%>' +
+		'<p><%- song.interprets[interpreti].name %></p>' +
+		'<% } %>' +
+		'<% } else { %>' +
+		'<p>Vami vyhladavany vyraz sa nenasiel</p>' +  
+		'<% }%>' +
+	'</div>'
+);
+
+$("body").on("click", "#playlist a, .jp-title a", function(event){
   event.preventDefault();
   var song_id = $(this).attr("href").split("/");
   song_id = song_id.slice(-1)[0];
@@ -68,25 +86,10 @@ $("body").on("click", "#playlist a.info-song, .jp-title a", function(event){
 				rating: data.song.rating_max
 			};
 		}
-  		$('.song-info').html(songTemplate(templateData));
+  		$('.song-info').html(template(templateData));
   	}
   });
   
-  return false;
-});
-
-$("body").on("click", "#playlist a.info-interpret", function(event){
-  event.preventDefault();
-  var interpret_id = $(this).attr("href").split("/");
-  interpret_id = interpret_id.slice(-1)[0];
-  $.ajax({
-  	url: "/getinterpret",
-  	type: "post",
-  	dataType: "json",
-  	data: {id: interpret_id},
-  	success: function(data){
-  	}
-  });
   return false;
 });
 
@@ -122,10 +125,26 @@ $("body").on("click", "#rate0, #rate1, #rate2, #rate3, #rate4", function(event){
 			id: data.song.id,
 			rating: data.rating.rating
 		};
-  		$('.song-info').html(songTemplate(templateData));
+  		$('.song-info').html(template(templateData));
   	}
   });
   return false;
+});
+
+$("#search-it").click(function(event){
+	$.ajax({
+  	url: "/search",
+  	type: "post",
+  	dataType: "json",
+  	data: {search: $("#search").val()},
+  	success: function(data){
+  		var templateData = {
+			songs: data.songs,
+			interprets: data.interprets
+		};
+  		$('#search-info').html(templatetwo(templateData));
+  	}
+  });
 });
 
 });

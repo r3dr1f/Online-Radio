@@ -10,8 +10,6 @@ from project.models.playlist import Playlist
 from project.liquidsoap import _session
 import datetime
 
-
-fname = "playlist.m3u"
 playlist_length = 5
 
 """
@@ -46,7 +44,7 @@ def roulette_selection(song_weight_table):
 """
 
 def pick_next_song():
-    songs = _session.query(Song, Song.rating_max * Song.factor_played * Song.factor_age).all()
+    songs = _session.query(Song, Song.current_rating).all()
     x = {song:weight for (song,weight) in songs}
     return roulette_selection(x)
 
@@ -61,7 +59,7 @@ def path_to_song(song_id):
     fills playlist with next 5 files to play
 """
 
-def generate_next_song(fname = fname):
+def generate_next_song():
     songs = []
     
     try:
