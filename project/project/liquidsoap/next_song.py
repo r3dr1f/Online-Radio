@@ -76,5 +76,9 @@ def generate_next_song():
         
         print(path_to_song(songs[0]))
         commit_queued_song(songs[0]) #nastavime danemu songu, ze je uz zaradeny vo fronte, kedze sme ho poslali printom do liquidsoapu  
-    
-generate_next_song()
+try:
+    if (sys.argv[1] != "development.ini"):
+        generate_next_song()
+except:
+    generate_next_song()
+print("I WAS CALLED NEXT SONG")

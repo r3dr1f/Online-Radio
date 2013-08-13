@@ -47,13 +47,14 @@ if (sys.argv[1] == "-init"):
 		_session.add(song)
 	_session.commit()
 	sys.exit(0)
-
-try:
-	#pesnicke, co sa prave prehrava nastavime cas, kedy sa zacala prehravat, cize aktualny cas
-	cur_song = _session.query(Playlist).filter(Playlist.song_id == sys.argv[1], Playlist.play_time == None).order_by("id asc").first()
-	cur_song.play_time = datetime.datetime.now()
-	_session.add(cur_song)
-	_session.commit()    
-except:
-    print("FAILED TO UPDATE RECORD IN TABLE PLAYLIST",sys.exc_info()[0])
-update_factor_played()
+	
+elif (sys.argv[1] != "development.ini"):
+	try:
+		#pesnicke, co sa prave prehrava nastavime cas, kedy sa zacala prehravat, cize aktualny cas
+		cur_song = _session.query(Playlist).filter(Playlist.song_id == sys.argv[1], Playlist.play_time == None).order_by("id asc").first()
+		cur_song.play_time = datetime.datetime.now()
+		_session.add(cur_song)
+		_session.commit()    
+	except:
+		print("FAILED TO UPDATE RECORD IN TABLE PLAYLIST",sys.exc_info()[0])
+	update_factor_played()

@@ -26,7 +26,3 @@ Session = sessionmaker(bind=connection)
 
 _session = Session()
 
- 
-def load_modules():
-    for loader, module_name, pkg in pkgutil.walk_packages(project.models.__path__, project.models.__name__ + '.'):
-        __import__(module_name)
