@@ -361,13 +361,19 @@ def upload_song_post(request):
         
                 input_file = request.POST['mp3'].file
         
-                file_path = os.path.join(os.getcwd() + '/../liquidsoap/songs/', filename)
+                file_path = os.path.join(os.getcwd() + '/project/liquidsoap/songs/', filename)
                 with open(file_path, 'wb') as output_file:
                     shutil.copyfileobj(input_file, output_file)
         
                 return {'ok': 1}
     else:
         return {'ok': 0, 'error': 'name'}
+    
+@view_config(route_name='getinterpret', request_method='POST', renderer='json')
+def get_interpret(request):
+    request.without_interpret = True
+    interpret = request.db_session.query(Interpret).filter_by(id=request.POST['id']).first()
+    return{'interpret': interpret, 'songs': interpret.songs}
 
 @view_config(route_name='getsong', request_method='POST', renderer='json')
 def get_song(request):

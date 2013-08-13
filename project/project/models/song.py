@@ -45,7 +45,7 @@ class Song(Base):
     __tablename__ = 'song'
     id = Column(Integer, primary_key=True)
     interpret_id = Column(Integer, ForeignKey('interpret.id'))
-    interpret = relationship('Interpret', backref="song")
+    interpret = relationship('Interpret', backref="songs")
     name = Column(String(100))
     rating_max = Column(Float) # rating vyratany na zaklade hodnotenia vsetkych uzivatelov z tabulky rating
     #factor_played = Column(Float) # faktor vyratany na zaklade posledneho prehratia

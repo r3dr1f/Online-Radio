@@ -52,6 +52,7 @@ def main(global_config, **settings):
         request.db_session = DBSession
         request.userid = authenticated_userid(request)
         request.interpretid = authenticated_userid(request)
+#         request.without_interpret = True
         
         if request.userid is not None:
             request.user = request.db_session.query(User).\
@@ -102,6 +103,7 @@ def main(global_config, **settings):
     config.add_route('getsource', '/getsource')
     config.add_route('upload', '/upload')
     config.add_route('getsong', '/getsong')
+    config.add_route('getinterpret', '/getinterpret')
     config.add_route('rate', '/rate')
     config.add_route('search', '/search')
 
