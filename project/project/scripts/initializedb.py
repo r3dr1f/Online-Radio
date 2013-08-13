@@ -53,7 +53,7 @@ def main(argv=sys.argv):
     user4 = User("user4@mail.com","heslo","user")
     interpret3 = Interpret(user4,"vyprazane kotrmelce")
     user5 = User("user5@mail.com","heslo","user")
-    interpret4 = Interpret(user5,"zamračené keksy")
+    interpret4 = Interpret(user5,"zamracene keksy")
     
     
     song = Song(interpret1, "jalovica", 50)

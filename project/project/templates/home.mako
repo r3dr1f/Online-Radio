@@ -10,10 +10,9 @@ function setPlaylist(data) {
 	for (i = 0; i < data.length; i++) {
 		tr = document.createElement("tr");
 		td = document.createElement("td");
-		a  = document.createElement("a");
-		a.setAttribute("href","song/"+data[i].song.id);
-		a.innerHTML = data[i].interpret.name+' - '+data[i].song_name;
-		td.appendChild(a);
+		interpret = '<a href="interpret/'+data[i].interpret.id + '" class="info-interpret">' + data[i].interpret.name + '</a>';
+		song = '<a href="song/'+data[i].song.id + '" class="info-song">' + data[i].song.name + '</a>';
+		td.innerHTML = interpret + " - " + song;		
 		tr.appendChild(td);
 		table.appendChild(tr);
 	}	
