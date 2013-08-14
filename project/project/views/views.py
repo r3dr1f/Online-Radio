@@ -419,5 +419,5 @@ def rate_song(request):
 @view_config(route_name='search', request_method='POST', renderer='json')
 def search(request):
     songs = request.db_session.query(Song).filter(Song.name.like('%'+request.POST['search']+'%')).all()
-    interprets = request.db_session.query(Interpret).filter(Interpret.interpret_name.like('%'+request.POST['search']+'%')).all()
+    interprets = request.db_session.query(Interpret).filter(Interpret.name.like('%'+request.POST['search']+'%')).all()
     return {'songs': songs, 'interprets': interprets}

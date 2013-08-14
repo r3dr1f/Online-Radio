@@ -48,12 +48,14 @@ var searchTemplate = _.template('' +
 	    '<% for(var songi in data.songs) {%>' +
 		'<p><%- data.songs[songi].name %></p>' +
 		'<% } %>' +
-		'<% } else if (data.interprets.length > 0) { %>' +
+		'<% } %>' +
+		'<% if (data.interprets.length > 0) { %>' +
 		'<p>Najdeni interpreti: </p>' + 
 		'<% for(var interpreti in data.interprets) {%>' +
 		'<p><%- data.interprets[interpreti].name %></p>' +
 		'<% } %>' +
-		'<% } else { %>' +
+		'<% } %>' +
+		'<% if ((data.songs.length == 0) && (data.interprets.length == 0)) { %>' +
 		'<p>Vami vyhladavany vyraz sa nenasiel</p>' +  
 		'<% }%>' +
 	'</div>'
