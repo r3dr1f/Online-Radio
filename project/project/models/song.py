@@ -30,6 +30,8 @@ from sqlalchemy.orm import (
     )
  
 from . import Base
+
+import datetime
  
 class ValidationError(Exception):
     pass 
@@ -51,8 +53,9 @@ class Song(Base):
     #factor_played = Column(Float) # faktor vyratany na zaklade posledneho prehratia
     factor_age = Column(Float) # faktor vyratany na zaklade veku pesnicky
     current_rating = Column(Float) # aktualny rating pesnicky
+    date_added = Column(DateTime) # cas pridania pesnicky do databazy
  
-    def __init__(self, interpret, name, rating_max = 60, factor_age = 1):
+    def __init__(self, interpret, name, rating_max = 60, factor_age = 1,date_added = datetime.datetime.now()):
         """Initialization of class.
         """
         self.interpret_id = interpret.id
@@ -62,6 +65,7 @@ class Song(Base):
         #self.factor_played = factor_played
         self.factor_age = factor_age
         self.current_rating = rating_max
+        self.date_added = date_added
  
     def __repr__(self):
         """Returns representative object of class User.
