@@ -29,6 +29,11 @@ var songTemplate = _.template('' +
 			'<a href="#" id="rate3">3</a>' + 
 			'<a href="#" id="rate4">4</a>' + 
 		'</div>' +
+	'<% } %>' +
+	'<% if (!data.request) {%>' +
+		'<a href="request/<%- data.id %>" class="request-to-play">request to play</a>' +
+	'<% } else {%>' +
+	'<p class="already-requested">Už ste si požiadali o prehratie</p>' +
 	'<% }} %>' +  
 	'</div>'
 );
@@ -42,17 +47,17 @@ var interpretTemplate = _.template('' +
 );
 
 var searchTemplate = _.template('' + 
-	'<div class="song-info">' +
+	'<div class="search-results">' +
 		'<% if (data.songs.length > 0) { %>' + 
 	    '<p>Najdene songy: </p>' +
 	    '<% for(var songi in data.songs) {%>' +
-		'<p><%- data.songs[songi].name %></p>' +
+		'<a href="song/<%- data.songs[songi].id %>" class="info-song"><%- data.songs[songi].name %></a><br />' +
 		'<% } %>' +
 		'<% } %>' +
 		'<% if (data.interprets.length > 0) { %>' +
 		'<p>Najdeni interpreti: </p>' + 
 		'<% for(var interpreti in data.interprets) {%>' +
-		'<p><%- data.interprets[interpreti].name %></p>' +
+		'<a href="interpret/<%- data.interprets[interpreti].id %>" class="info-interpret"><%- data.interprets[interpreti].name %></a><br />' +
 		'<% } %>' +
 		'<% } %>' +
 		'<% if ((data.songs.length == 0) && (data.interprets.length == 0)) { %>' +
@@ -61,7 +66,7 @@ var searchTemplate = _.template('' +
 	'</div>'
 );
 
-$("body").on("click", "#playlist a.info-interpret", function(event){
+$("body").on("click", "a.info-interpret", function(event){
   event.preventDefault();
   var interpret_id = $(this).attr("href").split("/");
   interpret_id = interpret_id.slice(-1)[0];
@@ -82,7 +87,7 @@ $("body").on("click", "#playlist a.info-interpret", function(event){
   return false;
 });
 
-$("body").on("click", "#playlist a.info-song, .jp-title a", function(event){
+$("body").on("click", "a.info-song, .jp-title a", function(event){
   event.preventDefault();
   var song_id = $(this).attr("href").split("/");
   song_id = song_id.slice(-1)[0];
@@ -99,14 +104,16 @@ $("body").on("click", "#playlist a.info-song, .jp-title a", function(event){
 					interpret: data.song.interpret.name,
 					id: data.song.id,
 					rating: data.rating,
-					user: data.user
+					user: data.user,
+					request: data.request
 				};
 			}	else {
 				var templateData = {
 					name: data.song.name,
 					interpret: data.song.interpret.name,
 					id: data.song.id,
-					user: data.user
+					user: data.user,
+					request: data.request
 				};
 			}	
   		} else {
@@ -174,6 +181,27 @@ $("#search-it").click(function(event){
 			interprets: data.interprets
 		};
   		$('#search-info').html(searchTemplate(templateData));
+  	}
+  });
+});
+
+$("body").on("click", ".request-to-play", function(event){
+	event.preventDefault();
+	var song_id = $(this).attr("href").split("/");
+  	song_id = song_id.slice(-1)[0];
+	$.ajax({
+  	url: "/request",
+  	type: "post",
+  	dataType: "json",
+  	data: {id: song_id},
+  	success: function(data){
+  		var templateData = {
+			request: data.request
+		};
+		if(data.request){
+			$('.request-to-play').remove();
+	  		$('#rate').after('<p class="already-requested">Váša požiadavka bola zaznamenaná</p>');
+  		}
   	}
   });
 });

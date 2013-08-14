@@ -49,6 +49,10 @@ from ..models.rating import (
     Rating,
     )
 
+from ..models.request import (
+    Request,
+    )
+
 from ..utils import valid_email
 
 from mako.template import Template
@@ -380,10 +384,15 @@ def get_song(request):
     song = request.db_session.query(Song).filter_by(id=request.POST['id']).first()
     if not request.user is None:
         rating = request.db_session.query(Rating).filter_by(user_id = request.user.id, song_id = song.id).first()
-        if not rating is None:
-            return{'song': song, 'rating': rating, 'user': request.user}
+        request_to_play = request.db_session.query(Request).filter_by(song_id = song.id, user_id = request.user.id).first()
+        if request_to_play is None:
+            request_to_play = False
         else:
-            return{'song': song, 'user': request.user}
+            request_to_play = True
+        if not rating is None:
+            return{'song': song, 'rating': rating, 'user': request.user, 'request': request_to_play}
+        else:
+            return{'song': song, 'user': request.user, 'request': request_to_play}
     else:
         return{'song': song}
     
@@ -421,3 +430,16 @@ def search(request):
     songs = request.db_session.query(Song).filter(Song.name.like('%'+request.POST['search']+'%')).all()
     interprets = request.db_session.query(Interpret).filter(Interpret.name.like('%'+request.POST['search']+'%')).all()
     return {'songs': songs, 'interprets': interprets}
+
+@view_config(route_name='request', request_method='POST', renderer='json')
+def request_to_play(request):
+    if not request.user is None:
+        song = request.db_session.query(Song).filter_by(id=request.POST['id']).first()
+        request_to_play = request.db_session.query(Request).filter_by(song_id = song.id, user_id = request.user.id).first()
+        if request_to_play is None:
+            request_play = Request(request.user, song)
+            request.db_session.add(request_play)
+            request_koeficient = 2
+            request.db_session.query(Song).filter_by(id=song.id).update({"current_rating": song.current_rating*request_koeficient})
+            return {'request': True}
+    return {'request': False}
