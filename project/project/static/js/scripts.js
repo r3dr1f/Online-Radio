@@ -59,6 +59,7 @@ var interpretTemplate = _.template('' +
 	'<% } %>' +
 	'</div>' +
 	'</div>'
+	
 );
 
 var searchTemplate = _.template('' + 
