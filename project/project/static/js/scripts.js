@@ -53,6 +53,7 @@ var interpretTemplate = _.template('' +
 		'<%- data.interpret.name %>' + 
 	'</span>' +  
 	'</div>'
+	
 );
 
 var searchTemplate = _.template('' + 
