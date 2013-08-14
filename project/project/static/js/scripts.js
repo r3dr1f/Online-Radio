@@ -14,7 +14,7 @@ _.templateSettings.variable = "data";
 var songTemplate = _.template('' + 
 	'<div class="song-info">' + 
 	'<span class="name">' + 
-		'<%- data.interpret %> - <%- data.name %>' + 
+		'<a href="interpret/<%- data.interpret.id %>" class="info-interpret"><%- data.interpret.name %></a> - <%- data.name %>' + 
 	'</span>' + 
 	'<span id="song-id"><%- data.id %></span><br />' +  
 	'<% if (!data.user) { %>' +
@@ -43,12 +43,6 @@ var interpretTemplate = _.template('' +
 	'<span class="name">' + 
 		'<%- data.interpret.name %>' + 
 	'</span>' +  
-	'<div id="interpret-songs">' +
-	'<span>Songs:</span><br />' +
-	'<% for(var songi in data.songs) { %>' +
-		'<a href="/song/<%- data.songs[songi].id %>" class="info-song"><%- data.songs[songi].name %></a><br />' +
-	'<% } %>' +
-	'</div>' +
 	'</div>'
 );
 
@@ -107,7 +101,7 @@ $("body").on("click", "a.info-song, .jp-title a", function(event){
 	  		if (data.rating != undefined) {
 	  			var templateData = {
 					name: data.song.name,
-					interpret: data.song.interpret.name,
+					interpret: data.song.interpret,
 					id: data.song.id,
 					rating: data.rating,
 					user: data.user,
@@ -116,7 +110,7 @@ $("body").on("click", "a.info-song, .jp-title a", function(event){
 			}	else {
 				var templateData = {
 					name: data.song.name,
-					interpret: data.song.interpret.name,
+					interpret: data.song.interpret,
 					id: data.song.id,
 					user: data.user,
 					request: data.request
@@ -125,7 +119,7 @@ $("body").on("click", "a.info-song, .jp-title a", function(event){
   		} else {
   			var templateData = {
 				name: data.song.name,
-				interpret: data.song.interpret.name,
+				interpret: data.song.interpret,
 				id: data.song.id,
 				rating: data.song.rating_max
 			};
