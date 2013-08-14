@@ -34,7 +34,16 @@ var songTemplate = _.template('' +
 		'<a href="request/<%- data.id %>" class="request-to-play">request to play</a>' +
 	'<% } else {%>' +
 	'<p class="already-requested">Už ste si požiadali o prehratie</p>' +
-	'<% }} %>' +  
+	'<% }} %>' +
+	
+	'<% if (data.user) { %>' +
+		'<a href="/comment/<%- data.id %>" class="add-comment">Pridať komentár</a><br />' +
+		'<form method="POST" action="" id="comment-form">'
+			'<input type="text" id="comment-input" />' +
+		'</form>' + 
+	'<% } %>' + 
+	'<div id="song-comments">' +
+	'</div>' + 
 	'</div>'
 );
 
@@ -202,6 +211,27 @@ $("body").on("click", ".request-to-play", function(event){
 			$('.request-to-play').remove();
 	  		$('#rate').after('<p class="already-requested">Váša požiadavka bola zaznamenaná</p>');
   		}
+  	}
+  });
+});
+
+$("body").on("click", ".add-comment", function(event){
+	event.preventDefault();
+	
+	return false;
+});
+
+$("body").on("click", ".add-comment", function(event){
+	event.preventDefault();
+	var song_id = $(this).attr("href").split("/");
+  	song_id = song_id.slice(-1)[0];
+	$.ajax({
+  	url: "/comment",
+  	type: "post",
+  	dataType: "json",
+  	data: {id: song_id},
+  	success: function(data){
+
   	}
   });
 });
