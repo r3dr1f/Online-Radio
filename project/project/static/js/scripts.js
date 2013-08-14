@@ -43,6 +43,12 @@ var interpretTemplate = _.template('' +
 	'<span class="name">' + 
 		'<%- data.interpret.name %>' + 
 	'</span>' +  
+	'<div id="interpret-songs">' +
+	'<span>Songs:</span><br />' +
+	'<% for(var songi in data.songs) { %>' +
+		'<a href="/song/<%- data.songs[songi].id %>" class="info-song"><%- data.songs[songi].name %></a><br />' +
+	'<% } %>' +
+	'</div>' +
 	'</div>'
 );
 
