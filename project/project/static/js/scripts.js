@@ -38,6 +38,12 @@ var interpretTemplate = _.template('' +
 	'<span class="name">' + 
 		'<%- data.interpret.name %>' + 
 	'</span>' +  
+	'<div id="interpret-songs">' +
+	'<span>Songs:</span><br />' +
+	'<% for(var songi in data.songs) { %>' +
+		'<a href="/song/<%- data.songs[songi].id %>" class="info-song"><%- data.songs[songi].name %></a><br />' +
+	'<% } %>' +
+	'</div>' +
 	'</div>'
 );
 
@@ -61,7 +67,7 @@ var searchTemplate = _.template('' +
 	'</div>'
 );
 
-$("body").on("click", "#playlist a.info-interpret", function(event){
+$("body").on("click", "a.info-interpret", function(event){
   event.preventDefault();
   var interpret_id = $(this).attr("href").split("/");
   interpret_id = interpret_id.slice(-1)[0];
@@ -82,7 +88,7 @@ $("body").on("click", "#playlist a.info-interpret", function(event){
   return false;
 });
 
-$("body").on("click", "#playlist a.info-song, .jp-title a", function(event){
+$("body").on("click", "a.info-song, .jp-title a", function(event){
   event.preventDefault();
   var song_id = $(this).attr("href").split("/");
   song_id = song_id.slice(-1)[0];
