@@ -44,17 +44,17 @@ class Interpret(Base):
     __tablename__ = 'interpret'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('uzer.id')) #one to one vztah s userom
-    interpret_name = Column(String(100))
+    name = Column(String(100))
     user = relationship('User', backref="interpret")
     
 
-    def __init__(self, user, interpret_name):
+    def __init__(self, user, name):
         """Initialization of class.
         """
         if (user.role != "interpret"):
             user.role = "interpret"
         self.user_id = user.id
-        self.interpret_name = interpret_name
+        self.name = name
         self.user = user
  
     def __repr__(self):
@@ -63,4 +63,4 @@ class Interpret(Base):
         return "Interpret<{id}>".format(id=self.id)
     
     def __json__(self, request):
-        return {'id': self.id, 'name': self.interpret_name, 'user': self.user.email}
+        return {'id': self.id, 'name': self.name, 'user': self.user.email}
