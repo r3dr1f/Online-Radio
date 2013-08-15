@@ -38,7 +38,7 @@ var songTemplate = _.template('' +
 	
 	'<% if (data.user) { %>' +
 		'<a href="/comment/<%- data.id %>" class="add-comment">Pridať komentár</a><br />' +
-		'<form method="POST" action="" id="comment-form">'
+		'<form method="POST" action="" id="comment-form">' +
 			'<input type="text" id="comment-input" />' +
 		'</form>' + 
 	'<% } %>' + 
