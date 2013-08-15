@@ -9,17 +9,13 @@ from project.liquidsoap import _session
 from project.models.song import Song
 import datetime
 
-def determine_oldness():
-	pass
-
 #cleans database playlist from queued but not played songs
 def initialize_playlist():
-	queued_but_not_played_songs = _session.query(Playlist).filter(Playlist.play_time == None, Playlist.queued == True).order_by("id asc").all()
+	queued_but_not_played_songs = _session.query(Playlist).filter(Playlist.play_time == None, Playlist.queued == True).all()
 	for song in queued_but_not_played_songs:
 		song.queued = False
 		_session.add(song)
 	_session.commit()
-	sys.exit(0)
 
 def run():	
 	try:

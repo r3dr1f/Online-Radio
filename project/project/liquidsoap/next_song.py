@@ -7,20 +7,54 @@ import random
 import sys
 from project.models.song import Song
 from project.models.playlist import Playlist
+from project.models.request import Request
 from project.liquidsoap import _session
-import datetime
+from datetime import datetime
+from datetime import timedelta
 
 playlist_length = 5
 
 """
-    sets "queued" column for currently added song to playlist to True
+    deletes all requests to play for song
+"""
+
+def delete_request_to_play(song):
+    requests = _session.query(Request).filter(Request.song == song).all()
+    for request in requests:
+        _session.delete(request)
+    _session.commit()
+
+"""
+    determine_factor_age - returns number in the interval [0.5,1] describing the age of the song
+"""
+
+def determine_factor_age(song): # po tyzdnoch bude factor_age klesat o 0.05, az dosiahne 0.5 
+    t1 = song.date_added
+    t2 = datetime.now()
+
+    tdelta = t2 - t1 # actually a datetime.timedelta object
+    #print(t1," ",tdelta.days)
+    res = max(0.5, 1.0 - int(tdelta.days / 7) * 0.05)
+    return res
+
+def update_factor_age():
+    songs = _session.query(Song).all()
+    for song in songs:
+        song.factor_age = determine_factor_age(song)
+        #print(song.factor_age) 
+        _session.add(song)
+    _session.commit()
+
+"""
+    update_current_song - updates current rating of all the sogs
 """
 
 def update_current_rating():
     try:
         songs = _session.query(Song).all()
         for song in songs:
-            song.current_rating = (9 * song.current_rating + song.rating_max * song.factor_age) / 10
+            if (song.current_rating < song.rating_max): #keby requesty sposobili, ze current_rating bude vacsi ako rating_max
+                song.current_rating = (9 * song.current_rating + song.rating_max * song.factor_age) / 10
             _session.add(song)
         _session.commit()
     except:
@@ -31,20 +65,18 @@ def update_current_rating():
         songs_to_be_played = _session.query(Song).join(Playlist).filter(Playlist.play_time == None).all()
         #print(songs_to_be_played)
         for song in songs_to_be_played:
+            delete_request_to_play(song)
             song.current_rating = 0
             _session.add(song)
         _session.commit()
     except:
         print("failed to set song ratings to 0")
-    #vynulujeme rating prave prehravanemu songu
-    try:
-        cur_song = _session.query(Song).filter(Song.id == sys.argv[1]).first()
-        cur_song.current_rating = 0
-        _session.add(cur_song)
-        _session.commit()
-    except:
-        print("failed to update currently playing song rating to 0")
+    finally:
+        update_factor_age()
 
+"""
+    sets "queued" column for currently added song to playlist to True
+"""
 
 def commit_queued_song(song_id):
     cur_song = _session.query(Playlist).filter(Playlist.song_id == song_id, Playlist.queued == False).order_by("id asc").first()
@@ -102,8 +134,8 @@ def generate_next_song():
             next_song = pick_next_song()
             songs.append(next_song.id)
             _session.add(Playlist(next_song,None,False)) #pridanie songu do databazy bez casu prehrania, kedze este sa len ide prehrat
+            update_current_rating()
         _session.commit()
         
-        print(path_to_song(songs[0]))
-        commit_queued_song(songs[0]) #nastavime danemu songu, ze je uz zaradeny vo fronte, kedze sme ho poslali printom do liquidsoapu  
-        update_current_rating()
+        commit_queued_song(songs[0]) #nastavime danemu songu, ze je uz zaradeny vo fronte, kedze sme ho poslali printom do liquidsoapu 
+        print(path_to_song(songs[0])) 
