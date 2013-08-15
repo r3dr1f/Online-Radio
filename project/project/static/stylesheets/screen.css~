@@ -426,3 +426,11 @@ body {
 .default_hide{
   display: none;
 }
+
+#song-id {
+	display: none;
+}
+
+#comment-form {
+	display: none;
+}

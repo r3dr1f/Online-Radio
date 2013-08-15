@@ -53,6 +53,10 @@ from ..models.request import (
     Request,
     )
 
+from ..models.comment import (
+    Comment,
+    )
+
 from ..utils import valid_email
 
 from mako.template import Template
@@ -81,7 +85,7 @@ from subprocess import (
     PIPE
     )
 
-import time
+import time, datetime
 
 
 import random
@@ -443,3 +447,17 @@ def request_to_play(request):
             request.db_session.query(Song).filter_by(id=song.id).update({"current_rating": song.current_rating*request_koeficient})
             return {'request': True}
     return {'request': False}
+
+@view_config(route_name='comment', request_method='POST', renderer='json')
+def add_comment(request):
+    if not request.user is None:
+        song = request.db_session.query(Song).filter_by(id=request.POST['id']).first()
+        user = request.db_session.query(User).filter_by(id=request.user.id).first()
+        comment = Comment(user, song, datetime.datetime.now(), request.POST['comment'])
+        request.db_session.add(comment)
+        request.db_session.flush()
+        comments = request.db_session.query(Comment).filter_by(song_id=song.id).order_by(Comment.add_time.asc()).all()
+        return {'comments': comments}
+        
+        
+        

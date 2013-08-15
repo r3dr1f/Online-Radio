@@ -16,7 +16,7 @@ var songTemplate = _.template('' +
 	'<span class="name">' + 
 		'<a href="interpret/<%- data.interpret.id %>" class="info-interpret"><%- data.interpret.name %></a> - <%- data.name %>' + 
 	'</span>' + 
-	'<span id="song-id"><%- data.id %></span><br />' +  
+	'<input type="hidden" id="song-id" value="<%- data.id %>" />' +  
 	'<% if (!data.user) { %>' +
 	    '<span>Hodnotenie: <%- data.rating %> </span>' +
 	'<% } else { if (data.rating) { %>' +
@@ -37,14 +37,19 @@ var songTemplate = _.template('' +
 	'<% }} %>' +
 	
 	'<% if (data.user) { %>' +
-		'<a href="/comment/<%- data.id %>" class="add-comment">Pridať komentár</a><br />' +
-		'<form method="POST" action="" id="comment-form">'
-			'<input type="text" id="comment-input" />' +
-		'</form>' + 
+		'<br /><a href="/comment/<%- data.id %>" class="add-comment">Pridať komentár</a><br />' +
+		'<textarea id="comment-input">' +
+		'</textarea>' +
 	'<% } %>' + 
 	'<div id="song-comments">' +
 	'</div>' + 
 	'</div>'
+);
+
+var commentsTemplate = _.template('' +
+	'<% for(var commenti in data.comments) { %>' +
+		'<div class="comment"><div class="comment-text"><%- data.comments[commenti].text %></div><div class="comment-time"><%- data.comments[commenti].add_time %></div></div>' +
+	'<% } %>'
 );
 
 var interpretTemplate = _.template('' + 
@@ -223,23 +228,30 @@ $("body").on("click", ".request-to-play", function(event){
 
 $("body").on("click", ".add-comment", function(event){
 	event.preventDefault();
-	
+	$("#comment-input").show();
 	return false;
 });
 
-$("body").on("click", ".add-comment", function(event){
-	event.preventDefault();
-	var song_id = $(this).attr("href").split("/");
-  	song_id = song_id.slice(-1)[0];
-	$.ajax({
-  	url: "/comment",
-  	type: "post",
-  	dataType: "json",
-  	data: {id: song_id},
-  	success: function(data){
-
-  	}
-  });
+$("body").on("keypress", "#comment-input", function(event){
+	if(event.which == 13) {
+		event.preventDefault();
+        if ($(this).val() != "") {
+	        $.ajax({
+			  	url: "/comment",
+		  		type: "post",
+		  		dataType: "json",
+		  		data: {id: $("#song-id").val(), comment: $("#comment-input").val()},
+		  		success: function(data){
+		  			$("#comment-input").val("");
+		  			$("#comment-input").hide();
+		  			var templateData = {
+		  				comments: data.comments
+		  			};
+		  			$("#song-comments").html(commentsTemplate(templateData));
+	  			}
+  			});	
+        }
+    }
 });
 
 });
