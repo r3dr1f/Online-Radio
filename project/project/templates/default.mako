@@ -46,6 +46,81 @@
 </head>
 
 <body id='museum'>
+<fb:login-button autologoutlink='true'  perms='email,user_birthday,status_update,publish_stream'></fb:login-button>
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    // init the FB JS SDK
+    FB.init({
+      appId      : '416080778513149',                        // App ID from the app dashboard
+      channelUrl : '${request.static_path('project:static/channel.html')}', // Channel file for x-domain comms
+      status     : true,                                 // Check Facebook Login status
+      xfbml      : true                                  // Look for social plugins on the page
+    });
+
+    // Additional initialization code such as adding Event Listeners goes here
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "http://connect.facebook.net/en_US/all.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+   
+   
+  $(document).ready(function(){
+   $('#fb-login').click(function(event){
+            FB.login
+            (
+                function( response )
+                {
+                console.log(response);
+                    if ( response.authResponse )
+                    {
+                        FB.api
+                        (
+                            "/me",
+                            function( response )
+                            {
+                                $('#fb-name').val(response.name);
+                                $('#email').val(response.email);
+                                //document.getElementById("obrazok").src = "http://graph.facebook.com/" + response.id + "/picture";
+                                $.ajax({
+								  	url: "/login_fb",
+								  	type: "post",
+								  	dataType: "json",
+								  	data: {uuid: response.id, email: response.email},
+								  	success: function(data){
+											window.location.href="${request.route_path('home')}";								  		
+								  		}
+								  });
+                            }
+                        )
+                    }
+                }, {scope: 'email'}
+            );
+});
+
+FB.Event.subscribe('auth.login', function(response) {
+   login();
+});
+FB.Event.subscribe('auth.logout', function(response) {
+   logout();
+});
+FB.getLoginStatus(function(response) {
+   if (response.session) {
+      greet();
+   }
+});
+
+});
+
+   
+   
+</script> 
     <div id="main">
         <div id="header">
             <h1><a href="#">Project</a></h1>
@@ -62,6 +137,7 @@
                             <input type="password" name="password" id="password-login" required/>    
                         </div>
                         <button type="submit" class="submit-form">Prihlásiť sa</button>
+                        <a class="register-button" id="fb-login" href="#">Prihlásiť sa pomocou facebooku</a>
                         <a class="register-button" href="${request.route_path('register')}">Zaregistrovať sa</a>
                         <div class="recovery-password">
                         <a href="${request.route_path('beg_for_recovery')}" >Zabudol som heslo</a>
@@ -70,7 +146,7 @@
                 </div>
             % else:
                 <form action="${request.route_path('logout')}" method="POST">
-                    <button type="submit" class="signout-button">Odhlásiť ${request.user.email}</button>
+                    <button type="submit" class="signout-button">Odhlásiť </button>
                 </form>
             % endif
             </div>

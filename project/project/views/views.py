@@ -81,6 +81,8 @@ from subprocess import (
     PIPE
     )
 
+from pyramid.security import remember
+
 import time
 
 
@@ -126,11 +128,11 @@ def register_interpret(db_session, user_id, interpret_name):
     
     return {}
 
-def register_user(db_session, email, password, role):
+def register_user(db_session, email, password, role, uuid = 0):
     """Registers a new user and returns his ID (single number).
 
     """
-    user = User(email, password, role)
+    user = User(email, password, role, uuid)
     
     if db_session.query(User).filter_by(email=email).count() != 0:
         raise DuplicateUserError
@@ -139,6 +141,11 @@ def register_user(db_session, email, password, role):
     db_session.flush()
 
     return user.id
+
+def register_fb(db_session, email, password, role, uuid):
+    user = User(email, password, role, uuid)
+    db_session.add(user)
+    db_session.flush()
 
 error_messages = {
     'invalid_email':'Zadajte správny e-mail.',
@@ -170,7 +177,6 @@ def register_submission(request):
                 POST['role'] = 1 
             user_id = register_user(request.db_session, POST['email'], POST['password'], POST['role'])
             if 'role' in POST and POST['interpret_name']:
-                print('registrujem interpreta') 
                 register_interpret(request.db_session, user_id ,POST['interpret_name'])
             return HTTPFound(request.route_path('register_success', user_id=user_id))
         except DuplicateUserError:
@@ -179,15 +185,25 @@ def register_submission(request):
 
     return {'errors': errors, 'error_messages': error_messages}
 
+@view_config(route_name='login_fb', request_method='POST', renderer='json')
+def login_fb(request):
+    user = request.db_session.query(User).filter_by(email=request.POST['email']).first()
+    errors = []
+    if user is None:
+        register_fb(request.db_session, request.POST['email'], "", 0, request.POST['uuid'])
+    try:
+        (headers, user) = request.authenticator.login_fb(request.POST['email'])
+        request.response.headerlist.extend(headers)
+        return {}
+    except NonExistingUserError:
+        errors.append('wrong-email')
+    return {'error': errors}
 
 @view_config(route_name='register_success', renderer='project:templates/register_success.mako')
 def register_success(request):
     """Displays success message after registration
     """
     return {'user_id':request.matchdict['user_id']}
-
-
-
 
 def validate_registration_data(form_data):
     """Checkes whether all datas are correct and returns dictionary of errors.

@@ -78,6 +78,7 @@ class User(Base):
     """
     __tablename__ = 'uzer'
     id = Column(Integer, primary_key=True)
+    uuid = Column(Integer)
     email = Column(String(50), unique=True)
     _password = Column(String(100), nullable=False)
     role = Column(String(50))
@@ -104,14 +105,15 @@ class User(Base):
         #self._password = hashpw(value.encode('ascii'), gensalt())
         self._password = hashpw(value, gensalt())
  
-    def __init__(self, email, password, role):
+    def __init__(self, email, password, role, uuid = 0, fullname = ""):
         """Initialization of class.
             roles: 0 = user/1 = interpret/2 = admin
         """
         mapa = {0:"user",1:"interpret",2:"admin","user":"user","interpret":"interpret","admin":"admin"}
-        
+        self.uuid = uuid
         self.email = email
         self.password = password
+        self.fullname = fullname
         self.role = mapa[role]
  
     def __repr__(self):

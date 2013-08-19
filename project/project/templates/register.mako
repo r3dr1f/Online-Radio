@@ -7,7 +7,7 @@
     <span class='error'>${error_messages[errors[field]]}</span>
 % endif
 </%def>
-<form method="POST">
+<form method="POST" id="registracia">
     <div class="input-group">
         <label for="email">E-mail</label>
         <input type="email" name="email" id="email" required/>
@@ -30,6 +30,7 @@
         <label for="interpret_name">Ako ťa ľudia oslovujú?</label>
         <input type="text" name="interpret_name" id="interpret_name"/>
     </div>
-    <button type="submit" class="submit-form">Zaregistrovať sa</button>
+    <input type="hidden" id="fb-name">
+    <button type="submit" class="submit-form">Zaregistrovať sa</button><br />
 </form>
 </%block>

@@ -17,9 +17,21 @@ class Authenticator:
         """
 
         user = self._session.query(User).filter_by(email=email).first()
-        
+
         if user is None: raise NonExistingUserError('This user doesn\'t exist.')
         if (user.password != password): raise WrongPasswordError('Passwords don\'t match.') 
+        
+        return (
+            remember(self._request, user.id),
+            user,
+            )
+                             
+    def login_fb(self, email):
+        """
+            Logs user into system.
+        """
+        user = self._session.query(User).filter_by(email=email).first()
+        if user is None: raise NonExsitingUserError('This user doesn\'t exist.')
         
         return (
             remember(self._request, user.id),

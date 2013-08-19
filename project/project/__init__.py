@@ -107,6 +107,7 @@ def main(global_config, **settings):
     config.add_route('rate', '/rate')
     config.add_route('search', '/search')
     config.add_route('request', '/request')
+    config.add_route('login_fb', '/login_fb')
 
     config.scan()
     random.seed()
