@@ -41,7 +41,6 @@ def update_factor_age():
     songs = _session.query(Song).all()
     for song in songs:
         song.factor_age = determine_factor_age(song)
-        #print(song.factor_age) 
         _session.add(song)
     _session.commit()
 

@@ -190,6 +190,8 @@ def register_submission(request):
 
 @view_config(route_name='login_fb', request_method='POST', renderer='json')
 def login_fb(request):
+    
+    
     user = request.db_session.query(User).filter_by(email=request.POST['email']).first()
     errors = []
     if user is None:

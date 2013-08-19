@@ -175,11 +175,11 @@ $("body").on("click", "#rate0, #rate1, #rate2, #rate3, #rate4", function(event){
   	url: "/rate",
   	type: "post",
   	dataType: "json",
-  	data: {id: $("#song-id").text(), rating: rating},
+  	data: {id: $("#song-id").val(), rating: rating},
   	success: function(data){
   		var templateData = {
 			name: data.song.name,
-			interpret: data.song.interpret.name,
+			interpret: data.song.interpret,
 			id: data.song.id,
 			rating: data.rating.rating
 		};
