@@ -30,5 +30,6 @@ system("python3.3 -c 'import feedback; feedback.initialize_playlist()' ")
 # Create the source
 s = request.dynamic(my_request_function)
 s = on_track(apply_metadata,s)
+s = audio_to_stereo(s)
 
 output.icecast(%mp3, host = "localhost", port = 8080, password = "baldur", mount = "stream", s, fallible=true)

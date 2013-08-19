@@ -7,11 +7,22 @@ import random
 import sys
 from project.models.song import Song
 from project.models.playlist import Playlist
+from project.models.request import Request
 from project.liquidsoap import _session
 from datetime import datetime
 from datetime import timedelta
 
 playlist_length = 5
+
+"""
+    deletes all requests to play for song
+"""
+
+def delete_request_to_play(song):
+    requests = _session.query(Request).filter(Request.song == song).all()
+    for request in requests:
+        _session.delete(request)
+    _session.commit()
 
 """
     determine_factor_age - returns number in the interval [0.5,1] describing the age of the song
@@ -54,6 +65,7 @@ def update_current_rating():
         songs_to_be_played = _session.query(Song).join(Playlist).filter(Playlist.play_time == None).all()
         #print(songs_to_be_played)
         for song in songs_to_be_played:
+            delete_request_to_play(song)
             song.current_rating = 0
             _session.add(song)
         _session.commit()

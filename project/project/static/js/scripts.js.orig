@@ -37,9 +37,16 @@ var songTemplate = _.template('' +
 	'<% }} %>' +
 	
 	'<% if (data.user) { %>' +
+<<<<<<< HEAD
 		'<br /><a href="/comment/<%- data.id %>" class="add-comment">Pridať komentár</a><br />' +
 		'<textarea id="comment-input">' +
 		'</textarea>' +
+=======
+		'<a href="/comment/<%- data.id %>" class="add-comment">Pridať komentár</a><br />' +
+		'<form method="POST" action="" id="comment-form">' +
+			'<input type="text" id="comment-input" />' +
+		'</form>' + 
+>>>>>>> f7ec74855b869203fbd4296da27bd09a219a268a
 	'<% } %>' + 
 	'<div id="song-comments">' +
 	'</div>' + 
@@ -253,6 +260,5 @@ $("body").on("keypress", "#comment-input", function(event){
         }
     }
 });
-
 
 });

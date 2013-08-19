@@ -34,6 +34,8 @@ from bcrypt import (hashpw, gensalt)
 from ..utils import valid_email
 from . import Base
 
+import datetime, re
+
 class Comment(Base):
     """Database table Interpret.
  
@@ -49,9 +51,10 @@ class Comment(Base):
     song_id = Column(Integer, ForeignKey('song.id'))
     song = relationship('Song', backref="comments")
     add_time = Column(DateTime)
+    text = Column(String);
     
 
-    def __init__(self, user, song, add_time):
+    def __init__(self, user, song, add_time, text):
         """Initialization of class.
         """
         self.user = user;
@@ -59,6 +62,7 @@ class Comment(Base):
         self.song = song
         self.song_id = song.id
         self.add_time = add_time
+        self.text = re.sub('<[^>]*>', '', text)
  
     def __repr__(self):
         """Returns representative object of class comment.
@@ -66,4 +70,5 @@ class Comment(Base):
         return "Comment<{id}>".format(id=self.id)
     
     def __json__(self, request):
-        return {'id': self.id, 'user': self.user, 'song': self.song, 'add_time': self.add_time}
+        time = datetime.datetime.strftime(self.add_time, '%d/%m/%Y %H:%M')
+        return {'id': self.id, 'user': self.user, 'song': self.song, 'add_time': time, 'text': self.text}
