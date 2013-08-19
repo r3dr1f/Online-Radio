@@ -54,7 +54,9 @@
       appId      : '416080778513149',                        // App ID from the app dashboard
       channelUrl : '${request.static_path('project:static/channel.html')}', // Channel file for x-domain comms
       status     : true,                                 // Check Facebook Login status
-      xfbml      : true                                  // Look for social plugins on the page
+      xfbml      : true,                                  // Look for social plugins on the page
+      cookie	 : true,
+      oauth		 : true      
     });
 
     // Additional initialization code such as adding Event Listeners goes here

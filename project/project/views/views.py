@@ -403,6 +403,7 @@ def get_interpret(request):
 @view_config(route_name='getsong', request_method='POST', renderer='json')
 def get_song(request):
     song = request.db_session.query(Song).filter_by(id=request.POST['id']).first()
+    comments = request.db_session.query(Comment).filter_by(song_id=song.id).order_by(Comment.add_time.asc()).all()
     if not request.user is None:
         rating = request.db_session.query(Rating).filter_by(user_id = request.user.id, song_id = song.id).first()
         request_to_play = request.db_session.query(Request).filter_by(song_id = song.id, user_id = request.user.id).first()
@@ -411,11 +412,11 @@ def get_song(request):
         else:
             request_to_play = True
         if not rating is None:
-            return{'song': song, 'rating': rating, 'user': request.user, 'request': request_to_play}
+            return{'song': song, 'rating': rating, 'user': request.user, 'request': request_to_play, 'comments': comments}
         else:
-            return{'song': song, 'user': request.user, 'request': request_to_play}
+            return{'song': song, 'user': request.user, 'request': request_to_play, 'comments': comments}
     else:
-        return{'song': song}
+        return{'song': song, 'comments': comments}
     
 @view_config(route_name='rate', request_method='POST', renderer='json')
 def rate_song(request):
@@ -439,7 +440,8 @@ def rate_song(request):
             average_rating = (count/all_who_rated)*multiply_to_hundred
             #update_song = Song(song.interpret, song.name, average_rating, song.factor_played, song.factor_age)
             request.db_session.query(Song).filter_by(id=song.id).update({"rating_max": average_rating})
-            return{'song': song, 'rating': rating_obj}
+            comments = request.db_session.query(Comment).filter_by(song_id=song.id).order_by(Comment.add_time.asc()).all()
+            return{'song': song, 'rating': rating_obj, 'comments': comments, 'user': request.user}
         else:
             error = "Lutujeme ale tuto pesnicku ste uz raz hodnotili"
             return{'error': error}

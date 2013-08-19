@@ -15,12 +15,12 @@ var songTemplate = _.template('' +
 	'<div class="song-info">' + 
 	'<span class="name">' + 
 		'<a href="interpret/<%- data.interpret.id %>" class="info-interpret"><%- data.interpret.name %></a> - <%- data.name %>' + 
-	'</span>' + 
+	'</span><br />' + 
 	'<input type="hidden" id="song-id" value="<%- data.id %>" />' +  
 	'<% if (!data.user) { %>' +
-	    '<span>Hodnotenie: <%- data.rating %> </span>' +
+	    '<span>Hodnotenie: <%- data.rating %> </span><br />' +
 	'<% } else { if (data.rating) { %>' +
-		'<span>Vaše hodnotenie: <%- data.rating.rating %></span>' +
+		'<span>Vaše hodnotenie: <%- data.rating %></span><br />' +
 	'<% } else { %>' +
 		'<div id="rate">' + 
 			'<a href="#" id="rate0">0</a>' + 
@@ -30,8 +30,9 @@ var songTemplate = _.template('' +
 			'<a href="#" id="rate4">4</a>' + 
 		'</div>' +
 	'<% } %>' +
+	'<div class="song-rating"></div>' + 
 	'<% if (!data.request) {%>' +
-		'<a href="request/<%- data.id %>" class="request-to-play">request to play</a>' +
+		'<a href="request/<%- data.id %>" class="request-to-play">request to play</a><br />' +
 	'<% } else {%>' +
 	'<p class="already-requested">Už ste si požiadali o prehratie</p>' +
 	'<% }} %>' +
@@ -181,9 +182,14 @@ $("body").on("click", "#rate0, #rate1, #rate2, #rate3, #rate4", function(event){
 			name: data.song.name,
 			interpret: data.song.interpret,
 			id: data.song.id,
-			rating: data.rating.rating
+			rating: data.rating.rating,
+			user: data.user
+		};
+		var commentsTemplateData = {
+			comments: data.comments
 		};
   		$('.song-info').html(songTemplate(templateData));
+  		$("#song-comments").html(commentsTemplate(commentsTemplateData));
   	}
   });
   return false;
@@ -220,7 +226,7 @@ $("body").on("click", ".request-to-play", function(event){
 		};
 		if(data.request){
 			$('.request-to-play').remove();
-	  		$('#rate').after('<p class="already-requested">Váša požiadavka bola zaznamenaná</p>');
+	  		$('.song-rating').html('<p class="already-requested">Vaša požiadavka bola zaznamenaná</p>');
   		}
   	}
   });

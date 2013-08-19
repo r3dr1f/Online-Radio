@@ -23,7 +23,6 @@ var first_time = true;
 
 function callAjax() {
 	$.ajax({
-		//url: "http://localhost:1234/requests/status.xml",
 		url: "/getsource",
 		type: "GET",
 		dataType: "json",
