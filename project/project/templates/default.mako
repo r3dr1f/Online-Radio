@@ -46,7 +46,6 @@
 </head>
 
 <body id='museum'>
-<fb:login-button autologoutlink='true'  perms='email,user_birthday,status_update,publish_stream'></fb:login-button>
 <div id="fb-root"></div>
 <script>
   window.fbAsyncInit = function() {
@@ -77,7 +76,7 @@
             (
                 function( response )
                 {
-                console.log(response);
+                	console.log(response);
                     if ( response.authResponse )
                     {
                         FB.api
@@ -103,19 +102,6 @@
                 }, {scope: 'email'}
             );
 });
-
-FB.Event.subscribe('auth.login', function(response) {
-   login();
-});
-FB.Event.subscribe('auth.logout', function(response) {
-   logout();
-});
-FB.getLoginStatus(function(response) {
-   if (response.session) {
-      greet();
-   }
-});
-
 });
 
    
@@ -146,7 +132,7 @@ FB.getLoginStatus(function(response) {
                 </div>
             % else:
                 <form action="${request.route_path('logout')}" method="POST">
-                    <button type="submit" class="signout-button">Odhlásiť </button>
+                    <button type="submit" class="signout-button">Odhlásiť ${request.user.email}</button>
                 </form>
             % endif
             </div>
