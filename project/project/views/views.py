@@ -85,14 +85,9 @@ from subprocess import (
     PIPE
     )
 
-<<<<<<< HEAD
 from pyramid.security import remember
 
-import time
-=======
 import time, datetime
->>>>>>> 6038f141b078b30717a216a1d0d0d0cbfff4806c
-
 
 import random
 #}}}
