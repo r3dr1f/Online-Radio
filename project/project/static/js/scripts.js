@@ -15,7 +15,8 @@ var songTemplate = _.template('' +
 	'<div class="song-info">' + 
 	'<span class="name">' + 
 		'<a href="interpret/<%- data.interpret.id %>" class="info-interpret"><%- data.interpret.name %></a> - <%- data.name %>' + 
-	'</span><br />' + 
+	'</span><br />' +
+	'<fb:like href="http://localhost:6543/song/<%- data.id %>" width="450" show_faces="true" send="false"></fb:like>' + 
 	'<input type="hidden" id="song-id" value="<%- data.id %>" />' +  
 	'<% if (!data.user) { %>' +
 	    '<span>Hodnotenie: <%- data.rating %> </span><br />' +
@@ -57,7 +58,7 @@ var interpretTemplate = _.template('' +
 	'<div class="interpret-info">' + 
 	'<span class="name">' + 
 		'<%- data.interpret.name %>' + 
-	'</span>' +  
+	'</span><br />'+  
 	'<div id="interpret-songs">' +
 	'<span>Songs:</span><br />' +
 	'<% for(var songi in data.songs) { %>' +
