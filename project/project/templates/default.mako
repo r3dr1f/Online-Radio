@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="sk-SK">
+<html lang="sk-SK" xmlns:fb="http://ogp.me/ns/fb#">
 <head>
 	<meta charset="utf-8">
 		<link type="text/css" href="${request.static_path('project:static/skins/jplayer.blue.monday.css')}" rel="stylesheet" />
@@ -43,6 +43,11 @@
     		});
 		</script>
     <link href="${request.static_path('project:static/stylesheets/screen.css')}" media="screen, projection" rel="stylesheet" type="text/css" />
+    
+    <!-- Facebook Share meta tags -->
+    <meta property="og:title" content="Rádio"/>
+    <meta property="og:site_name" content="Naše rádio"/>
+    <meta property="og:url" content="http://naseradio.sk"/>
 </head>
 
 <body id='museum'>
@@ -111,6 +116,7 @@
 </script> 
     <div id="main">
         <div id="header">
+        	<div class="fb-like" data-href="http://www.facebook.com/pages/Test/487965897961635" data-width="450" data-show-faces="true" data-send="false"></div>
             <h1><a href="#">Project</a></h1>
             <div class="login">
             % if request.userid is None:
