@@ -31,8 +31,8 @@ function callAjax() {
 			if(JSON.stringify(old_data) != JSON.stringify(data)){
 			    old_data = data;
 			    if(!first_time){
-			    	//$(".jp-title").slideToggle("slow");
-			       	//$(".jp-title").delay(2500).slideToggle("slow");
+			    	$(".jp-title").slideToggle("slow");
+			       	$(".jp-title").delay(2500).slideToggle("slow");
 			       	window.setTimeout(function () {
 			         	$(".jp-title a").text(data.song.interpret.name+' - '+data.song.name);
 			         	$('.jp-title a').attr('href',"song/"+data.song.id);
@@ -40,8 +40,8 @@ function callAjax() {
 			        setPlaylist(data.playlist);
 			    } else {
 		           	first_time = false;
-		           	$('.jp-title a').text(data.song.interpret.name+' - '+data.song.name);
-		           	$('.jp-title a').attr('href',"song/"+data.song.id);
+		           	$('.jp-title ul li a').text(data.song.interpret.name+' - '+data.song.name);
+		           	$('.jp-title ul li a').attr('href',"song/"+data.song.id);
 					setPlaylist(data.playlist);
 		        }
         	}	
