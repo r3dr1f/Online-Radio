@@ -1,6 +1,7 @@
 from .models.user import User
 
 from pyramid.security import (remember, forget)
+from sqlalchemy.sql import not_
 
 class Authenticator:
 
@@ -16,8 +17,7 @@ class Authenticator:
             password: User's password
         """
 
-        user = self._session.query(User).filter_by(email=email).first()
-
+        user = self._session.query(User).filter(User.email==email).filter(User.role!="fb").first()
         if user is None: raise NonExistingUserError('This user doesn\'t exist.')
         if (user.password != password): raise WrongPasswordError('Passwords don\'t match.') 
         

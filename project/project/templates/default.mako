@@ -54,7 +54,8 @@
       appId      : '416080778513149',                        // App ID from the app dashboard
       channelUrl : '${request.static_path('project:static/channel.html')}', // Channel file for x-domain comms
       status     : true,                                 // Check Facebook Login status
-      xfbml      : true                                  // Look for social plugins on the page
+      xfbml      : true,                                  // Look for social plugins on the page
+      oauth      : true
     });
 
     // Additional initialization code such as adding Event Listeners goes here
@@ -71,70 +72,16 @@
    
    
   $(document).ready(function(){
-   $('#fb-login').click(function(event){
-            FB.login
-            (
-                function( response )
-                {
-                	console.log(response);
-                    if ( response.authResponse )
-                    {
-                        FB.api
-                        (
-                            "/me",
-                            function( response )
-                            {
-                                $('#fb-name').val(response.name);
-                                $('#email').val(response.email);
-                                //document.getElementById("obrazok").src = "http://graph.facebook.com/" + response.id + "/picture";
-                                $.ajax({
-								  	url: "/login_fb",
-								  	type: "post",
-								  	dataType: "json",
-								  	data: {uuid: response.id, email: response.email},
-								  	success: function(data){
-											window.location.href="${request.route_path('home')}";								  		
-								  		}
-								  });
-                            }
-                        )
-                    }
-                }, {scope: 'email'}
-            );
-});
+   
 });
 
-   
+
    
 </script> 
     <div id="main">
         <div id="header">
             <h1><a href="#">Project</a></h1>
             <div class="login">
-            % if request.userid is None:
-                <div id="log in">
-                    <form class="login-form" action="${request.route_path('login')}" method="POST">
-                        <div class="input-group">
-                            <label for="email-login">E-mail</label>
-                            <input type="email" name="email" id="email-login" required/>
-                        </div>
-                        <div class="input-group">
-                            <label for="password-login">Heslo</label>
-                            <input type="password" name="password" id="password-login" required/>    
-                        </div>
-                        <button type="submit" class="submit-form">Prihlásiť sa</button>
-                        <a class="register-button" id="fb-login" href="#">Prihlásiť sa pomocou facebooku</a>
-                        <a class="register-button" href="${request.route_path('register')}">Zaregistrovať sa</a>
-                        <div class="recovery-password">
-                        <a href="${request.route_path('beg_for_recovery')}" >Zabudol som heslo</a>
-                        </div>
-                    </form>
-                </div>
-            % else:
-                <form action="${request.route_path('logout')}" method="POST">
-                    <button type="submit" class="signout-button">Odhlásiť ${request.user.email}</button>
-                </form>
-            % endif
             </div>
         <div>
         	<label for="search"></label>

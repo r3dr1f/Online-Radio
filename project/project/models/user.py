@@ -107,9 +107,9 @@ class User(Base):
  
     def __init__(self, email, password, role, uuid = 0, fullname = ""):
         """Initialization of class.
-            roles: 0 = user/1 = interpret/2 = admin
+            roles: 0 = user/1 = interpret/2 = admin/3 = facebook
         """
-        mapa = {0:"user",1:"interpret",2:"admin","user":"user","interpret":"interpret","admin":"admin"}
+        mapa = {0:"user",1:"interpret",2:"admin",3:"fb","user":"user","interpret":"interpret","admin":"admin","fb":"fb"}
         self.uuid = uuid
         self.email = email
         self.password = password
@@ -122,7 +122,7 @@ class User(Base):
         return "User<{email}>".format(email=self.email)
     
     def __json__(self, request):
-        return {'id': self.id}
+        return {'id': self.id, 'email': self.email}
  
  
 class InvalidEmailError(ValidationError):

@@ -121,9 +121,10 @@ def register_interpret(db_session, user_id, interpret_name):
     """Registers a new interpret
     
     """
-    interpret = Interpret(user_id, interpret_name)
+    user = db_session.query(User).filter_by(id=user_id).first()
+    interpret = Interpret(user, interpret_name)
     
-    if db_session.query(Interpret).filter_by(interpret_name=interpret_name).count() != 0:
+    if db_session.query(Interpret).filter_by(name=interpret_name).count() != 0:
         raise DuplicateUserError
 
     db_session.add(interpret)
@@ -158,14 +159,14 @@ error_messages = {
     }
 
 
-@view_config(route_name='register', request_method='GET', renderer='project:templates/register.mako')
+@view_config(route_name='register', request_method='GET', renderer='json')
 def register_view(request):
     """Displays registration form and processes form data.
     """
-    return {'errors': {}, 'error_messages': error_messages}
+    return {'register': True}
 
 
-@view_config(route_name='register', request_method='POST', renderer='project:templates/register.mako')
+@view_config(route_name='register', request_method='POST', renderer='json')
 def register_submission(request):
     """Handles registration form submission.
     Creates PDF card in 'users_data/cards/{ID}.pdf'. CSS file for it is in 'templates/pdf_card.css'.
@@ -174,17 +175,12 @@ def register_submission(request):
     errors = validate_registration_data(POST)
     if not errors:
         try:
-            if not 'role' in POST:
-                POST['role'] = 0
-            else:
-                POST['role'] = 1 
-            user_id = register_user(request.db_session, POST['email'], POST['password'], POST['role'])
-            if 'role' in POST and POST['interpret_name']:
+            user_id = register_user(request.db_session, POST['email'], POST['password'], int(POST['role']))
+            if POST['interpret_name'] and int(POST['role']) == 1:
                 register_interpret(request.db_session, user_id ,POST['interpret_name'])
-            return HTTPFound(request.route_path('register_success', user_id=user_id))
+            return {'register_succes': True}
         except DuplicateUserError:
             errors['email'] = 'duplicate_email'
-
 
     return {'errors': errors, 'error_messages': error_messages}
 
@@ -193,16 +189,16 @@ def login_fb(request):
     user = request.db_session.query(User).filter_by(email=request.POST['email']).first()
     errors = []
     if user is None:
-        register_fb(request.db_session, request.POST['email'], "", 0, request.POST['uuid'])
+        register_fb(request.db_session, request.POST['email'], "", 3, request.POST['uuid'])
     try:
         (headers, user) = request.authenticator.login_fb(request.POST['email'])
         request.response.headerlist.extend(headers)
-        return {}
+        return {'user': user}
     except NonExistingUserError:
         errors.append('wrong-email')
     return {'error': errors}
 
-@view_config(route_name='register_success', renderer='project:templates/register_success.mako')
+@view_config(route_name='register_success', request_method='get', renderer='json')
 def register_success(request):
     """Displays success message after registration
     """
@@ -245,7 +241,7 @@ def login(request):
     return {'errors':[]}
 
 
-@view_config(route_name='login', request_method='POST', renderer='project:templates/login.mako')
+@view_config(route_name='login', request_method='POST', renderer='json')
 def login_submit(request):
     """Processes submit of login data.
 
@@ -259,7 +255,8 @@ def login_submit(request):
 
     try:
         (headers, user) = request.authenticator.login(email, password)
-        return HTTPFound(location=request.route_path('home'), headers=headers)
+        request.response.headerlist.extend(headers)
+        return {'user': user}
     except WrongPasswordError:
         errors.append('wrong-password')
     except NonExistingUserError:
@@ -267,12 +264,13 @@ def login_submit(request):
     return {'errors': errors}
 
 
-@view_config(route_name='logout')
+@view_config(route_name='logout', request_method='POST', renderer='json')
 def logout(request):
     """Unauthorizes user.
     """
     headers = request.authenticator.logout()
-    return HTTPFound(location=request.route_path('home'), headers=headers)
+    request.response.headerlist.extend(headers)
+    return {'user': None}
 
 
 @view_config(route_name='beg_for_recovery', request_method='GET', renderer='project:templates/lost_password.mako')
@@ -430,13 +428,15 @@ def rate_song(request):
             request.db_session.add(rating_obj)
             all_ratings = request.db_session.query(Rating).filter_by(song_id = song.id).all()
             all_who_rated = len(all_ratings)
-            count = 0
-            for ratings in all_ratings:
-                count += ratings.rating
-            multiply_to_hundred = 25 # nasobime 25 lebo hodnotenie je od 0 po 4
-            average_rating = (count/all_who_rated)*multiply_to_hundred
-            #update_song = Song(song.interpret, song.name, average_rating, song.factor_played, song.factor_age)
-            request.db_session.query(Song).filter_by(id=song.id).update({"rating_max": average_rating})
+            minimalna_hranica = 19
+            if(all_who_rated > minimalna_hranica):
+                count = 0
+                for ratings in all_ratings:
+                    count += ratings.rating
+                multiply_to_hundred = 25 # nasobime 25 lebo hodnotenie je od 0 po 4
+                average_rating = (count/all_who_rated)*multiply_to_hundred
+                #update_song = Song(song.interpret, song.name, average_rating, song.factor_played, song.factor_age)
+                request.db_session.query(Song).filter_by(id=song.id).update({"rating_max": average_rating})
             return{'song': song, 'rating': rating_obj}
         else:
             error = "Lutujeme ale tuto pesnicku ste uz raz hodnotili"

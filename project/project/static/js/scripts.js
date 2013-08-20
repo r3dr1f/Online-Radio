@@ -1,13 +1,5 @@
 $(document).ready(function() {
 
-function registracia_objavenie_mena_interpreta(){
-	$(".trigger").click(function() {
-		$('.default_hide').slideToggle("fast");
-	});
-}
-
-registracia_objavenie_mena_interpreta();
-
 // templateovacia cast
 
 _.templateSettings.variable = "data";
@@ -85,6 +77,142 @@ var searchTemplate = _.template('' +
 		'<% }%>' +
 	'</div>'
 );
+
+var loginTemplate = _.template('' +
+		'<% if (!data.user && !data.register) { %>' +
+                '<div id="log in">' +
+                    '<form class="login-form" action="#" method="POST">' +
+                        '<div class="input-group">' +
+                            '<label for="email-login">E-mail</label>' +
+                            '<input type="email" name="email" id="email-login" required/>' +
+                        '</div>' +
+                        '<div class="input-group">' +
+                            '<label for="password-login">Heslo</label>' +
+                            '<input type="password" name="password" id="password-login" required/>' +    
+                        '</div>' +
+                        '<button type="submit" id="login" class="submit-form">Prihlásiť sa</button>' +
+                        '<a class="register-button" id="fb-login" href="#">Prihlásiť sa pomocou facebooku</a>' +
+                        '<a class="register-button" id="register" href="#">Zaregistrovať sa</a>' +
+                        '<div class="recovery-password">' +
+                        '<a id="beg-for-recovery" href="#" >Zabudol som heslo</a>' +
+                        '</div>' +
+                    '</form>' +
+                '</div>' +
+            '<% } if (data.user) { %>' +
+                    '<button type="submit" class="signout-button">Odhlásiť <%- data.user.email %></button>' +
+            '<% } if (data.register) { %>' +
+            	'<form method="POST" id="registracia">' +
+				    '<div class="input-group">' +
+				        '<label for="email">E-mail</label>' +
+				        '<input type="email" name="email" id="email" required/>' +
+				    '</div>' +
+				    '<div class="input-group">' +
+				        '<label for="password">Heslo</label>' +
+				        '<input type="password" name="password" id="password" required/>' +
+				    '</div>' +
+				    '<div class="input-group">' +
+				        '<label for="password_repeat">Heslo znovu</label>' +
+				        '<input type="password" name="password_repeat" id="password_repeat" required/>' +
+				    '</div>' +
+				    '<div class="input-group trigger">' +
+				        '<label for="role">Sa cítiš, že si interpret?</label>' +
+				        '<input type="checkbox" name="role" id="role"/>' +
+				    '</div>' +
+				    '<div class="input-group default_hide">' +
+				        '<label for="interpret_name">Ako ťa ľudia oslovujú?</label>' +
+				        '<input type="text" name="interpret_name" id="interpret_name"/>' +
+				    '</div>' +
+				    '<button type="submit" id="register-submit" class="submit-form">Zaregistrovať sa</button><br />' +
+				'</form>' +
+				'<% } else if (data.register_succes) { %>'+
+					'<h4>Boli ste zaregistrovaný. Ejchuchu. </h4>'+
+				'<% } %>'
+);
+
+$("body").on("click", ".signout-button", function(event){
+	event.preventDefault();
+	$.ajax({
+  	url: "/logout",
+  	type: "post",
+  	dataType: "json",
+  	success: function(data){
+  		console.log(data);
+  		var loginTemplateData = {
+					user: data.user
+				};
+  		$('.login').html(loginTemplate(loginTemplateData));
+  	}
+  });
+	return false;
+});
+
+$("body").on("click", "#login", function(event){
+	event.preventDefault();
+	$.ajax({
+  	url: "/login",
+  	type: "post",
+  	dataType: "json",
+  	data: {email: $('#email-login').val(), password: $('#password-login').val()},
+  	success: function(data){
+  		console.log(data);
+  		var loginTemplateData = {
+					user: data.user
+				};
+  		$('.login').html(loginTemplate(loginTemplateData));
+  	}
+  });
+	return false;
+});
+
+$("body").on("click", "#register", function(event){
+	event.preventDefault();
+	$.ajax({
+  	url: "/registracia",
+  	type: "get",
+  	dataType: "json",
+  	success: function(data){
+  		console.log(data);
+  		var loginTemplateData = {
+					register: data.register
+				};
+  		$('.login').html(loginTemplate(loginTemplateData));
+  	}
+  });
+	return false;
+});
+
+$("body").on("click", "#register-submit", function(event){
+	event.preventDefault();
+	var role = "";
+	if($('#role').is(':checked'))
+		role = 1
+	else
+		role = 0;
+	$.ajax({
+  	url: "/registracia",
+  	type: "post",
+  	dataType: "json",
+  	data: {email: $('#email').val(),
+  	 	   password: $('#password').val(), 
+  	 	   password_repeat: $('#password_repeat').val(), 
+  	 	   role: role, 
+  	 	   interpret_name: $('#interpret_name').val()},
+  	success: function(data){
+  		console.log(data);
+  		var loginTemplateData = {
+					register_succes: data.register_succes
+				};
+  		$('.login').html(loginTemplate(loginTemplateData));
+  	}
+  });
+	return false;
+});
+
+$('body').on("click", ".trigger", function(event){
+	$('.default_hide').slideToggle("fast");
+});
+
+
 
 $("body").on("click", "a.info-interpret", function(event){
   event.preventDefault();
@@ -253,6 +381,48 @@ $("body").on("keypress", "#comment-input", function(event){
         }
     }
 });
+
+$("body").on("click", "#fb-login", function(event){
+   			event.preventDefault();
+            FB.login
+            (
+                function( response )
+                {
+                	console.log(response);
+                    if ( response.authResponse )
+                    {
+                        FB.api
+                        (
+                            "/me",
+                            function( response )
+                            {
+                                $('#fb-name').val(response.name);
+                                $('#email').val(response.email);
+                                //document.getElementById("obrazok").src = "http://graph.facebook.com/" + response.id + "/picture";
+                                $.ajax({
+								  	url: "/login_fb",
+								  	type: "post",
+								  	dataType: "json",
+								  	data: {uuid: response.id, email: response.email},
+								  	success: function(data){
+											var templateData = {
+												user : data.user,
+												logout: data.logout
+											}
+											$('.login').html(loginTemplate(templateData));								  		
+								  		}
+								  });
+                            }
+                        )
+                    }
+                }, {scope: 'email'}
+            );
+            return false;
+});
+
+var loginTemplateData = {};
+$('.login').html(loginTemplate(loginTemplateData));
+
 
 
 });
