@@ -7,12 +7,13 @@ var songTemplate = _.template('' +
 	'<div class="song-info">' + 
 	'<span class="name">' + 
 		'<a href="interpret/<%- data.interpret.id %>" class="info-interpret"><%- data.interpret.name %></a> - <%- data.name %>' + 
-	'</span>' + 
+	'</span><br />' +
+	'<fb:like href="http://localhost:6543/song/<%- data.id %>" width="450" show_faces="true" send="false"></fb:like>' + 
 	'<input type="hidden" id="song-id" value="<%- data.id %>" />' +  
 	'<% if (!data.user) { %>' +
-	    '<span>Hodnotenie: <%- data.rating %> </span>' +
+	    '<span>Hodnotenie: <%- data.rating %> </span><br />' +
 	'<% } else { if (data.rating) { %>' +
-		'<span>Vaše hodnotenie: <%- data.rating.rating %></span>' +
+		'<span>Vaše hodnotenie: <%- data.rating.rating %></span><br />' +
 	'<% } else { %>' +
 		'<div id="rate">' + 
 			'<a href="#" id="rate0">0</a>' + 
@@ -22,8 +23,9 @@ var songTemplate = _.template('' +
 			'<a href="#" id="rate4">4</a>' + 
 		'</div>' +
 	'<% } %>' +
+	'<div class="song-rating"></div>' + 
 	'<% if (!data.request) {%>' +
-		'<a href="request/<%- data.id %>" class="request-to-play">request to play</a>' +
+		'<a href="request/<%- data.id %>" class="request-to-play">request to play</a><br />' +
 	'<% } else {%>' +
 	'<p class="already-requested">Už ste si požiadali o prehratie</p>' +
 	'<% }} %>' +
@@ -48,7 +50,7 @@ var interpretTemplate = _.template('' +
 	'<div class="interpret-info">' + 
 	'<span class="name">' + 
 		'<%- data.interpret.name %>' + 
-	'</span>' +  
+	'</span><br />'+  
 	'<div id="interpret-songs">' +
 	'<span>Songs:</span><br />' +
 	'<% for(var songi in data.songs) { %>' +
@@ -303,15 +305,20 @@ $("body").on("click", "#rate0, #rate1, #rate2, #rate3, #rate4", function(event){
   	url: "/rate",
   	type: "post",
   	dataType: "json",
-  	data: {id: $("#song-id").text(), rating: rating},
+  	data: {id: $("#song-id").val(), rating: rating},
   	success: function(data){
   		var templateData = {
 			name: data.song.name,
-			interpret: data.song.interpret.name,
+			interpret: data.song.interpret,
 			id: data.song.id,
-			rating: data.rating.rating
+			rating: data.rating.rating,
+			user: data.user
+		};
+		var commentsTemplateData = {
+			comments: data.comments
 		};
   		$('.song-info').html(songTemplate(templateData));
+  		$("#song-comments").html(commentsTemplate(commentsTemplateData));
   	}
   });
   return false;
@@ -348,7 +355,7 @@ $("body").on("click", ".request-to-play", function(event){
 		};
 		if(data.request){
 			$('.request-to-play').remove();
-	  		$('#rate').after('<p class="already-requested">Váša požiadavka bola zaznamenaná</p>');
+	  		$('.song-rating').html('<p class="already-requested">Vaša požiadavka bola zaznamenaná</p>');
   		}
   	}
   });
@@ -384,13 +391,9 @@ $("body").on("keypress", "#comment-input", function(event){
 
 $("body").on("click", "#fb-login", function(event){
    			event.preventDefault();
-            FB.login
-            (
-                function( response )
-                {
-                	console.log(response);
-                    if ( response.authResponse )
-                    {
+            FB.login(
+                function(response){
+                    if (response.authResponse){
                         FB.api
                         (
                             "/me",
@@ -406,8 +409,7 @@ $("body").on("click", "#fb-login", function(event){
 								  	data: {uuid: response.id, email: response.email},
 								  	success: function(data){
 											var templateData = {
-												user : data.user,
-												logout: data.logout
+												user : data.user
 											}
 											$('.login').html(loginTemplate(templateData));								  		
 								  		}
@@ -422,7 +424,6 @@ $("body").on("click", "#fb-login", function(event){
 
 var loginTemplateData = {};
 $('.login').html(loginTemplate(loginTemplateData));
-
 
 
 });

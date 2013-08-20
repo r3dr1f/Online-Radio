@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="sk-SK">
+<html lang="sk-SK" xmlns:fb="http://ogp.me/ns/fb#">
 <head>
 	<meta charset="utf-8">
 		<link type="text/css" href="${request.static_path('project:static/skins/jplayer.blue.monday.css')}" rel="stylesheet" />
@@ -43,9 +43,40 @@
     		});
 		</script>
     <link href="${request.static_path('project:static/stylesheets/screen.css')}" media="screen, projection" rel="stylesheet" type="text/css" />
+    
+    <!-- Facebook Share meta tags -->
+    <meta property="og:title" content="Rádio"/>
+    <meta property="og:site_name" content="Naše rádio"/>
+    <meta property="og:url" content="http://naseradio.sk"/>
 </head>
 
 <body id='museum'>
+
+<div id="jquery_jplayer_1" class="jp-jplayer"></div>
+  <div id="jp_container_1" class="jp-audio">
+    <div class="jp-type-single">
+      <div class="jp-gui jp-interface">
+        <ul class="jp-controls">
+          <li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
+          <li><a href="javascript:;" class="jp-pause" tabindex="1">stop</a></li>
+          <li><a href="javascript:;" class="jp-mute" tabindex="1" title="mute">mute</a></li>
+          <li><a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">unmute</a></li>
+          <li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>
+        </ul>
+        <div class="jp-volume-bar">
+          <div class="jp-volume-bar-value"></div>
+        </div>
+        <div class="jp-title">
+          		<a href="#">&nbsp;</a>
+      	</div>
+      </div>
+      <div class="jp-no-solution">
+        <span>Update Required</span>
+        To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+      </div>
+    </div>
+  </div>
+
 <div id="fb-root"></div>
 <script>
   window.fbAsyncInit = function() {
@@ -55,7 +86,8 @@
       channelUrl : '${request.static_path('project:static/channel.html')}', // Channel file for x-domain comms
       status     : true,                                 // Check Facebook Login status
       xfbml      : true,                                  // Look for social plugins on the page
-      oauth      : true
+      cookie	 : true,
+      oauth		 : true      
     });
 
     // Additional initialization code such as adding Event Listeners goes here
@@ -70,18 +102,40 @@
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
    
-   
-  $(document).ready(function(){
-   
-});
 
 
+   
    
 </script> 
     <div id="main">
         <div id="header">
+        	<div class="fb-like" data-href="http://www.facebook.com/pages/Test/487965897961635" data-width="450" data-show-faces="true" data-send="false"></div>
             <h1><a href="#">Project</a></h1>
             <div class="login">
+            % if request.userid is None:
+                <div id="log in">
+                    <form class="login-form" action="${request.route_path('login')}" method="POST">
+                        <div class="input-group">
+                            <label for="email-login">E-mail</label>
+                            <input type="email" name="email" id="email-login" required/>
+                        </div>
+                        <div class="input-group">
+                            <label for="password-login">Heslo</label>
+                            <input type="password" name="password" id="password-login" required/>    
+                        </div>
+                        <button type="submit" class="submit-form">Prihlásiť sa</button>
+                        <a class="register-button" id="fb-login" href="#">Prihlásiť sa pomocou facebooku</a>
+                        <a class="register-button" href="${request.route_path('register')}">Zaregistrovať sa</a>
+                        <div class="recovery-password">
+                        <a href="${request.route_path('beg_for_recovery')}" >Zabudol som heslo</a>
+                        </div>
+                    </form>
+                </div>
+            % else:
+                <form action="${request.route_path('logout')}" method="POST">
+                    <button type="submit" class="signout-button">Odhlásiť ${request.user.email}</button>
+                </form>
+            % endif
             </div>
         <div>
         	<label for="search"></label>

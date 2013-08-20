@@ -374,7 +374,7 @@ body {
 
 /* line 15, ../../../design/sass/screen.scss */
 #main {
-  margin: 30px auto;
+  margin:7em auto; /* posunieme nadol o velkost radia	*/
   width: 960px;
   background: #F3F3F3;
   border: thin solid #C3C3C3;
