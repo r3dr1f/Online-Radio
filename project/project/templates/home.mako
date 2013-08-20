@@ -34,13 +34,13 @@ function callAjax() {
 			    	//$(".jp-title").slideToggle("slow");
 			       	//$(".jp-title").delay(2500).slideToggle("slow");
 			       	window.setTimeout(function () {
-			         	$(".jp-title a").text(data.song.interpret.name+' - '+data.song.name);
+			         	$(".jp-title a").html('<div class="current-song-image"></div>' + data.song.interpret.name+' - '+data.song.name);
 			         	$('.jp-title a').attr('href',"song/"+data.song.id);
 			        }, 2000);
 			        setPlaylist(data.playlist);
 			    } else {
 		           	first_time = false;
-		           	$('.jp-title a').text(data.song.interpret.name+' - '+data.song.name);
+		           	$('.jp-title a').html('<div class="current-song-image"></div>' + data.song.interpret.name+' - '+data.song.name);
 		           	$('.jp-title a').attr('href',"song/"+data.song.id);
 					setPlaylist(data.playlist);
 		        }

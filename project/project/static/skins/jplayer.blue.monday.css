@@ -120,7 +120,7 @@ div.jp-interface ul.jp-controls {
 }
 
 div.jp-audio ul.jp-controls {
-	width: 10em;
+	width: 7em;
 	padding: 0;
 	float:left;
 }
@@ -321,7 +321,7 @@ div.jp-volume-bar {
 	cursor: pointer;
 }
 div.jp-audio div.jp-volume-bar {
-	margin: 0.85em 0 0 4em;
+	margin: 0.85em 0 0 0;
 }
 div.jp-volume-bar-value {
 	background: url("jplayer.blue.monday.jpg") 0 -256px repeat-x;
@@ -378,6 +378,7 @@ div.jp-title {
 	float:left;
 	/*text-align:center;
 	border-radius: 0px 0px 10px 10px;*/
+	width: 20em;
 }
 
 div.jp-title,
@@ -397,6 +398,10 @@ div.jp-playlist ul {
 	margin:0;
 	padding:0 20px;
 	font-size:.72em;
+}
+
+div.jp-title a {
+	font-size: 0.7em;
 }
 
 div.jp-title li {
