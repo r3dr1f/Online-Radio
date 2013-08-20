@@ -2,6 +2,7 @@
 <html lang="sk-SK" xmlns:fb="http://ogp.me/ns/fb#">
 <head>
 	<meta charset="utf-8">
+		<link href="${request.static_path('project:static/stylesheets/screen.css')}" media="screen, projection" rel="stylesheet" type="text/css" />
 		<link type="text/css" href="${request.static_path('project:static/skins/jplayer.blue.monday.css')}" rel="stylesheet" />
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/jquery.jplayer.min.js')}"></script>
@@ -42,8 +43,6 @@
 				});
     		});
 		</script>
-    <link href="${request.static_path('project:static/stylesheets/screen.css')}" media="screen, projection" rel="stylesheet" type="text/css" />
-    
     <!-- Facebook Share meta tags -->
     <meta property="og:title" content="Rádio"/>
     <meta property="og:site_name" content="Naše rádio"/>
@@ -56,19 +55,23 @@
   <div id="jp_container_1" class="jp-audio">
     <div class="jp-type-single">
       <div class="jp-gui jp-interface">
+      	<div id="logo">LOGO</div>
         <ul class="jp-controls">
           <li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
           <li><a href="javascript:;" class="jp-pause" tabindex="1">stop</a></li>
           <li><a href="javascript:;" class="jp-mute" tabindex="1" title="mute">mute</a></li>
           <li><a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">unmute</a></li>
-          <li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>
+          <li><div class="jp-volume-bar"><div class="jp-volume-bar-value"></div></div></li>
+          <!--<li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>-->
         </ul>
-        <div class="jp-volume-bar">
-          <div class="jp-volume-bar-value"></div>
-        </div>
         <div class="jp-title">
           		<a href="#">&nbsp;</a>
       	</div>
+      	<div id="show-playlist"><a href="#">playlist</a></div>
+      	<div id="search-form">
+        	<label for="search"></label>
+        	<input type="text" size="30" name="search" id="search" value="Hľadaj" />
+        </div>
       </div>
       <div class="jp-no-solution">
         <span>Update Required</span>
@@ -110,7 +113,6 @@
     <div id="main">
         <div id="header">
         	<div class="fb-like" data-href="http://www.facebook.com/pages/Test/487965897961635" data-width="450" data-show-faces="true" data-send="false"></div>
-            <h1><a href="#">Project</a></h1>
             <div class="login">
             % if request.userid is None:
                 <div id="log in">
@@ -137,11 +139,6 @@
                 </form>
             % endif
             </div>
-        <div>
-        	<label for="search"></label>
-        	<input type="text" size="30" name="search" id="search">
-        	<input type="submit" name="search-it" id="search-it" value="Vyhladat">
-        </div>
         </div>
         <div id="search-info">
         </div>

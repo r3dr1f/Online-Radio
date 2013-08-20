@@ -434,3 +434,29 @@ body {
 #comment-input {
 	display: none;
 }
+
+#logo {
+	float: left;
+	width: 4em;
+}
+
+.current-song-image {
+	float: left;
+	width: 2.85em;
+	overflow: hidden;
+	height: 2.85em;
+	margin-right: 0.5em;
+	background: #000;
+}
+
+#search-form {
+	margin-left: 1em;
+	float: left;
+}
+
+#show-playlist {
+	float: left;
+	width: 3em;
+	font-size: 0.8em;
+	margin-top: 0.4em;
+}

@@ -311,7 +311,7 @@ $("body").on("click", "#rate0, #rate1, #rate2, #rate3, #rate4", function(event){
 			name: data.song.name,
 			interpret: data.song.interpret,
 			id: data.song.id,
-			rating: data.rating.rating,
+			rating: data.rating,
 			user: data.user
 		};
 		var commentsTemplateData = {
@@ -324,21 +324,37 @@ $("body").on("click", "#rate0, #rate1, #rate2, #rate3, #rate4", function(event){
   return false;
 });
 
-$("#search-it").click(function(event){
-	$.ajax({
-  	url: "/search",
-  	type: "post",
-  	dataType: "json",
-  	data: {search: $("#search").val()},
-  	success: function(data){
-  		var templateData = {
-			songs: data.songs,
-			interprets: data.interprets
-		};
-  		$('#search-info').html(searchTemplate(templateData));
+$("#search").keypress(function(event){
+	if(event.which == 13) {
+        if ($(this).val() != "") {
+			$.ajax({
+			  	url: "/search",
+			  	type: "post",
+			  	dataType: "json",
+			  	data: {search: $("#search").val()},
+			  	success: function(data){
+			  		var templateData = {
+						songs: data.songs,
+						interprets: data.interprets
+					};
+	  				$('#search-info').html(searchTemplate(templateData));
+	  			}
+  			});
+  		}
   	}
-  });
 });
+
+$("#search").focus(function() {
+    if ($(this).val() == "Hľadaj") {
+       $(this).val("");
+    }
+  });
+  
+  $("#search").blur(function() {
+    if ($(this).val() == "") {
+      $(this).val("Hľadaj");
+    }
+  });
 
 $("body").on("click", ".request-to-play", function(event){
 	event.preventDefault();
