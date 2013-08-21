@@ -9,6 +9,7 @@
 		<script type="text/javascript" src="${request.static_path('project:static/js/jquery.jplayer.inspector.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/themeswitcher.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/underscore-min.js')}"></script>
+		<script type="text/javascript" src="${request.static_path('project:static/js/backbone.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/scripts.js')}"></script>
 		<script type="text/javascript">
 		    $(document).ready(function(){

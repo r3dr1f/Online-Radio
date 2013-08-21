@@ -1,5 +1,46 @@
 $(document).ready(function() {
 
+function info_song(){
+	var song_id = $('a.info-song').attr("href").split("/");
+  song_id = song_id.slice(-1)[0];
+  $.ajax({
+  	url: "/getsong",
+  	type: "post",
+  	dataType: "json",
+  	data: {id: song_id},
+  	success: function(data){
+  		if (data.user != undefined) {
+	  		if (data.rating != undefined) {
+	  			var templateData = {
+					name: data.song.name,
+					interpret: data.song.interpret,
+					id: data.song.id,
+					rating: data.rating,
+					user: data.user,
+					request: data.request
+				};
+			}	else {
+				var templateData = {
+					name: data.song.name,
+					interpret: data.song.interpret,
+					id: data.song.id,
+					user: data.user,
+					request: data.request
+				};
+			}	
+  		} else {
+  			var templateData = {
+				name: data.song.name,
+				interpret: data.song.interpret,
+				id: data.song.id,
+				rating: data.song.rating_max
+			};
+		}
+  		$('.song-info').html(songTemplate(templateData));
+  	}
+  });
+}
+
 // templateovacia cast
 
 _.templateSettings.variable = "data";
@@ -140,6 +181,7 @@ $("body").on("click", ".signout-button", function(event){
   	dataType: "json",
   	success: function(data){
   		console.log(data);
+  		info_song();
   		var loginTemplateData = {
 					user: data.user
 				};
@@ -158,6 +200,7 @@ $("body").on("click", "#login", function(event){
   	data: {email: $('#email-login').val(), password: $('#password-login').val()},
   	success: function(data){
   		console.log(data);
+  		info_song();
   		var loginTemplateData = {
 					user: data.user
 				};
@@ -240,45 +283,7 @@ $("body").on("click", "a.info-interpret", function(event){
 
 $("body").on("click", "a.info-song, .jp-title a", function(event){
   event.preventDefault();
-  var song_id = $(this).attr("href").split("/");
-  song_id = song_id.slice(-1)[0];
-  $.ajax({
-  	url: "/getsong",
-  	type: "post",
-  	dataType: "json",
-  	data: {id: song_id},
-  	success: function(data){
-  		if (data.user != undefined) {
-	  		if (data.rating != undefined) {
-	  			var templateData = {
-					name: data.song.name,
-					interpret: data.song.interpret,
-					id: data.song.id,
-					rating: data.rating,
-					user: data.user,
-					request: data.request
-				};
-			}	else {
-				var templateData = {
-					name: data.song.name,
-					interpret: data.song.interpret,
-					id: data.song.id,
-					user: data.user,
-					request: data.request
-				};
-			}	
-  		} else {
-  			var templateData = {
-				name: data.song.name,
-				interpret: data.song.interpret,
-				id: data.song.id,
-				rating: data.song.rating_max
-			};
-		}
-  		$('.song-info').html(songTemplate(templateData));
-  	}
-  });
-  
+  info_song();
   return false;
 });
 
@@ -425,6 +430,7 @@ $("body").on("click", "#fb-login", function(event){
 								  	dataType: "json",
 								  	data: {uuid: response.id, email: response.email},
 								  	success: function(data){
+											info_song();
 											var templateData = {
 												user : data.user
 											}
