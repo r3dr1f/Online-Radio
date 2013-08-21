@@ -34,14 +34,18 @@ function callAjax() {
 			    	//$(".jp-title").slideToggle("slow");
 			       	//$(".jp-title").delay(2500).slideToggle("slow");
 			       	window.setTimeout(function () {
-			         	$(".jp-title a").html('<div class="current-song-image"></div>' + data.song.interpret.name+' - '+data.song.name);
-			         	$('.jp-title a').attr('href',"song/"+data.song.id);
+			         	$(".jp-title > a").html('<div class="current-song-image"></div>' + data.song.interpret.name+' - '+data.song.name);
+			         	$('.jp-title > a').attr('href',"song/"+data.song.id);
+			         	$("#show-playlist").remove();
+			         	$(".jp-title").append('<div id="show-playlist"><a href="#">playlist</a></div>');
 			        }, 2000);
 			        setPlaylist(data.playlist);
 			    } else {
 		           	first_time = false;
-		           	$('.jp-title a').html('<div class="current-song-image"></div>' + data.song.interpret.name+' - '+data.song.name);
-		           	$('.jp-title a').attr('href',"song/"+data.song.id);
+		           	$('.jp-title > a').html('<div class="current-song-image"></div>' + data.song.interpret.name+' - '+data.song.name);
+		           	$('.jp-title > a').attr('href',"song/"+data.song.id);
+		           	$("#show-playlist").remove();
+		           	$(".jp-title").append('<div id="show-playlist"><a href="#">playlist</a></div>');
 					setPlaylist(data.playlist);
 		        }
         	}	

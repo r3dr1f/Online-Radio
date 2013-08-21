@@ -378,7 +378,7 @@ div.jp-title {
 	float:left;
 	/*text-align:center;
 	border-radius: 0px 0px 10px 10px;*/
-	width: 20em;
+	width: 30em;
 }
 
 div.jp-title,
@@ -400,8 +400,10 @@ div.jp-playlist ul {
 	font-size:.72em;
 }
 
-div.jp-title a {
+div.jp-title > a {
 	font-size: 0.7em;
+	float: left;
+	line-height: 2.5em;
 }
 
 div.jp-title li {

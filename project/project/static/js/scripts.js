@@ -127,7 +127,7 @@ var loginTemplate = _.template('' +
 				    '</div>' +
 				    '<button type="submit" id="register-submit" class="submit-form">Zaregistrovať sa</button><br />' +
 				'</form>' +
-				'<% } else if (data.register_succes) { %>'+
+				'<% } else if (data.register_success) { %>'+
 					'<h4>Boli ste zaregistrovaný. Ejchuchu. </h4>'+
 				'<% } %>'
 );
@@ -203,7 +203,7 @@ $("body").on("click", "#register-submit", function(event){
   	success: function(data){
   		console.log(data);
   		var loginTemplateData = {
-					register_succes: data.register_succes
+					register_success: data.register_success
 				};
   		$('.login').html(loginTemplate(loginTemplateData));
   	}
@@ -442,5 +442,15 @@ $("body").on("click", "#fb-login", function(event){
 var loginTemplateData = {};
 $('.login').html(loginTemplate(loginTemplateData));
 
+
+$("#login-button > a").click(function(e) {
+	e.preventDefault();
+	$("#login-content").show();
+	return false;
+});
+
+$("#login-button > a").blur(function() {
+	$("#login-content").hide();
+});
 
 });

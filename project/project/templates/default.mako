@@ -67,16 +67,22 @@
         <div class="jp-title">
           		<a href="#">&nbsp;</a>
       	</div>
-      	<div id="show-playlist"><a href="#">playlist</a></div>
       	<div id="search-form">
         	<label for="search"></label>
         	<input type="text" size="30" name="search" id="search" value="Hľadaj" />
         </div>
+        <div id="login-button">
+        	<a href="#">Prihlásiť</a>
+        	<div id="login-content">
+        		
+        	</div>
+        </div>
       </div>
-      <div class="jp-no-solution">
+      
+      <!--<div class="jp-no-solution">
         <span>Update Required</span>
         To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
-      </div>
+      </div>-->
     </div>
   </div>
 
