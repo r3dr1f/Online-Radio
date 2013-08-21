@@ -123,54 +123,54 @@ var searchTemplate = _.template('' +
 );
 
 var loginTemplate = _.template('' +
-		'<% if (!data.user && !data.register) { %>' +
-                '<div id="log in">' +
-                    '<form class="login-form" action="#" method="POST">' +
-                        '<div class="input-group">' +
-                            '<label for="email-login">E-mail</label>' +
-                            '<input type="email" name="email" id="email-login" required/>' +
-                        '</div>' +
-                        '<div class="input-group">' +
-                            '<label for="password-login">Heslo</label>' +
-                            '<input type="password" name="password" id="password-login" required/>' +    
-                        '</div>' +
-                        '<button type="submit" id="login" class="submit-form">Prihlásiť sa</button>' +
-                        '<a class="register-button" id="fb-login" href="#">Prihlásiť sa pomocou facebooku</a>' +
-                        '<a class="register-button" id="register" href="#">Zaregistrovať sa</a>' +
-                        '<div class="recovery-password">' +
-                        '<a id="beg-for-recovery" href="#" >Zabudol som heslo</a>' +
-                        '</div>' +
-                    '</form>' +
+	'<% if (!data.user && !data.register) { %>' +
+        '<div id="log-in">' +
+            '<form class="login-form" action="#" method="POST">' +
+                '<div class="input-group">' +
+                    '<label for="email-login">E-mail</label>' +
+                    '<input type="email" name="email" id="email-login" required/>' +
                 '</div>' +
-            '<% } if (data.user) { %>' +
-                    '<button type="submit" class="signout-button">Odhlásiť <%- data.user.email %></button>' +
-            '<% } if (data.register) { %>' +
-            	'<form method="POST" id="registracia">' +
-				    '<div class="input-group">' +
-				        '<label for="email">E-mail</label>' +
-				        '<input type="email" name="email" id="email" required/>' +
-				    '</div>' +
-				    '<div class="input-group">' +
-				        '<label for="password">Heslo</label>' +
-				        '<input type="password" name="password" id="password" required/>' +
-				    '</div>' +
-				    '<div class="input-group">' +
-				        '<label for="password_repeat">Heslo znovu</label>' +
-				        '<input type="password" name="password_repeat" id="password_repeat" required/>' +
-				    '</div>' +
-				    '<div class="input-group trigger">' +
-				        '<label for="role">Sa cítiš, že si interpret?</label>' +
-				        '<input type="checkbox" name="role" id="role"/>' +
-				    '</div>' +
-				    '<div class="input-group default_hide">' +
-				        '<label for="interpret_name">Ako ťa ľudia oslovujú?</label>' +
-				        '<input type="text" name="interpret_name" id="interpret_name"/>' +
-				    '</div>' +
-				    '<button type="submit" id="register-submit" class="submit-form">Zaregistrovať sa</button><br />' +
-				'</form>' +
-				'<% } else if (data.register_success) { %>'+
-					'<h4>Boli ste zaregistrovaný. Ejchuchu. </h4>'+
-				'<% } %>'
+                '<div class="input-group">' +
+                    '<label for="password-login">Heslo</label>' +
+                    '<input type="password" name="password" id="password-login" required/>' +    
+                '</div>' +
+                '<button type="submit" id="login" class="submit-form">Prihlásiť sa</button>' +
+                '<a class="register-button" id="register" href="#">Zaregistrovať sa</a>' +
+                '<a class="register-button" id="fb-login" href="#">&nbsp;</a>' +
+                '<div class="recovery-password">' +
+                '<a id="beg-for-recovery" href="#" >Zabudol som heslo</a>' +
+                '</div>' +
+            '</form>' +
+        '</div>' +
+    '<% } if (data.user) { %>' +
+        '<button type="submit" class="signout-button">Odhlásiť <%- data.user.email %></button>' +
+    '<% } if (data.register) { %>' +
+      	'<form method="POST" id="registracia">' +
+		    '<div class="input-group">' +
+		        '<label for="email">E-mail</label>' +
+		        '<input type="email" name="email" id="email" required/>' +
+		    '</div>' +
+		    '<div class="input-group">' +
+		        '<label for="password">Heslo</label>' +
+		        '<input type="password" name="password" id="password" required/>' +
+		    '</div>' +
+		    '<div class="input-group">' +
+		        '<label for="password_repeat">Heslo znovu</label>' +
+		        '<input type="password" name="password_repeat" id="password_repeat" required/>' +
+		    '</div>' +
+		    '<div class="input-group trigger">' +
+		        '<label for="role">Sa cítiš, že si interpret?</label>' +
+		        '<input type="checkbox" name="role" id="role"/>' +
+		    '</div>' +
+		    '<div class="input-group default_hide">' +
+		        '<label for="interpret_name">Ako ťa ľudia oslovujú?</label>' +
+		        '<input type="text" name="interpret_name" id="interpret_name"/>' +
+		    '</div>' +
+		    '<button type="submit" id="register-submit" class="submit-form">Zaregistrovať sa</button><br />' +
+		'</form>' +
+		'<% } else if (data.register_success) { %>'+
+			'<h4>Boli ste zaregistrovaný. Ejchuchu. </h4>'+
+		'<% } %>'
 );
 
 $("body").on("click", ".signout-button", function(event){
@@ -185,7 +185,7 @@ $("body").on("click", ".signout-button", function(event){
   		var loginTemplateData = {
 					user: data.user
 				};
-  		$('.login').html(loginTemplate(loginTemplateData));
+  		$('#login-content').html(loginTemplate(loginTemplateData));
   	}
   });
 	return false;
@@ -204,7 +204,7 @@ $("body").on("click", "#login", function(event){
   		var loginTemplateData = {
 					user: data.user
 				};
-  		$('.login').html(loginTemplate(loginTemplateData));
+  		$('#login-content').html(loginTemplate(loginTemplateData));
   	}
   });
 	return false;
@@ -221,7 +221,7 @@ $("body").on("click", "#register", function(event){
   		var loginTemplateData = {
 					register: data.register
 				};
-  		$('.login').html(loginTemplate(loginTemplateData));
+  		$('#login-content').html(loginTemplate(loginTemplateData));
   	}
   });
 	return false;
@@ -248,14 +248,19 @@ $("body").on("click", "#register-submit", function(event){
   		var loginTemplateData = {
 					register_success: data.register_success
 				};
-  		$('.login').html(loginTemplate(loginTemplateData));
+  		$('#login-content').html(loginTemplate(loginTemplateData));
   	}
   });
 	return false;
 });
 
-$('body').on("click", ".trigger", function(event){
-	$('.default_hide').slideToggle("fast");
+$('body').on("click", ".trigger > input", function(event){
+	if($('.trigger > input').is(':checked')){
+		$('.trigger > input').attr('checked','checked');
+		$('.default_hide').slideToggle("fast");	
+	} else {
+		$('.trigger > input').removeAttr('checked');
+	}
 });
 
 
@@ -434,7 +439,7 @@ $("body").on("click", "#fb-login", function(event){
 											var templateData = {
 												user : data.user
 											}
-											$('.login').html(loginTemplate(templateData));								  		
+											$('#login-content').html(loginTemplate(templateData));								  		
 								  		}
 								});
                             }
@@ -446,12 +451,12 @@ $("body").on("click", "#fb-login", function(event){
 });
 
 var loginTemplateData = {};
-$('.login').html(loginTemplate(loginTemplateData));
+$('#login-content').html(loginTemplate(loginTemplateData));
 
 
-$("#login-button > a").click(function(e) {
+$("#my-account > a").click(function(e) {
 	e.preventDefault();
-	$("#login-content").show();
+	$("#log-in").slideToggle('slow');
 	return false;
 });
 
