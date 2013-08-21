@@ -178,7 +178,7 @@ def register_submission(request):
             user_id = register_user(request.db_session, POST['email'], POST['password'], int(POST['role']))
             if POST['interpret_name'] and int(POST['role']) == 1:
                 register_interpret(request.db_session, user_id ,POST['interpret_name'])
-            return {'register_succes': True}
+            return {'register_success': True}
         except DuplicateUserError:
             errors['email'] = 'duplicate_email'
 

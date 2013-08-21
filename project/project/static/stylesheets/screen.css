@@ -457,6 +457,23 @@ body {
 #show-playlist {
 	float: left;
 	width: 3em;
-	font-size: 0.8em;
-	margin-top: 0.4em;
+	margin-left: 1em;
+}
+
+#show-playlist a {
+	font-size: 0.7em;
+	display: block;
+	line-height: 2.5em;
+}
+
+#login-button {
+	float: right;
+	margin-right: 1em;
+}
+
+#login-content {
+	display: none;
+	position: fixed;
+	top: 3em;
+	right: 0em;
 }
