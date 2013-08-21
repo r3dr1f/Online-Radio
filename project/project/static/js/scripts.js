@@ -3,6 +3,7 @@ $(document).ready(function() {
 // templateovacia cast
 
 _.templateSettings.variable = "data";
+
 var songTemplate = _.template('' + 
 	'<div class="song-info">' + 
 	'<span class="name">' + 
@@ -429,7 +430,7 @@ $("body").on("click", "#fb-login", function(event){
 											}
 											$('.login').html(loginTemplate(templateData));								  		
 								  		}
-								  });
+								});
                             }
                         )
                     }
