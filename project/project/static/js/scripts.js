@@ -71,7 +71,7 @@ var songTemplate = _.template('' +
 	'<% } else {%>' +
 	'<p class="already-requested">Už ste si požiadali o prehratie</p>' +
 	'<% }} %>' +
-	
+
 	'<% if (data.user) { %>' +
 		'<br /><a href="/comment/<%- data.id %>" class="add-comment">Pridať komentár</a><br />' +
 		'<textarea id="comment-input">' +

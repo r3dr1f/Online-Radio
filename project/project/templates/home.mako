@@ -37,7 +37,7 @@ function callAjax() {
 			         	$(".jp-title > a").html('<div class="current-song-image"></div>' + data.song.interpret.name+' - '+data.song.name);
 			         	$('.jp-title > a').attr('href',"song/"+data.song.id);
 			         	$("#show-playlist").remove();
-			         	$(".jp-title").append('<div id="show-playlist"><a href="#">playlist</a></div>');
+			         	$(".jp-title").append('<div id="show-playlist"><a href="#"><img src="../static/images/playlist.png" width="32" height="32" alt="playlist" title="playlist" class = "playlist-img"></a></div>');
 			        }, 2000);
 			        setPlaylist(data.playlist);
 			    } else {
@@ -45,7 +45,7 @@ function callAjax() {
 		           	$('.jp-title > a').html('<div class="current-song-image"></div>' + data.song.interpret.name+' - '+data.song.name);
 		           	$('.jp-title > a').attr('href',"song/"+data.song.id);
 		           	$("#show-playlist").remove();
-		           	$(".jp-title").append('<div id="show-playlist"><a href="#">playlist</a></div>');
+		           	$(".jp-title").append('<div id="show-playlist"><a href="#"><img src="../static/images/playlist.png" width="32" height="32" alt="playlist" title="playlist" class = "playlist-img"></a></div>');
 					setPlaylist(data.playlist);
 		        }
         	}	
@@ -58,7 +58,7 @@ callAjax();
 
 });
 </script>
-<h2>Toto je úvodná stránka</h2>
+<h2>Playlist</h2>
  <table id="playlist"></table>
  <div class="song-info"></div>
 </%block>

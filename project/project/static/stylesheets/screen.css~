@@ -75,15 +75,7 @@ form {
   display: block;
   width: 140px;
   padding: 5px 0;
-  border-radius: 3px;
-  border: thin solid #1F8DD6;
-  background: #1F8DD6;
   cursor: pointer;
-  color: white;
-}
-/* line 15, ../../../design/sass/_form.scss */
-.submit-form:hover {
-  background: #0e7cc5;
 }
 
 /* line 19, ../../../design/sass/_form.scss */
@@ -181,6 +173,7 @@ form {
 }
 /* line 96, ../../../design/sass/_form.scss */
 .login-form .input-group label {
+  font-family: 'Comfortaa', serif;
   display: block;
   text-align: left;
 }
@@ -289,9 +282,8 @@ h3 {
 
 /* line 14, ../../../design/sass/_text.scss */
 a {
-  color: #444;
   padding: 5 5px;
-  color: #36646c;
+  color: #bbbbbb;
   text-decoration: none;
 }
 /* line 19, ../../../design/sass/_text.scss */
@@ -301,9 +293,10 @@ a:hover {
 
 /* line 7, ../../../design/sass/screen.scss */
 body {
-  font-family: Helvetica, Arial, sans-serif;
+  /*font-family: Helvetica, Arial, sans-serif;*/
+  font-family: 'Comfortaa', serif;
   color: #333;
-  background: #F0F2FA;
+  background: #FFFFFF;
 }
 
 /* line 1, ../../../design/sass/_header.scss */
@@ -325,24 +318,6 @@ body {
   border-top-left-radius: 5px;
 }
 
-/* line 21, ../../../design/sass/_header.scss */
-.register-button {
-  display: inline-block;
-  padding: 7px 5px 6px 5px;
-  border-radius: 3px;
-  border: thin solid #61B842;
-  background: #61B842;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  color: white;
-  font-size: 13px;
-}
-/* line 32, ../../../design/sass/_header.scss */
-.register-button:hover {
-  background: #50a731;
-  text-decoration: none;
-}
 
 /* line 38, ../../../design/sass/_header.scss */
 .recovery-password {
@@ -374,7 +349,7 @@ body {
 
 /* line 15, ../../../design/sass/screen.scss */
 #main {
-  padding:7em auto; /* posunieme nadol o velkost radia	*/
+  margin:7em auto; /* posunieme nadol o velkost radia	*/
   width: 960px;
   background: #F3F3F3;
   border: thin solid #C3C3C3;
@@ -433,4 +408,194 @@ body {
 
 #comment-input {
 	display: none;
+}
+
+#logo {
+	padding-left:1em;
+	float: left;
+	width: 300px;
+	height: 2.5em;
+}
+
+.current-song-image {
+	float: left;
+	width: 2.85em;
+	overflow: hidden;
+	height: 2.85em;
+	margin-right: 0.5em;
+	background: #000;
+}
+
+#show-playlist {
+	float: left;
+	width: 3em;
+	margin-left: 1em;
+}
+
+.playlist-img {
+	padding-top: 0.7em;
+}
+
+#show-playlist a {
+	font-size: 0.7em;
+	display: block;
+	line-height: 2.5em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* vysuvaci login form */
+
+.default_hide{
+  display: none;
+}
+
+#comment-input {
+	display: none;
+}
+
+#logo {
+	float: left;
+	width: 4em;
+}
+
+.current-song-image {
+	float: left;
+	width: 2.85em;
+	overflow: hidden;
+	height: 2.85em;
+	margin-right: 0.5em;
+	background: #000;
+}
+
+#search-form {
+	margin-left: 1em;
+	float: left;
+	border-radius: 3px;
+	padding-top: 0.7em;
+}
+
+#search {
+	font-family: 'Comfortaa', serif;
+	float: right;
+	width: 15em;
+	border-radius: 3px;
+	height: 1.5em;
+	font-weight: bold;
+}
+
+#show-playlist {
+	float: right;
+	width: 3em;
+	margin-left: 1em;
+}
+
+#show-playlist a {
+	font-size: 0.7em;
+	display: block;
+	line-height: 2.5em;
+}
+
+#my-account {
+	float: right;
+	margin-left: 1em;
+	margin-right: 0.5em;
+	padding-top:0.5em;
+}
+
+#login-content {
+	padding: 0px;
+	display: block;
+	position: fixed;
+	top: 1.4em;
+	right: 0em;
+}
+
+#log-in{
+	font-size: 0.6em;
+	position: absolute;
+	right: 0em;
+	top: 1.8em;
+	display: none;
+	background: #d2d2d2;
+	width: 24em;
+	border-radius: 0px 0px 0px 5px;
+}
+
+.login-form{
+	float: left;
+	padding: 1em 2em;
+}
+
+.input-group label{
+	margin-top: 0.3em;
+	display: block;
+	width: 4em;
+	float: left;
+}
+
+.submit-form{
+	font-family: 'Comfortaa', serif;
+	color: #d2d2d2;
+	font-weight: bold;
+	font-size: 1.2em;
+	border-radius: 5px;
+	background-color: #2d2d2d;
+	display: block;
+	margin: 0.5em auto;
+	float: left;	
+}
+
+.submit-form:hover{
+	border-color: #0e7cc5;
+}
+
+.register-button{
+	padding: 0.2em;
+	padding-left: 5px;
+	padding-right: 5px;
+	/*font-family: Helvetica, Arial, sans-serif;*/
+	font-family: 'Comfortaa', Helvetica, Arial, serif;
+	font-weight: bold;
+	font-size: 1.2em;
+	color:#d2d2d2;
+	vertical-align: middle;
+	display: inline-block;
+	float: right;
+	display: block;
+	text-decoration: none;
+	margin: 0.5em auto;
+	text-align: left;
+	border-radius: 5px;
+	background-color: #2d2d2d;
+	border: 2px outset buttonface;
+}
+
+.register-button:hover {
+  border-color: #0e7cc5;
+  text-decoration: none;
+}
+
+#fb-login{
+	float: none;
+	clear:both;
+	background-image:url('../images/facebook_login.gif');
+	border: none;
+	background-repeat: none;
+	width: 175px;
+	height: 25px;
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	border-radius: 0px;
 }
