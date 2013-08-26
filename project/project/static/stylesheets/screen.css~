@@ -22,6 +22,7 @@ time, mark, audio, video {
 
 /* line 22, ../../../../../../../../../var/lib/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html {
+  min-width: 1000px;
   line-height: 1;
 }
 
@@ -293,7 +294,6 @@ a:hover {
 
 /* line 7, ../../../design/sass/screen.scss */
 body {
-	
   /*font-family: Helvetica, Arial, sans-serif;*/
   font-family: 'Comfortaa', Helvetica, Arial, serif;
   color: #333;
@@ -601,4 +601,18 @@ body {
 	padding: 0px;
 	border: 0px;
 	border-radius: 0px;
+}
+
+#preview-container {
+	width: 300px;
+	height: 300px;
+	overflow: hidden;
+}
+
+#jcrop-image {
+	display: none;
+}
+
+.current-song-image img {
+	width: 2.85em;
 }
