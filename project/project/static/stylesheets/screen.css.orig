@@ -157,7 +157,6 @@ form {
 
 /* line 85, ../../../design/sass/_form.scss */
 .login {
-  position: absolute;
   top: 0;
   right: 20px;
 }
@@ -173,7 +172,7 @@ form {
 }
 /* line 96, ../../../design/sass/_form.scss */
 .login-form .input-group label {
-  font-family: 'Comfortaa', serif;
+  font-family: 'Comfortaa', Helvetica, Arial, serif;
   display: block;
   text-align: left;
 }
@@ -294,7 +293,7 @@ a:hover {
 /* line 7, ../../../design/sass/screen.scss */
 body {
   /*font-family: Helvetica, Arial, sans-serif;*/
-  font-family: 'Comfortaa', serif;
+  font-family: 'Comfortaa', Helvetica, Arial, serif;
   color: #333;
   background: #FFFFFF;
 }
@@ -486,7 +485,7 @@ body {
 }
 
 #search {
-	font-family: 'Comfortaa', serif;
+	font-family: 'Comfortaa', Helvetica, Arial, serif;
 	float: right;
 	width: 15em;
 	border-radius: 3px;
@@ -525,6 +524,23 @@ body {
 	font-size: 0.6em;
 	position: absolute;
 	right: 0em;
+<<<<<<< HEAD
+}
+
+#preview-container {
+	width: 300px;
+	height: 300px;
+	overflow: hidden;
+}
+
+#jcrop-image {
+	display: none;
+}
+
+.current-song-image img {
+	width: 2.85em;
+}
+=======
 	top: 1.8em;
 	display: none;
 	background: #d2d2d2;
@@ -545,7 +561,7 @@ body {
 }
 
 .submit-form{
-	font-family: 'Comfortaa', serif;
+	font-family: 'Comfortaa', Helvetica, Arial, serif;
 	color: #d2d2d2;
 	font-weight: bold;
 	font-size: 1.2em;
@@ -599,3 +615,4 @@ body {
 	border: 0px;
 	border-radius: 0px;
 }
+>>>>>>> 7b530e3781dd23892c1a3c13309e44c0bc38071f

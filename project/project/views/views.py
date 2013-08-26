@@ -509,7 +509,10 @@ def upload_image(request):
             
         #else update
         else:
-            os.remove(os.getcwd() + '/project/static/uploaded/' + str(img.user_id) + '/' + img.name)
+            try:
+                os.remove(os.getcwd() + '/project/static/uploaded/' + str(img.user_id) + '/' + img.name)
+            except:
+                pass
             request.db_session.query(Image).filter_by(user_id=request.user.id).update({"name": filename})
             
         #get image file type
@@ -566,6 +569,11 @@ def crop_image(request):
     #resize image to 300x300 + antialias
     img = img.resize((dst_width, dst_height), Im.ANTIALIAS)
     
+    directory = os.getcwd() + '/project/static/uploaded/' + str(request.userid) + '/'
+    
+    if not os.path.exists(directory):
+            os.makedirs(directory)
+    
     #rewrite image
     file_path = os.getcwd() + '/project/static/uploaded/' + request.POST['src']
     if file_type == "jpg":      
@@ -579,10 +587,12 @@ def crop_image(request):
         ok = True
         
     if ok:
-        #delete image from tmp
-        os.remove(os.getcwd() + '/project/static/tmp/' + request.POST['src'])
+        try:
+            #delete image from tmp
+            os.remove(os.getcwd() + '/project/static/tmp/' + request.POST['src'])
+            #remove folder from tmp
+            os.rmdir(os.getcwd() + '/project/static/tmp/' + str(request.userid))
+        except:
+            pass
         
-        #remove folder from tmp
-        dir = request.POST['src'].split('/')
-        os.rmdir(os.getcwd() + '/project/static/tmp/' + dir[0])
     return {'ok': True}

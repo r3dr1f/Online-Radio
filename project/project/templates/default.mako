@@ -5,10 +5,12 @@
 		<link href="${request.static_path('project:static/stylesheets/screen.css')}" media="screen, projection" rel="stylesheet" type="text/css" />
 		<link type="text/css" href="${request.static_path('project:static/stylesheets/jquery.Jcrop.min.css')}" rel="stylesheet" />
 		<link type="text/css" href="${request.static_path('project:static/skins/jplayer.blue.monday.css')}" rel="stylesheet" />
-		<script type="text/javascript" src="${request.static_path('project:static/js/jquery-1.10.2.min.js')}"></script>
-		<script type="text/javascript" src="${request.static_path('project:static/js/jquery.form.min.js')}"></script>
+		<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Comfortaa&subset=latin,latin-ext">
+		
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/jquery.jplayer.min.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/jquery.jplayer.inspector.js')}"></script>
+		<script type="text/javascript" src="${request.static_path('project:static/js/jquery.form.min.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/themeswitcher.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/underscore-min.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/jquery.Jcrop.min.js')}"></script>
@@ -56,9 +58,9 @@
 
 <div id="jquery_jplayer_1" class="jp-jplayer"></div>
   <div id="jp_container_1" class="jp-audio">
+    <div id="logo"> <img src = "../static/images/3sk_logo_orange_mini.png" width = "120px" > </div>
     <div class="jp-type-single">
       <div class="jp-gui jp-interface">
-      	<div id="logo">LOGO</div>
         <ul class="jp-controls">
           <li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
           <li><a href="javascript:;" class="jp-pause" tabindex="1">stop</a></li>
@@ -74,10 +76,9 @@
         	<label for="search"></label>
         	<input type="text" size="30" name="search" id="search" value="Hľadaj" />
         </div>
-        <div id="login-button">
-        	<a href="#">Prihlásiť</a>
+        <div id="my-account">
+        	<a href="#"><img src="../static/images/profile.png" width="32" height="32" class="playlist-icon"></a>
         	<div id="login-content">
-        		
         	</div>
         </div>
       </div>
@@ -110,7 +111,7 @@
      var js, fjs = d.getElementsByTagName(s)[0];
      if (d.getElementById(id)) {return;}
      js = d.createElement(s); js.id = id;
-     js.src = "http://connect.facebook.net/en_US/all.js";
+     js.src = "//connect.facebook.net/en_US/all.js";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
    
