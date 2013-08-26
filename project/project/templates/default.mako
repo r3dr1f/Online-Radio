@@ -124,32 +124,6 @@
         <div id="header">
         	<div class="fb-like" data-href="http://www.facebook.com/pages/Test/487965897961635" data-width="450" data-show-faces="true" data-send="false"></div>
         	<div id="image-upload"></div>
-            <div class="login">
-            % if request.userid is None:
-                <div id="log in">
-                    <form class="login-form" action="${request.route_path('login')}" method="POST">
-                        <div class="input-group">
-                            <label for="email-login">E-mail</label>
-                            <input type="email" name="email" id="email-login" required/>
-                        </div>
-                        <div class="input-group">
-                            <label for="password-login">Heslo</label>
-                            <input type="password" name="password" id="password-login" required/>    
-                        </div>
-                        <button type="submit" class="submit-form">Prihlásiť sa</button>
-                        <a class="register-button" id="fb-login" href="#">Prihlásiť sa pomocou facebooku</a>
-                        <a class="register-button" href="${request.route_path('register')}">Zaregistrovať sa</a>
-                        <div class="recovery-password">
-                        <a href="${request.route_path('beg_for_recovery')}" >Zabudol som heslo</a>
-                        </div>
-                    </form>
-                </div>
-            % else:
-                <form action="${request.route_path('logout')}" method="POST">
-                    <button type="submit" class="signout-button">Odhlásiť ${request.user.email}</button>
-                </form>
-            % endif
-            </div>
         </div>
         <div id="search-info">
         </div>
