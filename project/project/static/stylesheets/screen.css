@@ -427,9 +427,9 @@ body {
 }
 
 #show-playlist {
-	float: left;
-	width: 3em;
-	margin-left: 1em;
+	float: right;
+	width: 32px;
+	margin-left: 5%;
 }
 
 .playlist-img {
@@ -480,9 +480,10 @@ body {
 
 #search-form {
 	margin-left: 1em;
-	float: left;
+	float: right;
 	border-radius: 3px;
 	padding-top: 0.7em;
+	width:15%;
 }
 
 #search {
@@ -492,6 +493,7 @@ body {
 	border-radius: 3px;
 	height: 1.5em;
 	font-weight: bold;
+	width:100%;
 }
 
 #show-playlist {
