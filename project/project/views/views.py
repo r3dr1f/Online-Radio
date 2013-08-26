@@ -576,23 +576,20 @@ def crop_image(request):
     
     #rewrite image
     file_path = os.getcwd() + '/project/static/uploaded/' + request.POST['src']
-    if file_type == "jpg":      
+    
+    if file_type.lower() == "jpg":      
         img.save(file_path, "JPEG")
-        ok = True
-    elif file_type == "gif":
+    elif file_type.lower() == "gif":
         img.save(file_path, "GIF")
-        ok = True
-    elif file_type == "png":
+    elif file_type.lower() == "png":
         img.save(file_path, "PNG")
-        ok = True
         
-    if ok:
-        try:
-            #delete image from tmp
-            os.remove(os.getcwd() + '/project/static/tmp/' + request.POST['src'])
-            #remove folder from tmp
-            os.rmdir(os.getcwd() + '/project/static/tmp/' + str(request.userid))
-        except:
-            pass
+    try:
+        #delete image from tmp
+        os.remove(os.getcwd() + '/project/static/tmp/' + request.POST['src'])
+        #remove folder from tmp
+        os.rmdir(os.getcwd() + '/project/static/tmp/' + str(request.userid))
+    except:
+        pass
         
     return {'ok': True}
