@@ -34,7 +34,11 @@ function callAjax() {
 			    	//$(".jp-title").slideToggle("slow");
 			       	//$(".jp-title").delay(2500).slideToggle("slow");
 			       	window.setTimeout(function () {
-			         	$(".jp-title > a").html('<div class="current-song-image"></div>' + data.song.interpret.name+' - '+data.song.name);
+			       		var image = '';
+			       		if (data.song.interpret.user.image !== 'undefined' && data.song.interpret.user.image.length > 0) {
+			       			image = '<img src="/static/uploaded/' + data.song.interpret.user.id + '/' + data.song.interpret.user.image[0].name + '" />';
+			       		}
+			         	$(".jp-title > a").html('<div class="current-song-image">' + image + '</div>' + data.song.interpret.name+' - '+data.song.name);
 			         	$('.jp-title > a').attr('href',"song/"+data.song.id);
 			         	$("#show-playlist").remove();
 			         	$(".jp-title").append('<div id="show-playlist"><a href="#"><img src="../static/images/playlist.png" width="32" height="32" alt="playlist" title="playlist" class = "playlist-img"></a></div>');
@@ -42,7 +46,11 @@ function callAjax() {
 			        setPlaylist(data.playlist);
 			    } else {
 		           	first_time = false;
-		           	$('.jp-title > a').html('<div class="current-song-image"></div>' + data.song.interpret.name+' - '+data.song.name);
+		           	var image = '';
+		       		if (data.song.interpret.user.image !== 'undefined' && data.song.interpret.user.image.length > 0) {
+		       			image = '<img src="/static/uploaded/' + data.song.interpret.user.id + '/' + data.song.interpret.user.image[0].name + '" />';
+		       		}
+		           	$('.jp-title > a').html('<div class="current-song-image">' + image + '</div>' + data.song.interpret.name+' - '+data.song.name);
 		           	$('.jp-title > a').attr('href',"song/"+data.song.id);
 		           	$("#show-playlist").remove();
 		           	$(".jp-title").append('<div id="show-playlist"><a href="#"><img src="../static/images/playlist.png" width="32" height="32" alt="playlist" title="playlist" class = "playlist-img"></a></div>');

@@ -218,8 +218,11 @@ $("body").on("click", "#login", function(event){
   	dataType: "json",
   	data: {email: $('#email-login').val(), password: $('#password-login').val()},
   	success: function(data){
+<<<<<<< HEAD
+=======
   		console.log(data);
   		info_song();
+>>>>>>> 7b530e3781dd23892c1a3c13309e44c0bc38071f
   		var loginTemplateData = {
 					user: data.user
 				};
@@ -483,6 +486,7 @@ $("#login-button > a").blur(function() {
 	$("#login-content").hide();
 });
 
+<<<<<<< HEAD
 function showResponse(responseText, statusText, xhr, $form)  {
 	var src = responseText.image.user_id + "/" + responseText.image.name; 
     $("#jcrop-image").attr("src", "/static/tmp/" + src);
@@ -548,4 +552,6 @@ $("#image-upload").html(imageTemplate(imageData));
   	}
   });
 
+=======
+>>>>>>> 7b530e3781dd23892c1a3c13309e44c0bc38071f
 });
