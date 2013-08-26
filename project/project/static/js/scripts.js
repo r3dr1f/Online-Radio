@@ -132,6 +132,25 @@ var loginTemplate = _.template('' +
 				'<% } %>'
 );
 
+var imageTemplate = _.template('' +
+	'<form id="imageform" method="post" enctype="multipart/form-data" action="/image">' +
+		'Upload image <input type="file" name="photoimg" id="photoimg" />' +
+	'</form>' +
+	'<div id="image">' + 
+		'<img src="" alt="skuska" id="jcrop-image"/>' +
+	'</div>' +
+	'<div id="preview-container">'+
+		'<img src="" id="preview" alt="" />' +
+	'</div>' +
+
+  	'<input type="hidden" id="crop-src" name="crop-src" value="" />' +
+	'<input type="hidden" id="x" name="x" value="0" />' +
+	'<input type="hidden" id="y" name="y" value="0" />' +
+	'<input type="hidden" id="w" name="w" value="0" />' +
+	'<input type="hidden" id="h" name="h" value="0" />' +
+	'<input type="submit" value="Orezať" id="crop" />'
+);
+
 $("body").on("click", ".signout-button", function(event){
 	event.preventDefault();
 	$.ajax({
@@ -157,7 +176,6 @@ $("body").on("click", "#login", function(event){
   	dataType: "json",
   	data: {email: $('#email-login').val(), password: $('#password-login').val()},
   	success: function(data){
-  		console.log(data);
   		var loginTemplateData = {
 					user: data.user
 				};
@@ -452,5 +470,70 @@ $("#login-button > a").click(function(e) {
 $("#login-button > a").blur(function() {
 	$("#login-content").hide();
 });
+
+function showResponse(responseText, statusText, xhr, $form)  {
+	var src = responseText.image.user_id + "/" + responseText.image.name; 
+    $("#jcrop-image").attr("src", "/static/tmp/" + src);
+    $("#preview").attr("src", "/static/tmp/" + src);
+    $("#jcrop-image").show();
+    $("#crop-src").val(src);
+    
+    $('#jcrop-image').Jcrop({
+		onChange: showPreview,
+		onSelect: showPreview,
+		bgColor: "white",
+		aspectRatio: 1
+	}); 
+} 
+
+$('body').on('change', '#photoimg', function() { 
+	$("#imageform").ajaxForm({
+		success: showResponse
+	}).submit();
+});
+
+var imageData = {};
+$("#image-upload").html(imageTemplate(imageData));
+
+  function checkCoords()
+  {
+  	 if (parseInt(jQuery('#w').val())>0) return true;
+  	 return false;
+  };
+  
+  function showPreview(coords)
+  {
+    if (parseInt(coords.w) > 0)
+    {
+      var rx = 300 / coords.w;
+      var ry = 300 / coords.h;
+
+      $("#preview").css({
+        width: Math.round(rx * $("#jcrop-image").width()) + 'px',
+        height: Math.round(ry * $("#jcrop-image").height()) + 'px',
+        marginLeft: '-' + Math.round(rx * coords.x) + 'px',
+        marginTop: '-' + Math.round(ry * coords.y) + 'px'
+      });
+      
+       jQuery('#x').val(coords.x);
+	   jQuery('#y').val(coords.y);
+	   jQuery('#w').val(coords.w);
+	   jQuery('#h').val(coords.h);
+    }
+  }
+  
+  $("#crop").click(function(e) {
+  	if (checkCoords()) {
+  		$.ajax({
+  			url: "/cropimage",
+  			dataType: "json",
+  			type: "POST",
+  			data: {'src': $("#crop-src").val(), 'x': $("#x").val(), 'y': $("#y").val(), 'w': $("#w").val(), 'h': $("#h").val()},
+  			success: function(data) {
+  				console.log(data);
+  			}
+  		});
+  	}
+  });
 
 });

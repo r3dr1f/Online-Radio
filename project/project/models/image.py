@@ -9,6 +9,7 @@ from sqlalchemy import (
     ForeignKey,
     Enum,
     Float,
+    DateTime,
     )
  
 from sqlalchemy.orm import (
@@ -28,39 +29,38 @@ from sqlalchemy.orm import (
     sessionmaker,
     )
  
-from bcrypt import (hashpw, gensalt)
- 
-from ..utils import valid_email
 from . import Base
 
-class Interpret(Base):
-    """Database table Interpret.
+import datetime
+ 
+class ValidationError(Exception):
+    pass 
+ 
+class Image(Base):
+    """Database table Image.
  
     Attributes:
         id: Identificator of object
-        user_id: id of user
-        interpret_name: name of interpret
+        interpret_id: Id of user who uploaded the image
+        name: Name of the image
     """
-    __tablename__ = 'interpret'
+    __tablename__ = 'image'
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('uzer.id')) #one to one vztah s userom
+    user_id = Column(Integer, ForeignKey('uzer.id'))
+    user = relationship('User', backref="image")
     name = Column(String(100))
-    user = relationship('User', backref="interpret")
-    
-
+ 
     def __init__(self, user, name):
         """Initialization of class.
         """
-        if (user.role != "interpret"):
-            user.role = "interpret"
         self.user_id = user.id
-        self.name = name
         self.user = user
+        self.name = name
  
     def __repr__(self):
-        """Returns representative object of class interpret.
+        """Returns representative object of class User.
         """
-        return "Interpret<{id}>".format(id=self.id)
+        return "Image<{id}>".format(id=self.user_id)
     
     def __json__(self, request):
-        return {'id': self.id, 'name': self.name, 'user': self.user}
+        return {'id': self.id, 'name': self.name, 'user_id': self.user_id}

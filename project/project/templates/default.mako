@@ -3,12 +3,15 @@
 <head>
 	<meta charset="utf-8">
 		<link href="${request.static_path('project:static/stylesheets/screen.css')}" media="screen, projection" rel="stylesheet" type="text/css" />
+		<link type="text/css" href="${request.static_path('project:static/stylesheets/jquery.Jcrop.min.css')}" rel="stylesheet" />
 		<link type="text/css" href="${request.static_path('project:static/skins/jplayer.blue.monday.css')}" rel="stylesheet" />
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+		<script type="text/javascript" src="${request.static_path('project:static/js/jquery-1.10.2.min.js')}"></script>
+		<script type="text/javascript" src="${request.static_path('project:static/js/jquery.form.min.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/jquery.jplayer.min.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/jquery.jplayer.inspector.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/themeswitcher.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/underscore-min.js')}"></script>
+		<script type="text/javascript" src="${request.static_path('project:static/js/jquery.Jcrop.min.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/scripts.js')}"></script>
 		<script type="text/javascript">
 		    $(document).ready(function(){
@@ -119,6 +122,7 @@
     <div id="main">
         <div id="header">
         	<div class="fb-like" data-href="http://www.facebook.com/pages/Test/487965897961635" data-width="450" data-show-faces="true" data-send="false"></div>
+        	<div id="image-upload"></div>
             <div class="login">
             % if request.userid is None:
                 <div id="log in">

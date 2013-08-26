@@ -122,7 +122,7 @@ class User(Base):
         return "User<{email}>".format(email=self.email)
     
     def __json__(self, request):
-        return {'id': self.id, 'email': self.email}
+        return {'id': self.id, 'email': self.email, 'image': self.image}
  
  
 class InvalidEmailError(ValidationError):
