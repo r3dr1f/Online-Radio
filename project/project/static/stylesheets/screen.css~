@@ -173,7 +173,7 @@ form {
 }
 /* line 96, ../../../design/sass/_form.scss */
 .login-form .input-group label {
-  font-family: 'Comfortaa', serif;
+  font-family: 'Comfortaa', Helvetica, Arial, serif;
   display: block;
   text-align: left;
 }
@@ -293,8 +293,9 @@ a:hover {
 
 /* line 7, ../../../design/sass/screen.scss */
 body {
+	
   /*font-family: Helvetica, Arial, sans-serif;*/
-  font-family: 'Comfortaa', serif;
+  font-family: 'Comfortaa', Helvetica, Arial, serif;
   color: #333;
   background: #FFFFFF;
 }
@@ -427,9 +428,9 @@ body {
 }
 
 #show-playlist {
-	float: left;
-	width: 3em;
-	margin-left: 1em;
+	float: right;
+	width: 32px;
+	margin-left: 5%;
 }
 
 .playlist-img {
@@ -480,18 +481,20 @@ body {
 
 #search-form {
 	margin-left: 1em;
-	float: left;
+	float: right;
 	border-radius: 3px;
 	padding-top: 0.7em;
+	width:15%;
 }
 
 #search {
-	font-family: 'Comfortaa', serif;
+	font-family: 'Comfortaa', Helvetica, Arial, serif;
 	float: right;
 	width: 15em;
 	border-radius: 3px;
 	height: 1.5em;
 	font-weight: bold;
+	width:100%;
 }
 
 #show-playlist {
@@ -545,7 +548,7 @@ body {
 }
 
 .submit-form{
-	font-family: 'Comfortaa', serif;
+	font-family: 'Comfortaa', Helvetica, Arial, serif;
 	color: #d2d2d2;
 	font-weight: bold;
 	font-size: 1.2em;

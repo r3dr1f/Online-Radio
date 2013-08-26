@@ -12,6 +12,9 @@
 		<script type="text/javascript" src="${request.static_path('project:static/js/themeswitcher.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/underscore-min.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/scripts.js')}"></script>
+		<script type="text/javascript"> $(window).scroll(function(){
+  $('.jp_container_1').css('left',-$(window).scrollLeft());
+});</script>
 		<script type="text/javascript">
 		    $(document).ready(function(){
       		var stream = {
@@ -55,7 +58,7 @@
 
 <div id="jquery_jplayer_1" class="jp-jplayer"></div>
   <div id="jp_container_1" class="jp-audio">
-    <div id="logo"> <img src = "../static/images/3sk_logo_orange_mini.png" width = "120px" > </div>
+    <div id="logo"> <img src = "../static/images/3sk_logo_orange_mini.png" style="height: 2.5em;" > </div>
     <div class="jp-type-single">
       <div class="jp-gui jp-interface">
         <ul class="jp-controls">
@@ -69,14 +72,16 @@
         <div class="jp-title">
           		<a href="#">&nbsp;</a>
       	</div>
-      	<div id="search-form">
-        	<label for="search"></label>
-        	<input type="text" size="30" name="search" id="search" value="Hľadaj" />
-        </div>
-        <div id="my-account">
+      	
+      	<div id="my-account">
         	<a href="#"><img src="../static/images/profile.png" width="32" height="32" class="playlist-icon"></a>
         	<div id="login-content">
         	</div>
+        </div>
+      	
+      	<div id="search-form">
+        	<label for="search"></label>
+        	<input type="text" size="30" name="search" id="search" value="Hľadaj" />
         </div>
       </div>
       
