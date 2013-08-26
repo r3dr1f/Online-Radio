@@ -35,7 +35,6 @@ div.jp-video {
 	background-color:#eee;
 }
 div.jp-audio {
-	min-width: 1000px;
 	width:100%; /* sirka radia na celu stranu */
 	position:fixed; /* fixna pozicia pri scrollovani */
 	top: 0;
@@ -123,7 +122,7 @@ div.jp-interface ul.jp-controls {
 
 div.jp-audio ul.jp-controls {
 	width: 7em;
-	margin-left: 10%;	
+	margin-left: 15%;	
 	float:left;
 	text-align: center;
 	padding-top: 0.3em;
@@ -384,7 +383,7 @@ div.jp-title {
 	float:left;
 	/*text-align:center;
 	border-radius: 0px 0px 10px 10px;*/
-	/*width: 30%;*/
+	width: 30em;
 }
 
 div.jp-title,
