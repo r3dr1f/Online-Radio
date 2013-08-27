@@ -471,9 +471,9 @@ body {
 
 .current-song-image {
 	float: left;
-	width: 2.85em;
+	width: 2.60em;
 	overflow: hidden;
-	height: 2.85em;
+	height: 2.60em;
 	margin-right: 0.5em;
 	background: #000;
 }
@@ -494,6 +494,7 @@ body {
 	height: 1.5em;
 	font-weight: bold;
 	width:100%;
+	padding: 0 0.3em;
 }
 
 #show-playlist {
@@ -613,5 +614,9 @@ body {
 }
 
 .current-song-image img {
-	width: 2.85em;
+	width: 2.60em;
+}
+
+.comment-image img {
+	width: 2.60em;
 }
