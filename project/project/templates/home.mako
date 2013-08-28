@@ -66,7 +66,6 @@ callAjax();
 
 });
 </script>
-<h2>Playlist</h2>
- <table id="playlist"></table>
- <div class="song-info"></div>
+
+<div class="song-info"></div>
 </%block>
