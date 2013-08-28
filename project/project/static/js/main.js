@@ -140,7 +140,6 @@ $(document).ready(function(){
 	
 	$("#search").keypress(function(event){
 		if(event.which == 13) {
-			alert(typeof song_info === 'undefined');
 			if(typeof component !== 'undefined'){
 		  		component.exit();
 		  	}
