@@ -419,8 +419,20 @@ body {
 	background: #000;
 }
 
+#show-playlist {
+	float: right;
+	width: 32px;
+	margin-left: 5%;
+}
+
 .playlist-img {
 	padding-top: 0.7em;
+}
+
+#show-playlist a {
+	font-size: 0.7em;
+	display: block;
+	line-height: 2.5em;
 }
 
 .playlist {
@@ -610,3 +622,84 @@ table#playlist td {
 .comment-image img {
 	width: 2.60em;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#logo {
+	padding-left: 0.3em;
+	padding-right: 0.7em;
+	float: left;
+	width: 4em;
+	height: 2.5em;
+}
+
+.current-song-image {
+	float: left;
+	width: 2.85em;
+	overflow: hidden;
+	height: 2.85em;
+	margin-right: 0.5em;
+	background: #000;
+}
+
+#search-form {
+	margin-left: 1em;
+	float: right;
+	border-radius: 3px;
+	padding-top: 0.7em;
+	width: 10%;
+}
+
+#search {
+	font-family: 'Comfortaa', Helvetica, Arial, serif;
+	float: right;
+	width: 1em;
+	border-radius: 3px;
+	height: 1.5em;
+	font-weight: bold;
+	width:100%;
+	overflow: hidden;
+	font-size: 0.5em;
+}
+
+#show-playlist {
+	float: right;
+	width: 1em;
+	margin-left: 1em;
+}
+
+#show-playlist a {
+	font-size: 0.7em;
+	display: block;
+	line-height: 2.5em;
+}
+
+#my-account {
+	float: right;
+	margin-left: 1em;
+	margin-right: 0.5em;
+	padding-top:0.5em;
+}
+
+
+.current-song-image img {
+	width: 2.85em;
+}
+

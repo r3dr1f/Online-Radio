@@ -419,8 +419,20 @@ body {
 	background: #000;
 }
 
+#show-playlist {
+	float: right;
+	width: 32px;
+	margin-left: 5%;
+}
+
 .playlist-img {
 	padding-top: 0.7em;
+}
+
+#show-playlist a {
+	font-size: 0.7em;
+	display: block;
+	line-height: 2.5em;
 }
 
 .playlist {
