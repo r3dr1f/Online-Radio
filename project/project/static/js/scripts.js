@@ -1,7 +1,17 @@
 $(document).ready(function() {
 
-function info_song(){
-	var song_id = $('a.info-song').attr("href").split("/");
+function getCommentImages(comments) {
+	for (var i = 0; i < comments.length; i++) {
+		if (comments[i].user.uuid != 0) {
+			comments[i].user.img_src = "http://graph.facebook.com/" + comments[i].user.uuid + "/picture?type=square";
+		} else {
+			comments[i].user.img_src = "/static/uploaded/" + comments[i].user.id + "/" + comments[i].user.image[0].name;
+		}
+	}
+}
+
+function info_song(elem){
+  var song_id = elem.attr("href").split("/");
   song_id = song_id.slice(-1)[0];
   $.ajax({
   	url: "/getsong",
@@ -37,6 +47,14 @@ function info_song(){
 			};
 		}
   		$('.song-info').html(songTemplate(templateData));
+  		getCommentImages(data.comments);
+  		console.log(data.comments);
+  		if (data.comments != undefined) {
+			var commentsTemplateData = {
+				comments: data.comments
+			};
+	  		$("#song-comments").html(commentsTemplate(commentsTemplateData));
+  		}
   	}
   });
 }
@@ -84,7 +102,7 @@ var songTemplate = _.template('' +
 
 var commentsTemplate = _.template('' +
 	'<% for(var commenti in data.comments) { %>' +
-		'<div class="comment"><div class="comment-text"><%- data.comments[commenti].text %></div><div class="comment-time"><%- data.comments[commenti].add_time %></div></div>' +
+		'<div class="comment"><div class="comment-image"><img src="<%- data.comments[commenti].user.img_src %>" /></div><div class="comment-user"><%- data.comments[commenti].user.fullname %></div><div class="comment-text"><%- data.comments[commenti].text %></div><div class="comment-time"><%- data.comments[commenti].add_time %></div></div>' +
 	'<% } %>'
 );
 
@@ -199,8 +217,7 @@ $("body").on("click", ".signout-button", function(event){
   	type: "post",
   	dataType: "json",
   	success: function(data){
-  		console.log(data);
-  		info_song();
+  		info_song($(".signout-button"));
   		var loginTemplateData = {
 					user: data.user
 				};
@@ -218,8 +235,6 @@ $("body").on("click", "#login", function(event){
   	dataType: "json",
   	data: {email: $('#email-login').val(), password: $('#password-login').val()},
   	success: function(data){
-  		console.log(data);
-  		info_song();
   		var loginTemplateData = {
 					user: data.user
 				};
@@ -236,7 +251,6 @@ $("body").on("click", "#register", function(event){
   	type: "get",
   	dataType: "json",
   	success: function(data){
-  		console.log(data);
   		var loginTemplateData = {
 					register: data.register
 				};
@@ -263,7 +277,6 @@ $("body").on("click", "#register-submit", function(event){
   	 	   role: role, 
   	 	   interpret_name: $('#interpret_name').val()},
   	success: function(data){
-  		console.log(data);
   		var loginTemplateData = {
 					register_success: data.register_success
 				};
@@ -307,7 +320,7 @@ $("body").on("click", "a.info-interpret", function(event){
 
 $("body").on("click", "a.info-song, .jp-title a", function(event){
   event.preventDefault();
-  info_song();
+  info_song($(this));
   return false;
 });
 
@@ -344,6 +357,8 @@ $("body").on("click", "#rate0, #rate1, #rate2, #rate3, #rate4", function(event){
 			rating: data.rating,
 			user: data.user
 		};
+		
+		getCommentImages(data.comments);
 		var commentsTemplateData = {
 			comments: data.comments
 		};
@@ -425,6 +440,8 @@ $("body").on("keypress", "#comment-input", function(event){
 		  		success: function(data){
 		  			$("#comment-input").val("");
 		  			$("#comment-input").hide();
+		  			
+		  			getCommentImages(data.comments);
 		  			var templateData = {
 		  				comments: data.comments
 		  			};
@@ -454,7 +471,6 @@ $("body").on("click", "#fb-login", function(event){
 								  	dataType: "json",
 								  	data: {uuid: response.id, email: response.email},
 								  	success: function(data){
-											info_song();
 											var templateData = {
 												user : data.user
 											}
@@ -542,7 +558,6 @@ $("#image-upload").html(imageTemplate(imageData));
   			type: "POST",
   			data: {'src': $("#crop-src").val(), 'x': $("#x").val(), 'y': $("#y").val(), 'w': $("#w").val(), 'h': $("#h").val()},
   			success: function(data) {
-  				console.log(data);
   			}
   		});
   	}
