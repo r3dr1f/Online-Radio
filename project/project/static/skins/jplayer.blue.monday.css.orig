@@ -35,10 +35,11 @@ div.jp-video {
 	background-color:#eee;
 }
 div.jp-audio {
+	min-width: 1000px;
 	width:100%; /* sirka radia na celu stranu */
 	position:fixed; /* fixna pozicia pri scrollovani */
 	top: 0;
-	z-index:1;
+	z-index:700;
 	//border-radius: 10px;
 	padding: 0.2em 0;
 	background-color: #2d2d2d;
@@ -122,7 +123,11 @@ div.jp-interface ul.jp-controls {
 
 div.jp-audio ul.jp-controls {
 	width: 7em;
-	margin-left: 15%;	
+<<<<<<< HEAD
+	margin-left: 10%;	
+=======
+	margin-left: 5em;	
+>>>>>>> 66f84f48df09ab71c4faacc1b9b93640b9d1ad1e
 	float:left;
 	text-align: center;
 	padding-top: 0.3em;
@@ -377,13 +382,13 @@ div.jp-video div.jp-duration {
 /* @group playlist */
 
 div.jp-title {
-	font-family: 'Comfortaa', serif;
+	font-family: 'Comfortaa', Helvetica, Arial, serif;
 	font-weight: bold;
 	font-size: 1em;
 	float:left;
 	/*text-align:center;
 	border-radius: 0px 0px 10px 10px;*/
-	width: 30em;
+	/*width: 30%;*/
 }
 
 div.jp-title,

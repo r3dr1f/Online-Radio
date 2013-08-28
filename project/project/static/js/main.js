@@ -1,4 +1,4 @@
-function main(){
+$(document).ready(function(){
 
 	var stream = {
 			title: "ABC Jazz",
@@ -58,8 +58,6 @@ function main(){
 	  	dataType: "json",
 	  	data: {email: $('#email-login').val(), password: $('#password-login').val()},
 	  	success: function(data){
-	  		console.log(data);
-	  		info_song();
 	  		var loginTemplateData = {
 						user: data.user
 					};
@@ -131,7 +129,7 @@ function main(){
 	  return false;
 	});
 	
-	$("body").on("click", "a.info-song, .jp-title a", function(event){
+	$("body").on("click", "a.info-song, .jp-title > a", function(event){
 	  event.preventDefault();
 	  var song_id = $(this).attr("href").split("/");
   	  song_id = song_id.slice(-1)[0];
@@ -139,8 +137,6 @@ function main(){
   	  component.enter($('.song-info'));
 	  return false;
 	});
-	
-	
 	
 	$("#search").keypress(function(event){
 		if(event.which == 13) {
@@ -267,4 +263,70 @@ function main(){
 		$("#login-content").hide();
 	});
 
-}
+	function showResponse(responseText, statusText, xhr, $form)  {
+	var src = responseText.image.user_id + "/" + responseText.image.name; 
+    $("#jcrop-image").attr("src", "/static/tmp/" + src);
+    $("#preview").attr("src", "/static/tmp/" + src);
+    $("#jcrop-image").show();
+    $("#crop-src").val(src);
+    
+    $('#jcrop-image').Jcrop({
+		onChange: showPreview,
+		onSelect: showPreview,
+		bgColor: "white",
+		aspectRatio: 1
+	}); 
+} 
+
+$('body').on('change', '#photoimg', function() { 
+	$("#imageform").ajaxForm({
+		success: showResponse
+	}).submit();
+});
+
+var imageData = {};
+$("#image-upload").html(imageTemplate(imageData));
+
+  function checkCoords()
+  {
+  	 if (parseInt(jQuery('#w').val())>0) return true;
+  	 return false;
+  };
+  
+  function showPreview(coords)
+  {
+    if (parseInt(coords.w) > 0)
+    {
+      var rx = 300 / coords.w;
+      var ry = 300 / coords.h;
+
+      $("#preview").css({
+        width: Math.round(rx * $("#jcrop-image").width()) + 'px',
+        height: Math.round(ry * $("#jcrop-image").height()) + 'px',
+        marginLeft: '-' + Math.round(rx * coords.x) + 'px',
+        marginTop: '-' + Math.round(ry * coords.y) + 'px'
+      });
+      
+       jQuery('#x').val(coords.x);
+	   jQuery('#y').val(coords.y);
+	   jQuery('#w').val(coords.w);
+	   jQuery('#h').val(coords.h);
+    }
+  }
+  
+  $("#crop").click(function(e) {
+  	if (checkCoords()) {
+  		$.ajax({
+  			url: "/cropimage",
+  			dataType: "json",
+  			type: "POST",
+  			data: {'src': $("#crop-src").val(), 'x': $("#x").val(), 'y': $("#y").val(), 'w': $("#w").val(), 'h': $("#h").val()},
+  			success: function(data) {
+  			}
+  		});
+  	}
+  });
+	
+	
+});
+

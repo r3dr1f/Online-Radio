@@ -29,6 +29,13 @@ function Song_info(id) {
 			};
 		}
 		$(this.element).html(songTemplate(templateData));
+		getCommentImages(this.data.comments);
+  		if (this.data.comments != undefined) {
+			var commentsTemplateData = {
+				comments: this.data.comments
+			};
+	  		$("#song-comments").html(commentsTemplate(commentsTemplateData));
+  		}
 	}
 	function fetch_data(id, done_callback){
 		$.ajax({
@@ -188,6 +195,7 @@ function Search_info(param){
 function Comments_info(id, comment){
 	this.data = {};
 	this.render = function(){
+		getCommentImages(this.data.comments);
 		var templateData = {
 			comments: this.data.comments
 		};

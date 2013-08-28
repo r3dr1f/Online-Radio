@@ -1,3 +1,15 @@
+function getCommentImages(comments) {
+	for (var i = 0; i < comments.length; i++) {
+		if (comments[i].user.uuid != 0) {
+			comments[i].user.img_src = "http://graph.facebook.com/" + comments[i].user.uuid + "/picture?type=square";
+		} else {
+			comments[i].user.img_src = "/static/uploaded/" + comments[i].user.id + "/" + comments[i].user.image[0].name;
+		}
+	}
+}
+
+// templateovacia cast
+
 _.templateSettings.variable = "data";
 
 var songTemplate = _.template('' + 
@@ -39,7 +51,7 @@ var songTemplate = _.template('' +
 
 var commentsTemplate = _.template('' +
 	'<% for(var commenti in data.comments) { %>' +
-		'<div class="comment"><div class="comment-text"><%- data.comments[commenti].text %></div><div class="comment-time"><%- data.comments[commenti].add_time %></div></div>' +
+		'<div class="comment"><div class="comment-image"><img src="<%- data.comments[commenti].user.img_src %>" /></div><div class="comment-user"><%- data.comments[commenti].user.fullname %></div><div class="comment-text"><%- data.comments[commenti].text %></div><div class="comment-time"><%- data.comments[commenti].add_time %></div></div>' +
 	'<% } %>'
 );
 
@@ -78,8 +90,10 @@ var searchTemplate = _.template('' +
 );
 
 var loginTemplate = _.template('' +
-	'<% if (!data.user && !data.register) { %>' +
-        '<div id="log-in">' +
+	'<div id="log-in">' +
+	'<% if (data.user != null) { %>' +
+        '<button type="submit" class="signout-button">Odhlásiť <%- data.user.email %></button>' +
+	'<% } else if ((!data.user || data.user == null) && !data.register) { %>' +
             '<form class="login-form" action="#" method="POST">' +
                 '<div class="input-group">' +
                     '<label for="email-login">E-mail</label>' +
@@ -96,10 +110,7 @@ var loginTemplate = _.template('' +
                 '<a id="beg-for-recovery" href="#" >Zabudol som heslo</a>' +
                 '</div>' +
             '</form>' +
-        '</div>' +
-    '<% } if (data.user) { %>' +
-        '<button type="submit" class="signout-button">Odhlásiť <%- data.user.email %></button>' +
-    '<% } if (data.register) { %>' +
+    '<% } else if (data.register) { %>' +
       	'<form method="POST" id="registracia">' +
 		    '<div class="input-group">' +
 		        '<label for="email">E-mail</label>' +
@@ -125,6 +136,53 @@ var loginTemplate = _.template('' +
 		'</form>' +
 		'<% } else if (data.register_success) { %>'+
 			'<h4>Boli ste zaregistrovaný. Ejchuchu. </h4>'+
-		'<% } %>'
+		'<% } %>' + 
+	'</div>'
 );
 
+var imageTemplate = _.template('' +
+	'<form id="imageform" method="post" enctype="multipart/form-data" action="/image">' +
+		'Upload image <input type="file" name="photoimg" id="photoimg" />' +
+	'</form>' +
+	'<div id="image">' + 
+		'<img src="" alt="skuska" id="jcrop-image"/>' +
+	'</div>' +
+	'<div id="preview-container">'+
+		'<img src="" id="preview" alt="" />' +
+	'</div>' +
+
+  	'<input type="hidden" id="crop-src" name="crop-src" value="" />' +
+	'<input type="hidden" id="x" name="x" value="0" />' +
+	'<input type="hidden" id="y" name="y" value="0" />' +
+	'<input type="hidden" id="w" name="w" value="0" />' +
+	'<input type="hidden" id="h" name="h" value="0" />' +
+	'<input type="submit" value="Orezať" id="crop" />'
+);
+
+$(document).ready(function() {
+
+
+
+  
+  $("body").on("click", "#show-playlist a", function(event) {
+  	event.preventDefault();
+  	if (!$(".playlist").hasClass("expanded")) {
+	  	$(".playlist").animate({width: "20em"}, 1000, "easeInOutQuad", function() {
+	  		$(this).addClass("expanded");
+	  	});
+	  	$("#main").animate({marginLeft: "20em"}, 1000, "easeInOutQuad");
+  	} else {
+  		$(".playlist").animate({width: 0}, 1000, "easeInOutQuad", function() {
+	  		$(this).removeClass("expanded");
+	  	});
+	  	$("#main").animate({marginLeft: 0}, 1000, "easeInOutQuad");
+  	}
+  	return false;
+  });
+  
+  $(window).resize(function() {
+  	$(".playlist").height($(window).height()-$(".jp-audio").outerHeight(true));
+  });
+  
+  $(".playlist").height($(window).height()-$(".jp-audio").outerHeight(true));
+});

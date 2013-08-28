@@ -173,7 +173,7 @@ form {
 }
 /* line 96, ../../../design/sass/_form.scss */
 .login-form .input-group label {
-  font-family: 'Comfortaa', serif;
+  font-family: 'Comfortaa', Helvetica, Arial, serif;
   display: block;
   text-align: left;
 }
@@ -294,7 +294,7 @@ a:hover {
 /* line 7, ../../../design/sass/screen.scss */
 body {
   /*font-family: Helvetica, Arial, sans-serif;*/
-  font-family: 'Comfortaa', serif;
+  font-family: 'Comfortaa', Helvetica, Arial, serif;
   color: #333;
   background: #FFFFFF;
 }
@@ -411,7 +411,8 @@ body {
 }
 
 #logo {
-	padding-left:1em;
+	padding-left: 0.3em;
+	padding-right: 0.7em;
 	float: left;
 	width: 300px;
 	height: 2.5em;
@@ -427,13 +428,16 @@ body {
 }
 
 #show-playlist {
-	float: left;
-	width: 3em;
-	margin-left: 1em;
+	float: right;
+	width: 32px;
+	margin-left: 5%;
 }
 
 .playlist-img {
-	padding-top: 0.7em;
+	padding-top: 0.6em;
+	width: 2em;
+	height: 2em;
+	padding-left: 0.2em;
 }
 
 #show-playlist a {
@@ -480,23 +484,27 @@ body {
 
 #search-form {
 	margin-left: 1em;
-	float: left;
+	float: right;
 	border-radius: 3px;
 	padding-top: 0.7em;
+	width: 10%;
 }
 
 #search {
-	font-family: 'Comfortaa', serif;
+	font-family: 'Comfortaa', Helvetica, Arial, serif;
 	float: right;
-	width: 15em;
+	width: 1em;
 	border-radius: 3px;
 	height: 1.5em;
 	font-weight: bold;
+	width:100%;
+	overflow: hidden;
+	font-size: 0.5em;
 }
 
 #show-playlist {
 	float: right;
-	width: 3em;
+	width: 1em;
 	margin-left: 1em;
 }
 
@@ -545,7 +553,7 @@ body {
 }
 
 .submit-form{
-	font-family: 'Comfortaa', serif;
+	font-family: 'Comfortaa', Helvetica, Arial, serif;
 	color: #d2d2d2;
 	font-weight: bold;
 	font-size: 1.2em;
@@ -599,3 +607,18 @@ body {
 	border: 0px;
 	border-radius: 0px;
 }
+
+#preview-container {
+	width: 300px;
+	height: 300px;
+	overflow: hidden;
+}
+
+#jcrop-image {
+	display: none;
+}
+
+.current-song-image img {
+	width: 2.85em;
+}
+

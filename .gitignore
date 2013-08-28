@@ -38,7 +38,8 @@ nosetests.xml
 *.sqlite
 env
 project/project/liquidsoap/songs
-
+project/project/static/uploaded
+project/project/static/tmp
 *.m3u
 
 # Compiled source #

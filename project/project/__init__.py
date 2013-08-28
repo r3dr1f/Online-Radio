@@ -109,6 +109,8 @@ def main(global_config, **settings):
     config.add_route('request', '/request')
     config.add_route('login_fb', '/login_fb')
     config.add_route('comment', '/comment')
+    config.add_route('image', '/image')
+    config.add_route('cropimage', '/cropimage')
 
     config.scan()
     random.seed()

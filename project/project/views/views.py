@@ -57,6 +57,10 @@ from ..models.comment import (
     Comment,
     )
 
+from ..models.image import (
+    Image,
+    )
+
 from ..utils import valid_email
 
 from mako.template import Template
@@ -86,6 +90,9 @@ from subprocess import (
     )
 
 from pyramid.security import remember
+
+import PIL
+from PIL import Image as Im
 
 import time, datetime
 
@@ -479,5 +486,110 @@ def add_comment(request):
         comments = request.db_session.query(Comment).filter_by(song_id=song.id).order_by(Comment.add_time.asc()).all()
         return {'comments': comments}
         
+@view_config(route_name='image', request_method='GET', renderer='json')
+def image(request):
+    return {}
+
+@view_config(route_name='image', request_method='POST', renderer='json')
+def upload_image(request):
+    if request.user is None:
+        return {}
+    #check uploaded file
+    file = request.POST['photoimg'].file
+    filename = request.POST['photoimg'].filename
+    if file is not None:
         
+        img = request.db_session.query(Image).filter_by(user_id = request.user.id).first()
+    
+        #create image if current user doesn't have one already
+        if img is None:
+            img = Image(request.user, filename)
+            request.db_session.add(img)
+            request.db_session.flush()
+            
+        #else update
+        else:
+            try:
+                os.remove(os.getcwd() + '/project/static/uploaded/' + str(img.user_id) + '/' + img.name)
+            except:
+                pass
+            request.db_session.query(Image).filter_by(user_id=request.user.id).update({"name": filename})
+            
+        #get image file type
+        file_type = filename.split('.')[-1]
         
+        #create directories on file path, if they don't exist yet
+        directory = os.getcwd() + '/project/static/tmp/' + str(img.user_id) + '/'
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+
+        #upload image to the directory
+        file_path = os.path.join(directory, filename)
+        with open(file_path, 'wb') as output_file:
+            shutil.copyfileobj(file, output_file)
+        
+        #resize width to 800, if it is higher    
+        image = Im.open(file_path)
+        width, height = image.size
+        maxwidth = 800
+        if width > maxwidth:
+            ratio = maxwidth / width
+            image = image.resize((int(width*ratio), int(height*ratio)), Im.ANTIALIAS)
+            #rewrite image
+            if file_type == "jpg":      
+                image.save(file_path, "JPEG")
+            elif file_type == "gif":
+                image.save(file_path, "GIF")
+            elif file_type == "png":
+                image.save(file_path, "PNG")    
+        
+    return {'image': img}
+        
+@view_config(route_name='cropimage', request_method='POST', renderer='json')
+def crop_image(request):
+    #load image
+    img = Im.open(os.getcwd() + '/project/static/tmp/' + request.POST['src'])
+    file_type = request.POST['src'].split('.')[-1]
+    
+    #get image dimensions
+    src_width, src_height = img.size
+    src_ratio = float(src_width) / float(src_height)
+    dst_width, dst_height = 300, 300
+    dst_ratio = 1
+    
+    #load crop variables - x,y = start coordinates, w = width, h = height
+    x = int(request.POST['x'])
+    y = int(request.POST['y'])
+    w = int(request.POST['w'])
+    h = int(request.POST['h'])
+    
+    #crop image
+    img = img.crop((x, y, x+w, y+h))
+    
+    #resize image to 300x300 + antialias
+    img = img.resize((dst_width, dst_height), Im.ANTIALIAS)
+    
+    directory = os.getcwd() + '/project/static/uploaded/' + str(request.userid) + '/'
+    
+    if not os.path.exists(directory):
+            os.makedirs(directory)
+    
+    #rewrite image
+    file_path = os.getcwd() + '/project/static/uploaded/' + request.POST['src']
+    
+    if file_type.lower() == "jpg":      
+        img.save(file_path, "JPEG")
+    elif file_type.lower() == "gif":
+        img.save(file_path, "GIF")
+    elif file_type.lower() == "png":
+        img.save(file_path, "PNG")
+        
+    try:
+        #delete image from tmp
+        os.remove(os.getcwd() + '/project/static/tmp/' + request.POST['src'])
+        #remove folder from tmp
+        os.rmdir(os.getcwd() + '/project/static/tmp/' + str(request.userid))
+    except:
+        pass
+        
+    return {'ok': True}
