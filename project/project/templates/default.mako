@@ -18,11 +18,21 @@
 		<script type="text/javascript" src="${request.static_path('project:static/js/themeswitcher.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/underscore-min.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/jquery.Jcrop.min.js')}"></script>
+		
 		<script type="text/javascript" src="${request.static_path('project:static/js/scripts.js')}"></script>
 		
-		</script>
 		<script type="text/javascript">
+			
+				
+			
+		
 		    $(document).ready(function(){
+		    
+		    $(window).on("scroll resize", function() {
+					$("#jp_container_1").css("margin-left", -$(document).scrollLeft());
+					$("#jp_container_1").css("width",Math.max($(document).width(),$("body").width() ));
+			});
+		    
       		var stream = {
 			title: "ABC Jazz",
 			//mp3: "http://listen.radionomy.com/abc-jazz"
