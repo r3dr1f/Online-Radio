@@ -8,6 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Comfortaa&subset=latin,latin-ext">
 		
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+		<script type="text/javascript" src="${request.static_path('project:static/js/jquery-ui-1.10.3-effects.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/jquery.jplayer.min.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/jquery.jplayer.inspector.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/jquery.form.min.js')}"></script>
@@ -57,7 +58,7 @@
     <meta property="og:url" content="http://naseradio.sk"/>
 </head>
 
-<body id='museum'>
+<body>
 
 <div id="jquery_jplayer_1" class="jp-jplayer"></div>
   <div id="jp_container_1" class="jp-audio">
@@ -94,6 +95,10 @@
       </div>-->
     </div>
   </div>
+  
+<div class="playlist">
+ 	<table id="playlist"></table>
+</div>
 
 <div id="fb-root"></div>
 <script>
@@ -128,7 +133,7 @@
     <div id="main">
         <div id="header">
         	<div class="fb-like" data-href="http://www.facebook.com/pages/Test/487965897961635" data-width="450" data-show-faces="true" data-send="false"></div>
-        	<div id="image-upload"></div>
+        	<!--<div id="image-upload"></div>-->
         </div>
         <div id="search-info">
         </div>

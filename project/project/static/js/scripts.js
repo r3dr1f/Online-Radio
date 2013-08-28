@@ -141,8 +141,10 @@ var searchTemplate = _.template('' +
 );
 
 var loginTemplate = _.template('' +
-	'<% if (!data.user && !data.register) { %>' +
-        '<div id="log-in">' +
+	'<div id="log-in">' +
+	'<% if (data.user != null) { %>' +
+        '<button type="submit" class="signout-button">Odhlásiť <%- data.user.email %></button>' +
+	'<% } else if ((!data.user || data.user == null) && !data.register) { %>' +
             '<form class="login-form" action="#" method="POST">' +
                 '<div class="input-group">' +
                     '<label for="email-login">E-mail</label>' +
@@ -159,10 +161,7 @@ var loginTemplate = _.template('' +
                 '<a id="beg-for-recovery" href="#" >Zabudol som heslo</a>' +
                 '</div>' +
             '</form>' +
-        '</div>' +
-    '<% } if (data.user) { %>' +
-        '<button type="submit" class="signout-button">Odhlásiť <%- data.user.email %></button>' +
-    '<% } if (data.register) { %>' +
+    '<% } else if (data.register) { %>' +
       	'<form method="POST" id="registracia">' +
 		    '<div class="input-group">' +
 		        '<label for="email">E-mail</label>' +
@@ -188,7 +187,8 @@ var loginTemplate = _.template('' +
 		'</form>' +
 		'<% } else if (data.register_success) { %>'+
 			'<h4>Boli ste zaregistrovaný. Ejchuchu. </h4>'+
-		'<% } %>'
+		'<% } %>' + 
+	'</div>'
 );
 
 var imageTemplate = _.template('' +
@@ -217,7 +217,6 @@ $("body").on("click", ".signout-button", function(event){
   	type: "post",
   	dataType: "json",
   	success: function(data){
-  		info_song($(".signout-button"));
   		var loginTemplateData = {
 					user: data.user
 				};
@@ -318,7 +317,7 @@ $("body").on("click", "a.info-interpret", function(event){
   return false;
 });
 
-$("body").on("click", "a.info-song, .jp-title a", function(event){
+$("body").on("click", "a.info-song, .jp-title > a", function(event){
   event.preventDefault();
   info_song($(this));
   return false;
@@ -562,5 +561,26 @@ $("#image-upload").html(imageTemplate(imageData));
   		});
   	}
   });
-
+  
+  $("body").on("click", "#show-playlist a", function(event) {
+  	event.preventDefault();
+  	if (!$(".playlist").hasClass("expanded")) {
+	  	$(".playlist").animate({width: "20em"}, 1000, "easeInOutQuad", function() {
+	  		$(this).addClass("expanded");
+	  	});
+	  	$("#main").animate({marginLeft: "20em"}, 1000, "easeInOutQuad");
+  	} else {
+  		$(".playlist").animate({width: 0}, 1000, "easeInOutQuad", function() {
+	  		$(this).removeClass("expanded");
+	  	});
+	  	$("#main").animate({marginLeft: 0}, 1000, "easeInOutQuad");
+  	}
+  	return false;
+  });
+  
+  $(window).resize(function() {
+  	$(".playlist").height($(window).height()-$(".jp-audio").outerHeight(true));
+  });
+  
+  $(".playlist").height($(window).height()-$(".jp-audio").outerHeight(true));
 });
