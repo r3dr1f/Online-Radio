@@ -28,11 +28,16 @@
 		
 		    $(document).ready(function(){
 		    
+		    
+		    /*tuto riesime spravne resizovanie toolbaru a posuvanie pri horizontalnom scrolle*/
+		    $("#jp_container_1").css("margin-left", -$(document).scrollLeft());
+			$("#jp_container_1").css("width",Math.max($(document).width(),$("body").width() ));
+		    
 		    $(window).on("scroll resize", function() {
 					$("#jp_container_1").css("margin-left", -$(document).scrollLeft());
 					$("#jp_container_1").css("width",Math.max($(document).width(),$("body").width() ));
 			});
-		    
+
       		var stream = {
 			title: "ABC Jazz",
 			//mp3: "http://listen.radionomy.com/abc-jazz"
