@@ -2,9 +2,13 @@
 <html lang="sk-SK" xmlns:fb="http://ogp.me/ns/fb#">
 <head>
 	<meta charset="utf-8">
-		<link href="${request.static_path('project:static/stylesheets/screen.css')}" media="screen, projection" rel="stylesheet" type="text/css" />
+		<link href="${request.static_path('project:static/stylesheets/screen.css')}" media="screen and (min-width: 1100px), projection and (min-width: 1100px)" rel="stylesheet" type="text/css" />
+		<link href="${request.static_path('project:static/stylesheets/screen_small.css')}" media="screen and (max-width: 1099px), projection and (max-width: 1099px)" rel="stylesheet" type="text/css" />
 		<link type="text/css" href="${request.static_path('project:static/stylesheets/jquery.Jcrop.min.css')}" rel="stylesheet" />
-		<link type="text/css" href="${request.static_path('project:static/skins/jplayer.blue.monday.css')}" rel="stylesheet" />
+		<link type="text/css" href="${request.static_path('project:static/skins/jplayer.blue.monday.css')}" rel="stylesheet" media="screen and (min-width: 1100px), projection and (min-width: 1100px)"/>
+		<link type="text/css" href="${request.static_path('project:static/skins/jplayer.blue.monday_small.css')}" rel="stylesheet" media="screen and (max-width: 1099px), projection and (max-width: 1099px)""/>
+		
+		
 		<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Comfortaa&subset=latin,latin-ext">
 		
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
@@ -15,12 +19,21 @@
 		<script type="text/javascript" src="${request.static_path('project:static/js/themeswitcher.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/underscore-min.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/jquery.Jcrop.min.js')}"></script>
+		
 		<script type="text/javascript" src="${request.static_path('project:static/js/scripts.js')}"></script>
-		<script type="text/javascript"> $(window).scroll(function(){
-  $('.jp_container_1').css('left',-$(window).scrollLeft());
-});</script>
+		
 		<script type="text/javascript">
+			
+				
+			
+		
 		    $(document).ready(function(){
+		    
+		    $(window).on("scroll resize", function() {
+					$("#jp_container_1").css("margin-left", -$(document).scrollLeft());
+					$("#jp_container_1").css("width",Math.max($(document).width(),$("body").width() ));
+			});
+		    
       		var stream = {
 			title: "ABC Jazz",
 			//mp3: "http://listen.radionomy.com/abc-jazz"

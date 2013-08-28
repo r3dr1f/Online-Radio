@@ -484,12 +484,13 @@ table#playlist td {
 	margin-left: 1em;
 	float: right;
 	border-radius: 3px;
-	padding-top: 0.7em;
+	padding-top: 0.5em;
 	width:15%;
 }
 
 #search {
 	font-family: 'Comfortaa', Helvetica, Arial, serif;
+	font-size:1em;
 	float: right;
 	width: 15em;
 	border-radius: 3px;

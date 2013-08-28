@@ -22,7 +22,6 @@ time, mark, audio, video {
 
 /* line 22, ../../../../../../../../../var/lib/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html {
-  min-width: 1000px;
   line-height: 1;
 }
 
@@ -412,7 +411,8 @@ body {
 }
 
 #logo {
-	padding-left:1em;
+	padding-left: 0.3em;
+	padding-right: 0.7em;
 	float: left;
 	width: 300px;
 	height: 2.5em;
@@ -434,7 +434,10 @@ body {
 }
 
 .playlist-img {
-	padding-top: 0.7em;
+	padding-top: 0.6em;
+	width: 2em;
+	height: 2em;
+	padding-left: 0.2em;
 }
 
 #show-playlist a {
@@ -484,22 +487,24 @@ body {
 	float: right;
 	border-radius: 3px;
 	padding-top: 0.7em;
-	width:15%;
+	width: 10%;
 }
 
 #search {
 	font-family: 'Comfortaa', Helvetica, Arial, serif;
 	float: right;
-	width: 15em;
+	width: 1em;
 	border-radius: 3px;
 	height: 1.5em;
 	font-weight: bold;
 	width:100%;
+	overflow: hidden;
+	font-size: 0.5em;
 }
 
 #show-playlist {
 	float: right;
-	width: 3em;
+	width: 1em;
 	margin-left: 1em;
 }
 
@@ -616,3 +621,4 @@ body {
 .current-song-image img {
 	width: 2.85em;
 }
+
