@@ -17,7 +17,7 @@ function Song_info(id) {
 					name: this.data.song.name,
 					interpret: this.data.song.interpret,
 					id: this.data.song.id,
-					rating_max: this.data.song.rating_max,
+					rating_max: this.data.song.rating_max,	
 					user: this.data.user,
 					request: this.data.request
 				};
