@@ -419,20 +419,8 @@ body {
 	background: #000;
 }
 
-#show-playlist {
-	float: right;
-	width: 32px;
-	margin-left: 5%;
-}
-
 .playlist-img {
 	padding-top: 0.7em;
-}
-
-#show-playlist a {
-	font-size: 0.7em;
-	display: block;
-	line-height: 2.5em;
 }
 
 .playlist {
@@ -622,3 +610,19 @@ table#playlist td {
 .comment-image img {
 	width: 2.60em;
 }
+
+
+/* hviezdicky pre zobrazenie hodnotenia */
+
+span.stars, span.stars span {
+    display: block;
+    background: url('../images/stars2.png') 0 -16px repeat-x;
+    width: 80px; /*nvm preco, ale ide to*/
+    height: 16px;
+}
+
+span.stars span {
+    background-position: 0 0;
+}
+
+

@@ -19,17 +19,18 @@ var songTemplate = _.template('' +
 	'</span><br />' +
 	'<fb:like href="http://localhost:6543/song/<%- data.id %>" width="450" show_faces="true" send="false"></fb:like>' + 
 	'<input type="hidden" id="song-id" value="<%- data.id %>" />' +  
-	'<% if (data.user == null || !data.user) { %>' +
-	    '<span>Hodnotenie: <%- data.rating %> </span><br />' +
+	"<% if (data.user == null || !data.user) { %>" +
+	    '<span>Priemerné hodnotenie: <br /> <%- data.rating %>% <span class="stars"><span style="width: <%- Math.max(0, (Math.min(5, parseFloat(data.rating/20.0))))*16 %>px"></span></span> ' +
 	'<% } else { if (data.rating != null || data.rating) { %>' +
-		'<span>Vaše hodnotenie: <%- data.rating.rating %></span><br />' +
+		'<span>Vaše hodnotenie: <span class="stars"> <span style="width: <%- Math.max(0, (Math.min(5, parseFloat(data.rating.rating + 1))))*16 %>px"></span></span> </span><br />' +
 	'<% } else { %>' +
-		'<div id="rate">' + 
-			'<a href="#" id="rate0">0</a>' + 
-			'<a href="#" id="rate1">1</a>' + 
-			'<a href="#" id="rate2">2</a>' + 
-			'<a href="#" id="rate3">3</a>' + 
-			'<a href="#" id="rate4">4</a>' + 
+		
+		'<div id="rate" class="star-rating">' + 
+			'<a href="#" id="rate0" class="one-star">0</a>' + 
+			'<a href="#" id="rate1" class="two-stars">1</a>' + 
+			'<a href="#" id="rate2" class="three-stars">2</a>' + 
+			'<a href="#" id="rate3" class="four-stars">3</a>' + 
+			'<a href="#" id="rate4" class="five-stars">4</a>' + 
 		'</div>' +
 	'<% } %>' +
 	'<div class="song-rating"></div>' + 
