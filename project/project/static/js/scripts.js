@@ -3,7 +3,11 @@ function getCommentImages(comments) {
 		if (comments[i].user.uuid != 0) {
 			comments[i].user.img_src = "http://graph.facebook.com/" + comments[i].user.uuid + "/picture?type=square";
 		} else {
-			comments[i].user.img_src = "/static/uploaded/" + comments[i].user.id + "/" + comments[i].user.image[0].name;
+			if (comments[i].user.image[0] != null) {
+				comments[i].user.img_src = "/static/uploaded/" + comments[i].user.id + "/" + comments[i].user.image[0].name;
+			} else {
+				comments[i].user.img_src = "/static/user-default.jpg";
+			}
 		}
 	}
 }
