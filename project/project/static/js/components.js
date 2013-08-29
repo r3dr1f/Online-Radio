@@ -254,6 +254,7 @@ function Rating_info(id, rating){
 				interpret: this.data.song.interpret,
 				id: this.data.song.id,
 				rating: this.data.rating,
+				rating_max: this.data.song.rating_max,
 				user: this.data.user
 			};
 		var commentsTemplateData = {

@@ -8,7 +8,7 @@ function Song_info(id) {
 					interpret: this.data.song.interpret,
 					id: this.data.song.id,
 					rating: this.data.rating,
-					rating_max: this.data.song.rating.rating_max,
+					rating_max: this.data.song.rating_max,
 					user: this.data.user,
 					request: this.data.request
 				};
