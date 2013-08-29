@@ -380,7 +380,7 @@ div.jp-video div.jp-duration {
 
 div.jp-title {
 	font-family: 'Comfortaa', Helvetica, Arial, serif;
-	font-weight: bold;
+	
 	font-size: 1em;
 	float:left;
 	/*text-align:center;
@@ -411,6 +411,11 @@ div.jp-title > a {
 	font-size: 1em;
 	float: left;
 	line-height: 2.5em;
+	color: #bbbbbb;
+}
+
+div.jp-title > a:hover {
+	font-weight: bolder;
 }
 
 div.jp-title li {

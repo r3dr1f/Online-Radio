@@ -287,12 +287,12 @@ h3 {
 /* line 14, ../../../design/sass/_text.scss */
 a {
   padding: 5 5px;
-  color: #bbbbbb;
+  color: black;
   text-decoration: none;
 }
 /* line 19, ../../../design/sass/_text.scss */
 a:hover {
-  text-decoration: underline;
+  font-weight: bolder;
 }
 
 /* line 7, ../../../design/sass/screen.scss */
