@@ -22,9 +22,13 @@ var songTemplate = _.template('' +
 	"<% if (data.user == null || !data.user) { %>" +
 	    '<span>Priemerné hodnotenie: <br /> <%- data.rating %>% <span class="stars"><span style="width: <%- Math.max(0, (Math.min(5, parseFloat(data.rating/20.0))))*16 %>px"></span></span> ' +
 	'<% } else { if (data.rating != null || data.rating) { %>' +
-		'<span>Vaše hodnotenie: <span class="stars"> <span style="width: <%- Math.max(0, (Math.min(5, parseFloat(data.rating.rating + 1))))*16 %>px"></span></span> </span><br />' +
+	   '<span>Priemerné hodnotenie: <br /> <%- data.rating_max %>% <span class="stars"><span style="width: <%- Math.max(0, (Math.min(5, parseFloat(data.rating_max/20.0))))*16 %>px"></span></span> ' +		
+		'<span>Tvoje hodnotenie: <span class="stars"> <span style="width: <%- Math.max(0, (Math.min(5, parseFloat(data.rating.rating + 1))))*16 %>px"></span></span> </span><br />' +
 	'<% } else { %>' +
-		
+		'<br />' +
+		'<span>Priemerné hodnotenie: <br /> <%- data.rating_max %>% <span class="stars"><span style="width: <%- Math.max(0, (Math.min(5, parseFloat(data.rating_max/20.0))))*16 %>px"></span></span> ' +		
+		'<br />' +		
+		'<span>Tvoje hodnotenie: </span> <br />' +		
 		'<div id="rate" class="star-rating">' + 
 			'<a href="#" id="rate0" class="one-star">0</a>' + 
 			'<a href="#" id="rate1" class="two-stars">1</a>' + 
