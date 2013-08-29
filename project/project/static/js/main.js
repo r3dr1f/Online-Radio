@@ -1,6 +1,6 @@
-$(document).ready(function(){
+function main(id, email) {
 
-	var stream = {
+			var stream = {
 			title: "ABC Jazz",
 			//mp3: "http://listen.radionomy.com/abc-jazz"
 			//mp3: "http://127.0.0.1:1234/stream"
@@ -44,7 +44,7 @@ $(document).ready(function(){
 	  		var loginTemplateData = {
 						user: data.user
 					};
-	  		$('#login-content').html(loginTemplate(loginTemplateData));
+	  		$('#log-in').html(loginTemplate(loginTemplateData));
 	  	}
 	  });
 		return false;
@@ -61,7 +61,7 @@ $(document).ready(function(){
 	  		var loginTemplateData = {
 						user: data.user
 					};
-	  		$('#login-content').html(loginTemplate(loginTemplateData));
+	  		$('#log-in').html(loginTemplate(loginTemplateData));
 	  	}
 	  });
 		return false;
@@ -78,7 +78,7 @@ $(document).ready(function(){
 	  		var loginTemplateData = {
 						register: data.register
 					};
-	  		$('#login-content').html(loginTemplate(loginTemplateData));
+	  		$('#log-in').html(loginTemplate(loginTemplateData));
 	  	}
 	  });
 		return false;
@@ -105,7 +105,7 @@ $(document).ready(function(){
 	  		var loginTemplateData = {
 						register_success: data.register_success
 					};
-	  		$('#login-content').html(loginTemplate(loginTemplateData));
+	  		$('#log-in').html(loginTemplate(loginTemplateData));
 	  	}
 	  });
 		return false;
@@ -235,9 +235,9 @@ $(document).ready(function(){
 													component.user_login(data.user.id);
 												}
 												var templateData = {
-													user : data.user
+													user: data.user
 												}
-												$('#login-content').html(loginTemplate(templateData));								  		
+												$('#log-in').html(loginTemplate(templateData));								  		
 									  		}
 									});
 	                            }
@@ -248,8 +248,14 @@ $(document).ready(function(){
 	            return false;
 	});
 	
-	var loginTemplateData = {};
-	$('#login-content').html(loginTemplate(loginTemplateData));
+	var loginJSON = {"user": { 
+				"id": id, "email": email
+			}
+	};
+	var loginTemplateData = {
+		user: loginJSON.user		
+	};
+	$('#log-in').html(loginTemplate(loginTemplateData));
 	
 	
 	$("#my-account > a").click(function(e) {
@@ -259,7 +265,7 @@ $(document).ready(function(){
 	});
 	
 	$("#login-button > a").blur(function() {
-		$("#login-content").hide();
+		$("#log-in").hide();
 	});
 
 	function showResponse(responseText, statusText, xhr, $form)  {
@@ -327,5 +333,5 @@ $("#image-upload").html(imageTemplate(imageData));
   });
 	
 	
-});
+}
 

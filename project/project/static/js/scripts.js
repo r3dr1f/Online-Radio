@@ -91,7 +91,6 @@ var searchTemplate = _.template('' +
 );
 
 var loginTemplate = _.template('' +
-	'<div id="log-in">' +
 	'<% if (data.user != null) { %>' +
         '<button type="submit" class="signout-button">Odhlásiť <%- data.user.email %></button>' +
 	'<% } else if ((!data.user || data.user == null) && !data.register) { %>' +
@@ -137,8 +136,7 @@ var loginTemplate = _.template('' +
 		'</form>' +
 		'<% } else if (data.register_success) { %>'+
 			'<h4>Boli ste zaregistrovaný. Ejchuchu. </h4>'+
-		'<% } %>' + 
-	'</div>'
+		'<% } %>' 
 );
 
 var imageTemplate = _.template('' +

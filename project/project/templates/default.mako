@@ -23,6 +23,8 @@
 		<script type="text/javascript" src="${request.static_path('project:static/js/scripts.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/main.js')}"></script>
 		<script type="text/javascript">
+		
+			$(document).ready(function(){main(${request.userid}, "${request.user.email}");});
 			
 			$(document).ready(function(){
 		    
@@ -67,6 +69,7 @@
       	<div id="my-account">
         	<a href="#"><img src="../static/images/profile.png" width="32" height="32" class="playlist-icon"></a>
         	<div id="login-content">
+        		<div id="log-in"></div>
         	</div>
         </div>
       	
