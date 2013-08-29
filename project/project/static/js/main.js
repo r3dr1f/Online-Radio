@@ -252,9 +252,13 @@ function main(id, email) {
 				"id": id, "email": email
 			}
 	};
-	var loginTemplateData = {
-		user: loginJSON.user		
-	};
+	if (loginJSON.user.email != "") {
+		var loginTemplateData = {
+			user: loginJSON.user		
+		};
+	} else {
+		var loginTemplateData = {};
+	}
 	$('#log-in').html(loginTemplate(loginTemplateData));
 	
 	

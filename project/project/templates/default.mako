@@ -24,8 +24,12 @@
 		<script type="text/javascript" src="${request.static_path('project:static/js/main.js')}"></script>
 		<script type="text/javascript">
 		
+		% if request.user != None:
 			$(document).ready(function(){main(${request.userid}, "${request.user.email}");});
-			
+		% else:
+			$(document).ready(function(){main(0, "");});
+		% endif
+		
 			$(document).ready(function(){
 		    
 		    
