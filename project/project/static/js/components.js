@@ -82,7 +82,11 @@ function Song_info(id) {
 			  		rating = 4;
 			  		break;
 			}
-			$('#rate0, #rate1, #rate2, #rate3, #rate4', this.element).trigger('rate-info-request', [id, rating]);
+			$('#rate0', this.element).trigger('rate-info-request0', [id, rating]);
+			$('#rate1', this.element).trigger('rate-info-request1', [id, rating]);
+			$('#rate2', this.element).trigger('rate-info-request2', [id, rating]);
+			$('#rate3', this.element).trigger('rate-info-request3', [id, rating]);
+			$('#rate4', this.element).trigger('rate-info-request4', [id, rating]);
 		});
 		$(".request-to-play").click(function(ev){
 			ev.preventDefault();
@@ -90,11 +94,12 @@ function Song_info(id) {
 		});
 	}
 	this.exit = function(){
-		$("body").off("click", "#rate0, #rate1, #rate2, #rate3, #rate4");//, a.request-to-play, a.info-interpret");
+		$("#rate0, #rate1, #rate2, #rate3, #rate4, .request-to-play, .info-interpret").off("click");
 	}
 	this.user_login = function(user_id){
 		this.data.user = user_id;
 		this.render();
+		this.register_events();
 	}
 }
 
@@ -134,7 +139,7 @@ function Interpret_info(id){
 		});
 	}
 	this.exit = function(){
-		$('a.info-song').off("click");		
+		$('.info-song').off("click");		
 	}
 	this.user_login = function(user_id){
 		this.data.user = user_id;
@@ -184,7 +189,7 @@ function Search_info(param){
 		});
 	}
 	this.exit = function(){
-		$('.song-info *').off("click");		
+		$('.info-song, .info-interpret').off("click");		
 	}
 	this.user_login = function(user_id){
 		this.data.user = user_id;
@@ -222,21 +227,10 @@ function Comments_info(id, comment){
 		});
 	}
 	this.register_events = function(){
-		$('a.info-song', this.element).click(function(ev){
-			ev.preventDefault();
-			var song_id = $(this).attr("href").split("/");
-			song_id = song_id.slice(-1)[0];
-			$(this).trigger('song-info-request', [song_id]);
-		});
-		$('a.info-interpret', this.element).click(function(ev){
-			ev.preventDefault();
-			var interpret_id = $(this).attr("href").split("/");
-			interpret_id = interpret_id.slice(-1)[0];
-			$('a.info-interpret', this.element).trigger('interpret-info-request', [interpret_id]);
-		});
+		
 	}
 	this.exit = function(){
-		$('.song-info *').off("click");		
+	
 	}
 	this.user_login = function(user_id){
 		this.data.user = user_id;
@@ -279,21 +273,10 @@ function Rating_info(id, rating){
 		});
 	}
 	this.register_events = function(){
-		$('a.info-song', this.element).click(function(ev){
-			ev.preventDefault();
-			var song_id = $(this).attr("href").split("/");
-			song_id = song_id.slice(-1)[0];
-			$(this).trigger('song-info-request', [song_id]);
-		});
-		$('a.info-interpret', this.element).click(function(ev){
-			ev.preventDefault();
-			var interpret_id = $(this).attr("href").split("/");
-			interpret_id = interpret_id.slice(-1)[0];
-			$('a.info-interpret', this.element).trigger('interpret-info-request', [interpret_id]);
-		});
+	
 	}
 	this.exit = function(){
-		$('.song-info *').off("click");		
+
 	}
 	this.user_login = function(user_id){
 		this.data.user = user_id;
@@ -328,21 +311,10 @@ function Request_info(id){
 		});
 	}
 	this.register_events = function(){
-		$('a.info-song', this.element).click(function(ev){
-			ev.preventDefault();
-			var song_id = $(this).attr("href").split("/");
-			song_id = song_id.slice(-1)[0];
-			$(this).trigger('song-info-request', [song_id]);
-		});
-		$('a.info-interpret', this.element).click(function(ev){
-			ev.preventDefault();
-			var interpret_id = $(this).attr("href").split("/");
-			interpret_id = interpret_id.slice(-1)[0];
-			$('a.info-interpret', this.element).trigger('interpret-info-request', [interpret_id]);
-		});
+
 	}
 	this.exit = function(){
-		$('.song-info *').off("click");		
+
 	}
 	this.user_login = function(user_id){
 		this.data.user = user_id;

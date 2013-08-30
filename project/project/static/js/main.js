@@ -165,10 +165,8 @@ $(document).ready(function(){
   	  	component.enter($('.song-info'));
   	});
 	
-	$("body").on("rate-info-request", function(event, id, rating){
+	$("body").on("rate-info-request0, rate-info-request1, rate-info-request2, rate-info-request3, rate-info-request4", function(event, id, rating){
 	    event.preventDefault();
-	    if(typeof component !== 'undefined')
-	   		component.exit();
 	    component = new Rating_info(id, rating);
 	    component.enter($('.song-info'));
 	});
@@ -177,8 +175,6 @@ $(document).ready(function(){
 		event.preventDefault();
 		var song_id = $(this).attr("href").split("/");
 	  	song_id = song_id.slice(-1)[0];
-		if(typeof component !== 'undefined')
-			component.exit();
 		component = new Request_info(song_id);
 		component.enter($('.song-info'));
 	});
@@ -230,7 +226,6 @@ $(document).ready(function(){
 									  	dataType: "json",
 									  	data: {uuid: response.id, email: response.email},
 									  	success: function(data){
-									  			console.log(data.user);
 												if(typeof component !== 'undefined'){
 													component.user_login(data.user.id);
 												}
