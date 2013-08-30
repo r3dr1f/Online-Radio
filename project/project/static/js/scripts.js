@@ -3,7 +3,11 @@ function getCommentImages(comments) {
 		if (comments[i].user.uuid != 0) {
 			comments[i].user.img_src = "http://graph.facebook.com/" + comments[i].user.uuid + "/picture?type=square";
 		} else {
-			comments[i].user.img_src = "/static/uploaded/" + comments[i].user.id + "/" + comments[i].user.image[0].name;
+			if (comments[i].user.image[0] != null) {
+				comments[i].user.img_src = "/static/uploaded/" + comments[i].user.id + "/" + comments[i].user.image[0].name;
+			} else {
+				comments[i].user.img_src = "/static/user-default.jpg";
+			}
 		}
 	}
 }
@@ -19,17 +23,22 @@ var songTemplate = _.template('' +
 	'</span><br />' +
 	'<fb:like href="http://localhost:6543/song/<%- data.id %>" width="450" show_faces="true" send="false"></fb:like>' + 
 	'<input type="hidden" id="song-id" value="<%- data.id %>" />' +  
-	'<% if (data.user == null || !data.user) { %>' +
-	    '<span>Hodnotenie: <%- data.rating %> </span><br />' +
+	"<% if (data.user == null || !data.user) { %>" +
+	    '<span>Priemerné hodnotenie: <br /> <%- data.rating %>% <span class="stars"><span style="width: <%- Math.max(0, (Math.min(5, parseFloat(data.rating/20.0))))*16 %>px"></span></span> ' +
 	'<% } else { if (data.rating != null || data.rating) { %>' +
-		'<span>Vaše hodnotenie: <%- data.rating.rating %></span><br />' +
+	   '<span>Priemerné hodnotenie: <br /> <%- data.rating_max %>% <span class="stars"><span style="width: <%- Math.max(0, (Math.min(5, parseFloat(data.rating_max/20.0))))*16 %>px"></span></span> ' +		
+		'<span>Tvoje hodnotenie: <span class="stars"> <span style="width: <%- Math.max(0, (Math.min(5, parseFloat(data.rating.rating + 1))))*16 %>px"></span></span> </span><br />' +
 	'<% } else { %>' +
-		'<div id="rate">' + 
-			'<a href="#" id="rate0">0</a>' + 
-			'<a href="#" id="rate1">1</a>' + 
-			'<a href="#" id="rate2">2</a>' + 
-			'<a href="#" id="rate3">3</a>' + 
-			'<a href="#" id="rate4">4</a>' + 
+		'<br />' +
+		'<span>Priemerné hodnotenie: <br /> <%- data.rating_max %>% <span class="stars"><span style="width: <%- Math.max(0, (Math.min(5, parseFloat(data.rating_max/20.0))))*16 %>px"></span></span> ' +		
+		'<br />' +		
+		'<span>Tvoje hodnotenie: </span> <br />' +		
+		'<div id="rate" class="star-rating">' + 
+			'<a href="#" id="rate0" class="one-star">0</a>' + 
+			'<a href="#" id="rate1" class="two-stars">1</a>' + 
+			'<a href="#" id="rate2" class="three-stars">2</a>' + 
+			'<a href="#" id="rate3" class="four-stars">3</a>' + 
+			'<a href="#" id="rate4" class="five-stars">4</a>' + 
 		'</div>' +
 	'<% } %>' +
 	'<div class="song-rating"></div>' + 
@@ -90,7 +99,6 @@ var searchTemplate = _.template('' +
 );
 
 var loginTemplate = _.template('' +
-	'<div id="log-in">' +
 	'<% if (data.user != null) { %>' +
         '<button type="submit" class="signout-button">Odhlásiť <%- data.user.email %></button>' +
 	'<% } else if ((!data.user || data.user == null) && !data.register) { %>' +
@@ -136,8 +144,7 @@ var loginTemplate = _.template('' +
 		'</form>' +
 		'<% } else if (data.register_success) { %>'+
 			'<h4>Boli ste zaregistrovaný. Ejchuchu. </h4>'+
-		'<% } %>' + 
-	'</div>'
+		'<% } %>' 
 );
 
 var imageTemplate = _.template('' +

@@ -35,14 +35,14 @@ div.jp-video {
 	background-color:#eee;
 }
 div.jp-audio {
-	/*width:100%;  sirka radia na celu stranu */
+	width:100%; /* sirka radia na celu stranu */
 	position:fixed; /* fixna pozicia pri scrollovani */
-	height: 2.3em;
 	top: 0;
 	z-index:700;
 	//border-radius: 10px;
 	padding: 0.2em 0;
 	background-color: #2d2d2d;
+	height: 2.6em;
 }
 
 div.jp-audio-stream {
@@ -124,11 +124,10 @@ div.jp-interface ul.jp-controls {
 
 div.jp-audio ul.jp-controls {
 	width: 7em;
-	margin-left: 1em;	
+	margin-left: 5em;	
 	float:left;
 	text-align: center;
-
-	padding-top: 0.1em;
+	padding-top: 0.3em;
 }
 
 div.jp-audio-stream ul.jp-controls {
@@ -152,14 +151,13 @@ div.jp-interface ul.jp-controls li {
 }
 
 div.jp-interface ul.jp-controls a {
-	/* width: 2em; */
 	display:block;
 	overflow:hidden;
 	text-indent:-9999px;
 }
 a.jp-play,
 a.jp-pause {
-	width: 40px;
+	width:40px;
 	height:40px;
 }
 
@@ -382,11 +380,12 @@ div.jp-video div.jp-duration {
 
 div.jp-title {
 	font-family: 'Comfortaa', Helvetica, Arial, serif;
-	font-weight: bold;
+	
 	font-size: 1em;
 	float:left;
 	/*text-align:center;
 	border-radius: 0px 0px 10px 10px;*/
+	width: 30em;
 }
 
 div.jp-title,
@@ -409,10 +408,14 @@ div.jp-playlist ul {
 }
 
 div.jp-title > a {
-	font-size: 0.7em;
+	font-size: 1em;
 	float: left;
 	line-height: 2.5em;
-	padding-top: 0.2em;
+	color: #bbbbbb;
+}
+
+div.jp-title > a:hover {
+	font-weight: bolder;
 }
 
 div.jp-title li {

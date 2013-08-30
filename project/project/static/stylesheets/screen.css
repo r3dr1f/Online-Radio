@@ -80,19 +80,28 @@ form {
 
 /* line 19, ../../../design/sass/_form.scss */
 .signout-button {
+  padding: 0.2em;
+  padding-left: 5px;
+  padding-right: 5px;
+  /*font-family: Helvetica, Arial, sans-serif;*/
+  font-family: 'Comfortaa', Helvetica, Arial, serif;
+  font-weight: bold;
+  font-size: 1.2em;
+  color:#d2d2d2;
+  vertical-align: middle;
   display: inline-block;
-  padding: 5px;
-  border-radius: 3px;
-  border: thin solid #61B842;
-  background: #61B842;
-  cursor: pointer;
-  text-align: center;
+  float: right;
+  display: block;
   text-decoration: none;
-  color: white;
+  margin: 0.5em auto;
+  text-align: left;
+  border-radius: 5px;
+  background-color: #2d2d2d;
+  border: 2px outset buttonface;
 }
 /* line 34, ../../../design/sass/_form.scss */
 .signout-button:hover {
-  background: #50a731;
+  border-color: #0e7cc5;
   text-decoration: none;
 }
 
@@ -278,12 +287,12 @@ h3 {
 /* line 14, ../../../design/sass/_text.scss */
 a {
   padding: 5 5px;
-  color: #bbbbbb;
+  color: black;
   text-decoration: none;
 }
 /* line 19, ../../../design/sass/_text.scss */
 a:hover {
-  text-decoration: underline;
+  font-weight: bolder;
 }
 
 /* line 7, ../../../design/sass/screen.scss */
@@ -609,4 +618,143 @@ table#playlist td {
 
 .comment-image img {
 	width: 2.60em;
+}
+
+
+/* hviezdicky pre zobrazenie hodnotenia */
+
+span.stars, span.stars span {
+    display: block;
+    background: url('../images/stars2.png') 0 -16px repeat-x;
+    width: 80px; /*nvm preco, ale ide to*/
+    height: 16px;
+}
+
+span.stars span {
+    background-position: 0 0;
+}
+
+/*hviezdicky pre hodnotenie */
+.star-rating,
+
+.star-rating a:hover,
+
+.star-rating a:active,
+
+.star-rating a:focus,
+
+.star-rating .current-rating{
+
+	display: block;
+    background: url('../images/stars2.png') 0 -16px repeat-x;
+    width: 80px; /*nvm preco, ale ide to*/
+    height: 16px;
+}
+
+.star-rating{
+
+	position:relative;
+
+	width:80px;
+
+	height:16px;
+
+	overflow:hidden;
+
+	list-style:none;
+
+	margin:0;
+
+	padding:0;
+
+	background-position: left bottom;
+
+}
+
+.star-rating li{
+
+	display: inline;
+
+}
+
+.star-rating a,
+
+.star-rating .current-rating{
+
+	position:absolute;
+
+	top:0;
+
+	left:0;
+
+	text-indent:-1000em;
+
+	height:16px;
+
+	line-height:25px;
+
+	outline:none;
+
+	overflow:hidden;
+
+	border: none;
+
+}
+
+.star-rating a:hover,
+
+.star-rating a:active,
+
+.star-rating a:focus{
+
+	background-position: left top;
+
+}
+
+.star-rating a.one-star{
+
+	width:20%;
+
+	z-index:6;
+
+}
+
+.star-rating a.two-stars{
+
+	width:40%;
+
+	z-index:5;
+
+}
+
+.star-rating a.three-stars{
+
+	width:60%;
+
+	z-index:4;
+
+}
+
+.star-rating a.four-stars{
+
+	width:80%;
+
+	z-index:3;
+
+}
+
+.star-rating a.five-stars{
+
+	width:100%;
+
+	z-index:2;
+
+}
+
+.star-rating .current-rating{
+
+	z-index:1;
+
+	background-position: left center;
+
 }

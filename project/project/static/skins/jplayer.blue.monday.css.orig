@@ -35,7 +35,6 @@ div.jp-video {
 	background-color:#eee;
 }
 div.jp-audio {
-	min-width: 1000px;
 	width:100%; /* sirka radia na celu stranu */
 	position:fixed; /* fixna pozicia pri scrollovani */
 	top: 0;
@@ -43,7 +42,13 @@ div.jp-audio {
 	//border-radius: 10px;
 	padding: 0.2em 0;
 	background-color: #2d2d2d;
+<<<<<<< HEAD
+	height: 2.6em;
 }
+=======
+}
+
+>>>>>>> c6f5f1f9348ba7e654a770f9f0667c2d57f5235d
 div.jp-audio-stream {
 	width:182px;
 }
@@ -123,11 +128,7 @@ div.jp-interface ul.jp-controls {
 
 div.jp-audio ul.jp-controls {
 	width: 7em;
-<<<<<<< HEAD
-	margin-left: 10%;	
-=======
 	margin-left: 5em;	
->>>>>>> 66f84f48df09ab71c4faacc1b9b93640b9d1ad1e
 	float:left;
 	text-align: center;
 	padding-top: 0.3em;
@@ -388,7 +389,6 @@ div.jp-title {
 	float:left;
 	/*text-align:center;
 	border-radius: 0px 0px 10px 10px;*/
-	/*width: 30%;*/
 }
 
 div.jp-title,

@@ -23,20 +23,28 @@
 		<script type="text/javascript" src="${request.static_path('project:static/js/scripts.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/main.js')}"></script>
 		<script type="text/javascript">
-			
+		
+		% if request.user != None:
+			$(document).ready(function(){main(${request.userid}, "${request.user.email}");});
+		% else:
+			$(document).ready(function(){main(0, "");});
+		% endif
+		
 			$(document).ready(function(){
 		    
 		    
-		    /*tuto riesime spravne resizovanie toolbaru a posuvanie pri horizontalnom scrolle*/
-		    $("#jp_container_1").css("margin-left", -$(document).scrollLeft());
-			$("#jp_container_1").css("width",Math.max($(document).width(),$("body").width() ));
+		    	/*tuto riesime spravne resizovanie toolbaru a posuvanie pri horizontalnom scrolle*/
+		    	$("#jp_container_1").css("margin-left", -$(document).scrollLeft());
+				$("#jp_container_1").css("width",Math.max($(document).width(),$("body").width() ));
 		    
-		    $(window).on("scroll resize", function() {
+		    	$(window).on("scroll resize", function() {
 					$("#jp_container_1").css("margin-left", -$(document).scrollLeft());
 					$("#jp_container_1").css("width",Math.max($(document).width(),$("body").width() ));
+				});
 			});
-});
 		</script>
+		
+		
     <!-- Facebook Share meta tags -->
     <meta property="og:title" content="Rádio"/>
     <meta property="og:site_name" content="Naše rádio"/>
@@ -65,6 +73,7 @@
       	<div id="my-account">
         	<a href="#"><img src="../static/images/profile.png" width="32" height="32" class="playlist-icon"></a>
         	<div id="login-content">
+        		<div id="log-in"></div>
         	</div>
         </div>
       	
