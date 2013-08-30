@@ -439,7 +439,7 @@ def rate_song(request):
             request.db_session.add(rating_obj)
             all_ratings = request.db_session.query(Rating).filter_by(song_id = song.id).all()
             all_who_rated = len(all_ratings)
-            minimalna_hranica = 3 # minimalny pocet uzivatelov, ktori musia zahlasovat, aby to malo vahu
+            minimalna_hranica = 5 # minimalny pocet uzivatelov, ktori musia zahlasovat, aby to malo vahu
             if(all_who_rated > minimalna_hranica):
                 count = 0
                 for ratings in all_ratings:
