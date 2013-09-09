@@ -10,7 +10,7 @@
 		
 		
 		<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Comfortaa&subset=latin,latin-ext">
-		
+					
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/jquery-ui-1.10.3-effects.js')}"></script>
 		<script type="text/javascript" src="${request.static_path('project:static/js/jquery.jplayer.min.js')}"></script>
@@ -43,7 +43,6 @@
 				});
 			});
 		</script>
-		
 		
     <!-- Facebook Share meta tags -->
     <meta property="og:title" content="Rádio"/>
@@ -135,5 +134,8 @@
             <%block name="page_content">${content | n}</%block>
         </div>
     </div>
+
+   
+  
 </body>
 </html>

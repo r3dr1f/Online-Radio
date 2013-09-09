@@ -5,24 +5,29 @@ function main(id, email) {
 			//mp3: "http://listen.radionomy.com/abc-jazz"
 			//mp3: "http://127.0.0.1:1234/stream"
 			//mp3: "http://tombadoma.dyndns.org:8080/stream"
-			mp3: "http://localhost:8080/stream"
+			mp3: "http://radio3.sk:8080/stream"
+			
 			},
 			ready = false;
 
 			$("#jquery_jplayer_1").jPlayer({
 				ready: function (event) {
-				ready = true;
-				$(this).jPlayer("setMedia", stream);
+	
+					ready = true;
+					$(this).jPlayer("setMedia", stream);
 				},
+				
 				pause: function() {
-				$(this).jPlayer("clearMedia");
+					$(this).jPlayer("clearMedia");
 				},
+				
 				error: function(event) {
 					if(ready && event.jPlayer.error.type === $.jPlayer.error.URL_NOT_SET) {
-					// Setup the media stream again and play it.
-					$(this).jPlayer("setMedia", stream).jPlayer("play");
+						// Setup the media stream again and play it.
+						$(this).jPlayer("setMedia", stream).jPlayer("play");
 					}
 				},
+				nativeSupport: false,
 				swfPath: "${request.static_path('project:static/js')}",
 				supplied: "mp3",
 				preload: "none",
