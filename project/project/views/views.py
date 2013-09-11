@@ -384,7 +384,7 @@ def upload_song_post(request):
             if not allowed_mime_type(mimetypes.guess_type(request.POST['mp3'].filename)):
                 return {'ok': 0, 'error': 'mime'}
             else:
-                song = Song(request.interpret.id, request.POST['name'])
+                song = Song(request.interpret, request.POST['name'])
                 request.db_session.add(song)
                 request.db_session.flush()
                 

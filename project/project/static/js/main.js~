@@ -95,9 +95,8 @@ function main(id, email) {
 	$("body").on("click", "#register-submit", function(event){
 		event.preventDefault();
 		var role = "";
-		if($('#interpret_name').val().length > 0){
-			role = 1;
-		}
+		if($('#role').is(':checked'))
+			role = 1
 		else
 			role = 0;
 		$.ajax({
