@@ -27,8 +27,10 @@ function main(id, email) {
 						$(this).jPlayer("setMedia", stream).jPlayer("play");
 					}
 				},
-				
-				swfPath: "${request.static_path('project:static/js')}",
+				nativeSupport: false,
+				oggSupport: false,
+				//swfPath: "${request.static_path('project:static/js')}",
+				swfPath: "/static/js/Jplayer.swf",
 				supplied: "mp3",
 				preload: "none",
 				wmode: "window",
