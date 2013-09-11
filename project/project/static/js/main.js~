@@ -27,7 +27,6 @@ function main(id, email) {
 						$(this).jPlayer("setMedia", stream).jPlayer("play");
 					}
 				},
-				solution:"flash, html",
 				nativeSupport: false,
 				oggSupport: false,
 				//swfPath: "${request.static_path('project:static/js')}",
