@@ -412,6 +412,7 @@ div.jp-title > a {
 	float: left;
 	line-height: 2.5em;
 	color: #bbbbbb;
+	max-width: 20em;
 }
 
 div.jp-title > a:hover {
