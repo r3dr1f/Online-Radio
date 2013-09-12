@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="sk-SK" xmlns:fb="http://ogp.me/ns/fb#">
 <head>
+	<title>radio3.sk | music > mainstream</title>
 	<link rel="icon" type="shortcut icon" href="static/favicon.ico">
 	<meta charset="utf-8">
 		<link href="${request.static_path('project:static/stylesheets/screen.css')}" media="screen and (min-width: 1100px), projection and (min-width: 1100px)" rel="stylesheet" type="text/css" />
