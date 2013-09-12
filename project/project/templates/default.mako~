@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="sk-SK" xmlns:fb="http://ogp.me/ns/fb#">
 <head>
-	<link rel="icon" type="shortcut icon" href="static/favicon.ico">
+	<link rel="icon" type="static/shortcut icon" href="favicon.ico">
 	<meta charset="utf-8">
 		<link href="${request.static_path('project:static/stylesheets/screen.css')}" media="screen and (min-width: 1100px), projection and (min-width: 1100px)" rel="stylesheet" type="text/css" />
 		<link href="${request.static_path('project:static/stylesheets/screen_small.css')}" media="screen and (max-width: 1099px), projection and (max-width: 1099px)" rel="stylesheet" type="text/css" />
